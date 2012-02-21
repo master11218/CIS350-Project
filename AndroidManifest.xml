@@ -25,6 +25,7 @@
         <activity android:name = "edu.upenn.cis350.ProfileActivity"/>
         <activity android:name = "edu.upenn.cis350.SearchActivity" />
         <activity android:name = "edu.upenn.cis350.ContactActivity" />
+        <activity android:name = "edu.upenn.cis350.ProviderProfileActivity" />
         
     </application>
 

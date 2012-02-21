@@ -18,10 +18,19 @@ public final class R {
         public static final int button_history=0x7f050001;
         public static final int button_map=0x7f050002;
         public static final int button_profile=0x7f050003;
+        public static final int button_providerpf_map=0x7f05000a;
         public static final int button_search=0x7f050000;
+        public static final int provider_address=0x7f050008;
+        public static final int provider_info=0x7f050006;
+        public static final int provider_name=0x7f050007;
+        public static final int provider_phone=0x7f050009;
+        public static final int providerpf_top=0x7f050005;
+        public static final int search_temp=0x7f05000b;
     }
     public static final class layout {
         public static final int main=0x7f030000;
+        public static final int provider_pf=0x7f030001;
+        public static final int search=0x7f030002;
     }
     public static final class string {
         public static final int app_name=0x7f040001;

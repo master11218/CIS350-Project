@@ -15,7 +15,7 @@ public class VoiceActivity extends Activity {
     private Button m_button_history;
     private Button m_button_map;
     private Button m_button_contact;
-    private Context m_context = this;
+    private final Context m_context = this;
     
     
     @Override

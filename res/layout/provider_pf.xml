@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <!-- Provider info -->
+
+	<LinearLayout
+	    android:id="@+id/providerpf_top"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal">
+	    <LinearLayout
+	        android:id="@+id/provider_info"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical" >
+		        
+		    <TextView 
+		        android:id="@+id/provider_name"
+		        android:layout_width="wrap_content"
+		    	android:layout_height="wrap_content"
+		    	android:text="Abbasi, Nadeem Ahmed, MD"
+		        />
+		    <TextView
+		        android:id="@+id/provider_address"
+		        android:layout_width="wrap_content"
+		    	android:layout_height="wrap_content"
+		    	android:text="3400 Spruce Street, 8 Ravdin, Philadelphia, PA 19104"
+		        />
+		    
+		    <TextView
+		        android:id="@+id/provider_phone"
+		        android:layout_width="wrap_content"
+		    	android:layout_height="wrap_content"
+		    	android:text="(215)662-3228"
+		        />
+	    
+	    </LinearLayout>
+	    <Button 
+	        android:id="@+id/button_providerpf_map"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Map"
+    	    />	
+    	
+    </LinearLayout>
+
+</RelativeLayout>
