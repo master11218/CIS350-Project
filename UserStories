@@ -1,0 +1,27 @@
+Stuff we expect to be able to get from pre-existing data - 1 point each
+I want to be able to search by city,county, zip, state, and radial distance from the location.
+I want to be able to search by provider category, provider type as well as the type of health plans I have.
+I want to be able to display my search results on a map display results on a map in relation to my current location.
+I want to be able to search by first and last name, or group name.
+I want to be able to search by PCD type, specialist type, and whether or not they’re accepting new patients.
+I want to be able to search by the languages they use apart from English.
+I want to be able to limit the number of results I see on each page.
+I want to see results by map with specialty plan, provider details, and doctor info.
+I want to be able to see the plan details.
+I want to be able to go to doctor’s website and call them.
+
+Stuff that would require our own back-end - 2 points each
+I want to be able to rate my providers.
+I want to be able to rank by rating, rank by distance, 
+I want to be able to search by rating.
+I want to be able to write reviews about the providers after my visit.
+I want to be able to see all the providers I’ve rated.
+I want to be able to filter the comments of a provider by the service it provides
+
+Optional?
+As a patient, I want to control the privacy setting of my profile
+As a patient, I want to filter the comments of a provider by the service it provides
+As a patient, I want to upload photo of a provider's facility from my device
+As a patient, I want to visualize the providers' locations on the map
+As a patient, I want to keep multiple providers in my profile for searching
+As an insurance company, I want to import all providers information (location, services) into the database.
