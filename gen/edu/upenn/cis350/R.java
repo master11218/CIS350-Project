@@ -20,12 +20,12 @@ public final class R {
         public static final int button_profile=0x7f050003;
         public static final int button_providerpf_map=0x7f050006;
         public static final int button_search=0x7f050000;
+        public static final int linearLayout1=0x7f050010;
         public static final int provider_address=0x7f05000a;
         public static final int provider_info=0x7f050008;
         public static final int provider_name=0x7f050009;
         public static final int provider_phone=0x7f05000b;
         public static final int providerpf_comment_header=0x7f05000f;
-        public static final int providerpf_comments=0x7f050010;
         public static final int providerpf_middle=0x7f05000d;
         public static final int providerpf_rate_button=0x7f05000c;
         public static final int providerpf_rating=0x7f05000e;
