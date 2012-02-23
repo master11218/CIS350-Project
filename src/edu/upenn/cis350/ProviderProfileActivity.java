@@ -9,6 +9,8 @@ public class ProviderProfileActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.provider_pf);
         
+        //initialize a dummy provider.
+        Provider p = new Provider();
         
     }
 

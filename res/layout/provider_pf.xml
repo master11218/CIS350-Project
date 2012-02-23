@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/providerpf_wrapper"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
     <!-- Provider info -->
 
+    
+	    <Button 
+	        android:id="@+id/button_providerpf_map"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Map"
+	        android:layout_alignParentRight="true"
+    	    />	
+    	    
 	<LinearLayout
 	    android:id="@+id/providerpf_top"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:orientation="horizontal">
+	        android:layout_toLeftOf="@id/button_providerpf_map"
+	        android:orientation="vertical">
 	    <LinearLayout
 	        android:id="@+id/provider_info"
 	        android:layout_width="wrap_content"
@@ -25,7 +36,7 @@
 		        android:id="@+id/provider_address"
 		        android:layout_width="wrap_content"
 		    	android:layout_height="wrap_content"
-		    	android:text="3400 Spruce Street, 8 Ravdin, Philadelphia, PA 19104"
+		    	android:text="3400 Spruce Street, 8 Ravdin, Philadelphia, PA"
 		        />
 		    
 		    <TextView
@@ -33,16 +44,52 @@
 		        android:layout_width="wrap_content"
 		    	android:layout_height="wrap_content"
 		    	android:text="(215)662-3228"
-		        />
-	    
+		        />    
 	    </LinearLayout>
-	    <Button 
-	        android:id="@+id/button_providerpf_map"
+    </LinearLayout>
+    
+	    <Button
+			android:id="@+id/providerpf_rate_button"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Review and Rate!"
+			android:layout_below="@+id/providerpf_top"
+			android:layout_alignParentRight="true"
+	        />
+	    
+	<LinearLayout
+	    android:id="@+id/providerpf_middle"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBottom="@+id/providerpf_rate_button"
+	    android:layout_below="@id/providerpf_top"
+	    android:layout_gravity="center_vertical"
+	    android:layout_toLeftOf="@+id/providerpf_rate_button"
+	    android:gravity="center_vertical" >
+
+	    <TextView
+	        android:id="@+id/providerpf_rating"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:text="Map"
-    	    />	
-    	
+	        android:gravity="center_vertical"
+	        android:text="Rating: 5.00"
+	        />
     </LinearLayout>
+    
+	<TextView
+	    android:id="@+id/providerpf_comment_header"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/providerpf_middle"
+	    android:text="Comments"
+	    />
+	<ListView
+	    android:id="@+id/providerpf_comments"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@id/providerpf_comment_header"
+	    />
+    
+    
 
 </RelativeLayout>
