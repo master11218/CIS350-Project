@@ -26,7 +26,7 @@ public class SearchActivity extends Activity{
 		super.onResume();
         temp = (Button)this.findViewById(R.id.search_temp);
         temp.setOnClickListener(new OnClickListener(){
-			@Override
+			
 			public void onClick(View arg0) {
 		        Intent i = new Intent(m_context, ProviderProfileActivity.class);
 		        startActivity(i);
