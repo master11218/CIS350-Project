@@ -27,6 +27,9 @@
         <activity android:name = "edu.upenn.cis350.ContactActivity" />
         <activity android:name = "edu.upenn.cis350.ProviderProfileActivity" />
         
+        <uses-library android:name="com.google.android.maps" />
+        <uses-permission android:name="android.permission.INTERNET" />
+        
     </application>
 
 </manifest>
