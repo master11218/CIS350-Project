@@ -37,21 +37,21 @@ public class VoiceActivity extends Activity {
         m_button_contact = (Button)this.findViewById(R.id.button_contact);
         
         m_button_search.setOnClickListener(new OnClickListener(){
-			@Override
+			
 			public void onClick(View arg0) {
 	        	Intent intent = new Intent(m_context, SearchActivity.class);
 				startActivity(intent);
 			}
         });
         m_button_profile.setOnClickListener(new OnClickListener(){
-			@Override
+			
 			public void onClick(View v) {
 	        	Intent intent = new Intent(m_context, ProfileActivity.class);
 				startActivity(intent);
 			}
         });
         m_button_history.setOnClickListener(new OnClickListener(){
-			@Override
+			
 			public void onClick(View v) {
 	        	Intent intent = new Intent(m_context, HistoryActivity.class);
 				startActivity(intent);
@@ -59,14 +59,14 @@ public class VoiceActivity extends Activity {
 			}
         });
         m_button_map.setOnClickListener(new OnClickListener(){
-			@Override
+			
 			public void onClick(View v) {
 	        	Intent intent = new Intent(m_context, MapProviderActivity.class);
 				startActivity(intent);
 			}
         });
         m_button_contact.setOnClickListener(new OnClickListener(){
-			@Override
+			
 			public void onClick(View v) {
 	        	Intent intent = new Intent(m_context, ContactActivity.class);
 				startActivity(intent);
