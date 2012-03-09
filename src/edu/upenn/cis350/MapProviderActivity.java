@@ -1,5 +1,5 @@
 package edu.upenn.cis350;
-import android.app.Activity;
+
 import com.google.android.maps.MapActivity;
 import android.os.Bundle;
 

@@ -59,7 +59,7 @@ public class VoiceActivity extends Activity {
 			}
         });
         m_button_map.setOnClickListener(new OnClickListener(){
-			
+        	
 			public void onClick(View v) {
 	        	Intent intent = new Intent(m_context, MapProviderActivity.class);
 				startActivity(intent);
