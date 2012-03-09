@@ -3,11 +3,18 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-    
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Showing results page 1 of 1" 
+        />
+
     <Button
         android:id="@+id/search_temp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        />
+        android:text="Abbasi, Nadeem Ahmed, MD" />
 
 </LinearLayout>

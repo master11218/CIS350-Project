@@ -2,5 +2,7 @@
 <resources>
     <string name="hello">Hello World, VoiceActivity!</string>
     <string name="app_name">Voice</string>
+    <string name="yes">Profile</string>
+    <string name="no">Cancel</string>
 
 </resources>
