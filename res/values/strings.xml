@@ -4,5 +4,13 @@
     <string name="app_name">Voice</string>
     <string name="yes">Profile</string>
     <string name="no">Cancel</string>
+    <string name="providerpf_rate_review_label1">&quot;Review this provider!&quot;</string>
+    <string name="submit">Submit</string>
+    <string name="contact_copyright">ProviderPlus is an app provided by the University of Pennsylvania School of Nursing</string>
+    <string name="contact_more">For more information, please contact:</string>
+    <string name="contact_info_name">Evan Wu</string>
+    <string name="contact_info_email">evanswu@nursing.seas.upenn.edu</string>
+    <string name="contact_info_number">1-215-255-2555</string>
+    
 
 </resources>
