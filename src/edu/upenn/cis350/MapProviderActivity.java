@@ -49,6 +49,7 @@ public class MapProviderActivity extends MapActivity{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 //		_descriptions.add("Abbasi, Nadeem Ahmed, MD");
+		
 		//grab the location, set the latitude and longitude
 		locationClick();
 		
