@@ -47,31 +47,18 @@ public class ProviderProfileActivity extends Activity{
 		m_provider_phone = (TextView)this.findViewById(R.id.provider_phone);
 		m_provider_address = (TextView)this.findViewById(R.id.provider_address);
 		m_provider_rating = (TextView)this.findViewById(R.id.provider_rating);
-		
-		//Initialize a bunch of dummy ratings
-		Rating first = new Rating(3,1,new Date(System.currentTimeMillis()), "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-				5);
-		Rating second = new Rating(4,1,new Date(System.currentTimeMillis()), " adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehend",
-				3);
-		Rating third = new Rating(5,1,new Date(System.currentTimeMillis()), " This guy is awesome!!!!!!!!!!!!!!!!!!!!!!!",
-				3);
-		Rating fourth= new Rating(5,1,new Date(System.currentTimeMillis()), " I don't speak latin );",
-				4);
-		m_ratings = new ArrayList<Rating>();
-		
-		m_ratings.add(first);
-		m_ratings.add(second);
-		m_ratings.add(third);
-		m_ratings.add(fourth);
-		
-		//initialize a dummy provider.
-		m_provider = new Provider(1,"Nadeem Abbhasi Ahmed", "3400 Spruce Street, 8 Ravdin, Philadelphia, PA", "(215)662-3228", m_ratings, 39.951481, -75.200987);
 	}
 
 
 	@Override
 	public void onResume(){
 		super.onResume();
+
+		
+		//grab what's passed to it
+		m_provider = (Provider)getIntent().getSerializableExtra("providers");
+		m_ratings = m_provider.getRatings();
+		
 		m_button_map.setOnClickListener(new OnClickListener(){
 			public void onClick(View v) {
 				Intent intent = new Intent(m_context, MapProviderActivity.class);
@@ -126,6 +113,8 @@ public class ProviderProfileActivity extends Activity{
 		}
 		public View getView(final int position, View convertView, ViewGroup parent) {
 
+			
+			//inflate the view
 	        LinearLayout list_result;
 	        if(convertView == null){
 	        	LayoutInflater inf = (LayoutInflater)m_context.getSystemService(
@@ -135,6 +124,7 @@ public class ProviderProfileActivity extends Activity{
 	        }
 	        else
 	        	list_result = (LinearLayout)convertView;
+	        //populate the new view
 	        TextView tv_rating = (TextView)list_result.findViewById(R.id.providerpf_comment_rating);
 	        Integer temp = m_ratings.get(position).getRating();
 	        tv_rating.setText("Rating: " + temp.toString() + ".0");
