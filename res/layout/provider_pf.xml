@@ -83,136 +83,13 @@
         android:layout_below="@+id/providerpf_middle"
         android:text="Reviews"
         android:textSize="20dp" />
-    <!--
-    Temporarily taken out.
+    
 	<ListView
 	    android:id="@+id/providerpf_comments"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
-	    android:layout_below="@id/providerpf_comment_header"
+	    android:layout_below="@id/providerpf_comment_header"p
 	    />
-    -->
-    
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/providerpf_comment_header">
-
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" 
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
-		            
-		    <TextView
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-				android:layout_gravity="right"
-		        android:text="2012/3/04" />
-        </LinearLayout>
-        
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" 
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
-		            
-		    <TextView
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-				android:layout_gravity="right"
-		        android:text="2012/3/04" />
-        </LinearLayout>
-        
-        
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" 
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
-		            
-		    <TextView
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-				android:layout_gravity="right"
-		        android:text="2012/3/04" />
-        </LinearLayout>
-        
-        
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" 
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
-		            
-		    <TextView
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-				android:layout_gravity="right"
-		        android:text="2012/3/04" />
-        </LinearLayout>
-        
-        
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" 
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
-		            
-		    <TextView
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-				android:layout_gravity="right"
-		        android:text="2012/3/04" />
-        </LinearLayout>
-        
-        
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" 
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
-		            
-		    <TextView
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-				android:layout_gravity="right"
-		        android:text="2012/3/04" />
-        </LinearLayout>
-        
-
-    </LinearLayout>
-    </ScrollView>
     
 
 
