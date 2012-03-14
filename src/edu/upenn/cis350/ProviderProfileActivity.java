@@ -66,7 +66,6 @@ public class ProviderProfileActivity extends Activity{
 		
 		//initialize a dummy provider.
 		m_provider = new Provider(1,"Nadeem Abbhasi Ahmed", "3400 Spruce Street, 8 Ravdin, Philadelphia, PA", "(215)662-3228", m_ratings, 39.951481, -75.200987);
-		
 	}
 
 
@@ -76,6 +75,7 @@ public class ProviderProfileActivity extends Activity{
 		m_button_map.setOnClickListener(new OnClickListener(){
 			public void onClick(View v) {
 				Intent intent = new Intent(m_context, MapProviderActivity.class);
+				intent.putExtra("providers", m_provider);
 				startActivity(intent);
 			}
 		});
@@ -94,10 +94,10 @@ public class ProviderProfileActivity extends Activity{
 		
 		
 		//set the provider info
-		m_provider_name.setText(m_provider.getPhone());
+		m_provider_name.setText(m_provider.getName());
 		m_provider_phone.setText(m_provider.getPhone());
 		m_provider_address.setText(m_provider.getAddress());
-		m_provider_rating.setText(m_provider.getAvgRating());
+		m_provider_rating.setText(m_provider.getAvgRating().toString());
 		
 	}
 

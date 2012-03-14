@@ -68,7 +68,7 @@
         android:gravity="center_vertical" >
 
         <TextView
-            android:id="@+id/providerpf_rating"
+            android:id="@+id/provider_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -88,7 +88,7 @@
 	    android:id="@+id/providerpf_comments"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
-	    android:layout_below="@id/providerpf_comment_header"p
+	    android:layout_below="@id/providerpf_comment_header"
 	    />
     
 
