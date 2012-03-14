@@ -1,14 +1,16 @@
 package edu.upenn.cis350;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Rating {
+public class Rating implements Serializable{
 
-	private long user_id;
-	private long provider_id;
+	private static final long serialVersionUID = 1L;
+	private Long user_id;
+	private Long provider_id;
 	private Date date;
 	private String review;
-	private int rating;
+	private Integer rating;
 	
 	public Rating(long user, long provider, Date date, String desc, int rate){
 		user_id = user;
@@ -17,10 +19,10 @@ public class Rating {
 		review = desc;
 		rating = rate;
 	}
-	public long getUser(){
+	public Long getUser(){
 		return user_id;
 	}
-	public long getProvider(){
+	public Long getProvider(){
 		return provider_id;
 	}
 	public Date getDate(){
@@ -29,7 +31,7 @@ public class Rating {
 	public String getReview(){
 		return review;
 	}
-	public int getRating(){
+	public Integer getRating(){
 		return rating;
 	}
 }

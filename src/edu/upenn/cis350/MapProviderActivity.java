@@ -1,8 +1,3 @@
-/*
- * I realized after coding the class that we need to be passing the Provider object around.
- * I'll rewrite the class to deal with multiple providers once there is code that supports it.
- */
-
 package edu.upenn.cis350;
 
 import com.google.android.maps.GeoPoint;
@@ -21,31 +16,18 @@ import java.util.List;
 public class MapProviderActivity extends MapActivity{
 	private MapView _myMapView;
 	private MapController _myMapController;
-	private ArrayList<GeoPoint> _points;
-	private ArrayList<String> _descriptions;
-	
-	public MapProviderActivity(){
-		_points = new ArrayList<GeoPoint>();
-		_descriptions = new ArrayList<String>();
-		
-		//default point if nothing specified
-		_points.add(new GeoPoint(39950446,-75192587));
-		_descriptions.add("Abbasi, Nadeem Ahmed, MD");
-		
-		/*
-		 * Code to get all points within a certain radius goes here.
-		 * Cannot be implemented without a dataset.
-		 */
-	}
-	
-	public MapProviderActivity(ArrayList<GeoPoint> points, ArrayList<String> descriptions){
-		_points = points;
-		_descriptions = descriptions;
-	}
+	private ArrayList<Provider> _providers;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+//		_descriptions.add("Abbasi, Nadeem Ahmed, MD");
+		
+		_providers = new ArrayList<Provider>();
+		_providers.add((Provider)getIntent().getSerializableExtra("providers"));
+		if(_providers.size() == 1)
+			System.out.println("Would have shown directions");
+
 		setContentView(R.layout.map);
 		_myMapView = (MapView) findViewById(R.id.mapview);
 		_myMapController = _myMapView.getController();
@@ -60,9 +42,11 @@ public class MapProviderActivity extends MapActivity{
 		List<Overlay> mapOverlays = _myMapView.getOverlays();
 		Drawable drawable = this.getResources().getDrawable(R.drawable.androidmarker);
 		MapItemizedOverlay itemizedoverlay = new MapItemizedOverlay(drawable, this);
+		itemizedoverlay.setProviders(_providers);
 		
-		for(int i = 0; i < _points.size(); i++){
-			OverlayItem overlayitem = new OverlayItem(_points.get(i), _descriptions.get(i), "");
+		for(int i = 0; i < _providers.size(); i++){
+			GeoPoint p = new GeoPoint((int)(_providers.get(i).getLongitude() * 1000000), (int)(_providers.get(i).getLatitude()*1000000));
+			OverlayItem overlayitem = new OverlayItem(p, "", "");
 			itemizedoverlay.addOverlay(overlayitem);
 		}
 

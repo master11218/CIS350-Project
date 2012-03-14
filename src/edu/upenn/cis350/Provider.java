@@ -3,8 +3,6 @@ package edu.upenn.cis350;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import com.google.android.maps.GeoPoint;
-
 public class Provider implements Serializable{
 	
 	/**
@@ -16,43 +14,59 @@ public class Provider implements Serializable{
 	private String address;
 	private String phone;
 	private ArrayList<Rating> ratings = new ArrayList<Rating>();
-	private float avgRating;
 	private ArrayList<String> comments = new ArrayList<String>();
-	private GeoPoint location;
+	private Double longitude;
+	private Double latitude;
+	//private GeoPoint location;
 	
 	public Provider(long id, String name, String address, String phone, ArrayList<Rating> rates, 
 			double longitude, double latitude){
 		this.id = id;
 		this.name = name;
-		this.address =address;
+		this.address = address;
 		this.phone = phone;
 		this.ratings = rates;
-		GeoPoint x = new GeoPoint((int)(latitude * (10^6)), (int)(longitude * 6));
+		this.longitude = longitude;
+		this.latitude = latitude;
 	}
 	
 	public long getID(){
 		return id;
 	}
+	
 	public String getName(){
 		return name;
 	}
+	
 	public String getAddress(){
 		return address;
 	}
+	
 	public String getPhone(){
 		return phone;
 	}
+	
 	public ArrayList<Rating> getRatings(){
 		return ratings;
 	}
-	public float getAvgRating(){
-		return avgRating;
+	
+	public Double getAvgRating(){
+		double totalRating = 0;
+		for(Rating r: this.getRatings())
+			totalRating += r.getRating();
+		return totalRating/(double)this.getRatings().size();
 	}
+	
 	public ArrayList<String> comments(){
 		return comments;
 	}
-	public GeoPoint getLocation(){
-		return location;
+	
+	public Double getLatitude(){
+		return this.latitude;
+	}
+	
+	public Double getLongitude(){
+		return this.longitude;
 	}
 	
 	public void setID(long n){
@@ -72,7 +86,6 @@ public class Provider implements Serializable{
 	}
 
 	public void addRating(Rating n){
-		avgRating = ((avgRating * ratings.size()) + n.getRating())/(ratings.size()+1); 
 		ratings.add(n);
 	}
 	
@@ -80,4 +93,11 @@ public class Provider implements Serializable{
 		comments.add(n);
 	}
 	
+	public void setLatitude(double d){
+		latitude = d;
+	}
+	
+	public void setLongitude(double d){
+		longitude = d;
+	}
 }
