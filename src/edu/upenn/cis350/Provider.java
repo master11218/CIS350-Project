@@ -3,13 +3,19 @@ package edu.upenn.cis350;
 import java.util.ArrayList;
 
 public class Provider {
+	private long id;
 	private String name;
 	private String address;
 	private String phone;
 	private ArrayList<Float> ratings = new ArrayList<Float>();
 	private float avgRating;
 	private ArrayList<String> comments = new ArrayList<String>();
+	private float longitude;
+	private float latitude;
 	
+	public long getID(){
+		return id;
+	}
 	public String getName(){
 		return name;
 	}
@@ -27,6 +33,16 @@ public class Provider {
 	}
 	public ArrayList<String> comments(){
 		return comments;
+	}
+	public float getLongitude(){
+		return longitude;
+	}
+	public float getLatitude(){
+		return latitude;
+	}
+	
+	public void setID(long n){
+		id = n;
 	}
 	
 	public void setName(String n){
@@ -48,6 +64,14 @@ public class Provider {
 	
 	public void addComment(String n){
 		comments.add(n);
+	}
+	
+	public void setLongitude(float n){
+		longitude = n;
+	}
+
+	public void setLatitude(float n){
+		latitude = n;
 	}
 }
 
