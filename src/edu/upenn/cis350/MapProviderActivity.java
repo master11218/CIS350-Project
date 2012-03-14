@@ -7,8 +7,13 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
+import edu.upenn.cis350.MyLocation.LocationResult;
+
+import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +22,35 @@ public class MapProviderActivity extends MapActivity{
 	private MapView _myMapView;
 	private MapController _myMapController;
 	private ArrayList<Provider> _providers;
+	private Double m_lat;
+	private Double m_long;
+	private Context m_context = this;
 
+
+	MyLocation m_location = new MyLocation();
+	private void locationClick() {
+		m_location.getLocation(this, locationResult);
+	}
+
+	public LocationResult locationResult = new LocationResult(){
+		@Override
+		public void gotLocation(Location location){
+			if(location != null){
+				m_lat = location.getLatitude();
+				m_long = location.getLongitude();
+				Toast.makeText(m_context, "The lat: " + m_lat.toString() + " The long: " + m_long.toString(), Toast.LENGTH_SHORT).show();
+				
+			}
+			//Got the location!
+		}
+	};
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 //		_descriptions.add("Abbasi, Nadeem Ahmed, MD");
+		//grab the location, set the latitude and longitude
+		locationClick();
 		
 		_providers = new ArrayList<Provider>();
 		_providers.add((Provider)getIntent().getSerializableExtra("providers"));
@@ -38,6 +67,9 @@ public class MapProviderActivity extends MapActivity{
 		GeoPoint pennLocation = new GeoPoint(39951481, -75200987);
 		_myMapController.animateTo(pennLocation);
 		
+		
+		
+
 		//add additional "pins" to the map
 		List<Overlay> mapOverlays = _myMapView.getOverlays();
 		Drawable drawable = this.getResources().getDrawable(R.drawable.androidmarker);
