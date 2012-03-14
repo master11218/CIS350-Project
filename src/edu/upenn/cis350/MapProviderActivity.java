@@ -79,7 +79,7 @@ public class MapProviderActivity extends MapActivity{
 			if(location != null){
 				m_lat = location.getLatitude();
 				m_long = location.getLongitude();
-				Toast.makeText(m_context, "The lat: " + m_lat.toString() + " The long: " + m_long.toString(), Toast.LENGTH_SHORT).show();
+				Toast.makeText(m_context, "Your current location is (" + m_lat.toString() + ", " + m_long.toString() + ")", Toast.LENGTH_SHORT).show();
 				
 			}
 			//Got the location!
