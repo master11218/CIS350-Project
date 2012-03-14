@@ -29,4 +29,7 @@ public class Rating {
 	public String getReview(){
 		return review;
 	}
+	public int getRating(){
+		return rating;
+	}
 }

@@ -1,17 +1,34 @@
 package edu.upenn.cis350;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Provider {
+import com.google.android.maps.GeoPoint;
+
+public class Provider implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private long id;
 	private String name;
 	private String address;
 	private String phone;
-	private ArrayList<Float> ratings = new ArrayList<Float>();
+	private ArrayList<Rating> ratings = new ArrayList<Rating>();
 	private float avgRating;
 	private ArrayList<String> comments = new ArrayList<String>();
-	private float longitude;
-	private float latitude;
+	private GeoPoint location;
+	
+	public Provider(long id, String name, String address, String phone, ArrayList<Rating> rates, 
+			double longitude, double latitude){
+		this.id = id;
+		this.name = name;
+		this.address =address;
+		this.phone = phone;
+		this.ratings = rates;
+		GeoPoint x = new GeoPoint((int)(latitude * (10^6)), (int)(longitude * 6));
+	}
 	
 	public long getID(){
 		return id;
@@ -25,7 +42,7 @@ public class Provider {
 	public String getPhone(){
 		return phone;
 	}
-	public ArrayList<Float> getRatings(){
+	public ArrayList<Rating> getRatings(){
 		return ratings;
 	}
 	public float getAvgRating(){
@@ -34,11 +51,8 @@ public class Provider {
 	public ArrayList<String> comments(){
 		return comments;
 	}
-	public float getLongitude(){
-		return longitude;
-	}
-	public float getLatitude(){
-		return latitude;
+	public GeoPoint getLocation(){
+		return location;
 	}
 	
 	public void setID(long n){
@@ -57,8 +71,8 @@ public class Provider {
 		phone = n;
 	}
 
-	public void addRating(float n){
-		avgRating = ((avgRating * ratings.size()) + n)/(ratings.size()+1); 
+	public void addRating(Rating n){
+		avgRating = ((avgRating * ratings.size()) + n.getRating())/(ratings.size()+1); 
 		ratings.add(n);
 	}
 	
@@ -66,12 +80,4 @@ public class Provider {
 		comments.add(n);
 	}
 	
-	public void setLongitude(float n){
-		longitude = n;
-	}
-
-	public void setLatitude(float n){
-		latitude = n;
-	}
 }
-
