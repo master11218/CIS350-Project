@@ -21,7 +21,6 @@ public class MapProviderActivity extends MapActivity{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		_descriptions.add("Abbasi, Nadeem Ahmed, MD");
 		
 		_providers = new ArrayList<Provider>();
 		_providers.add((Provider)getIntent().getSerializableExtra("providers"));

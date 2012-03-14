@@ -1,19 +1,43 @@
 package edu.upenn.cis350;
 
 public class User {
-//	 User ID : long (key, unique)
-//	 Name : String
-//	 Policies: List<Policy>
-//	 A list of policy ID
-//	 Address : String
-//	 Longitude: String
-//	 Latitude : String
-//	 History : List<Rating>
-//	 All the history of Past visit
-//	 Email : String
-
-	 private long id;
-	 private String name;
-	 //private List<Policy> policies
-	 //policies not yet done.
+	 private long _id;
+	 private String _name;
+	 private String _email;
+	 private String _address;
+	 private String _gender;
+	 private String _phone;
+	 
+	 public User (long id, String name, String email, String address, String gender, String phone){
+		 _id = id;
+		 _name = name;
+		 _email = email;
+		 _address = address;
+		 _gender = gender;
+		 _phone = phone;
+	 }
+	 
+	 public Long getId(){
+		 return this._id;
+	 }
+	 
+	 public String getName(){
+		 return this._name;
+	 }
+	 
+	 public String getEmail(){
+		 return this._email;
+	 }
+	 
+	 public String getAddress(){
+		 return this._address;
+	 }
+	 
+	 public String getGender(){
+		 return this._gender;
+	 }
+	 
+	 public String getPhone(){
+		 return this._phone;
+	 }
 }
