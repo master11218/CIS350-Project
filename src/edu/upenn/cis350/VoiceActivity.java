@@ -1,5 +1,7 @@
 package edu.upenn.cis350;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -78,6 +80,8 @@ public class VoiceActivity extends Activity {
         	
 			public void onClick(View v) {
 	        	Intent intent = new Intent(m_context, MapProviderActivity.class);
+//	        	Provider empty = null;
+//	        	intent.putExtra("providers", empty);
 				startActivity(intent);
 			}
         });

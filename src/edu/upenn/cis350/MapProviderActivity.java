@@ -53,17 +53,16 @@ public class MapProviderActivity extends MapActivity{
 	public void generateProviderList(){
 
         //Generate a bunch of temporary random providers
-        _providers.add(generateProvider("Loraine Zachery", 39.951481, -75.200987));
-        _providers.add(generateProvider("Tyrone Bolan", 39.952481, -75.200987));
-        _providers.add(generateProvider("Roslyn Chico", 39.953481, -75.200987));
-        _providers.add(generateProvider("Sharron Becher", 39.954481, -75.200987));
-        _providers.add(generateProvider("Steidl Zachery", 39.955481, -75.200987));
-        _providers.add(generateProvider("Hugh Tandy", 39.956481, -75.200987));
+        _providers.add(generateProvider("Loraine Zachery", 39.951481, -75.180987));
+        _providers.add(generateProvider("Tyrone Bolan", 39.952481, -75.190987));
+        _providers.add(generateProvider("Roslyn Chico", 39.9512376, -75.100987));
+        _providers.add(generateProvider("Sharron Becher", 39.941237, -75.211987));
+        _providers.add(generateProvider("Steidl Zachery", 39.912731, -75.223421));
+        _providers.add(generateProvider("Hugh Tandy", 39.91111, -75.0843728));
         _providers.add(generateProvider("Mathew Dimas", 39.957481, -75.200987));
-        _providers.add(generateProvider("Milagros Siegmund", 39.958481, -75.200987));
-        _providers.add(generateProvider("Serena Champine", 39.959481, -75.200987));
-        _providers.add(generateProvider("Allie Lunday", 39.950481, -75.200987));
-        
+        _providers.add(generateProvider("Milagros Siegmund", 39.958481, -75.178178));
+        _providers.add(generateProvider("Serena Champine", 39.959481, -75.192789));
+        _providers.add(generateProvider("Allie Lunday", 39.950481, -75.188687));
 	}
 	
 	
@@ -90,16 +89,18 @@ public class MapProviderActivity extends MapActivity{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		_descriptions.add("Abbasi, Nadeem Ahmed, MD");
 		
 		//grab the location, set the latitude and longitude
 		locationClick();
 		
 		Provider intentProvider = (Provider)getIntent().getSerializableExtra("providers");
-		if(intentProvider != null)
+		if(intentProvider == null)
+			generateProviderList();
+		else
 			_providers.add(intentProvider);
-		if(_providers.size() == 1)
+		if(_providers.size() == 1){
 			System.out.println("Would have shown directions");
+		}
 
 		setContentView(R.layout.map);
 		_myMapView = (MapView) findViewById(R.id.mapview);
@@ -111,9 +112,6 @@ public class MapProviderActivity extends MapActivity{
 		GeoPoint pennLocation = new GeoPoint(39951481, -75200987);
 		_myMapController.animateTo(pennLocation);
 		
-		
-		
-
 		//add additional "pins" to the map
 		List<Overlay> mapOverlays = _myMapView.getOverlays();
 		Drawable drawable = this.getResources().getDrawable(R.drawable.androidmarker);
