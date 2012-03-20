@@ -35,6 +35,7 @@ public class ProviderProfileActivity extends Activity{
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.provider_pf);
 		m_button_map = (Button)this.findViewById(R.id.button_providerpf_map);

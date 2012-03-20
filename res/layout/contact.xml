@@ -6,18 +6,21 @@
     android:gravity="center">
      
     <TextView
+        android:id="@+id/contact_copyright"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/contact_copyright" />
     
     <TextView
+        android:id="@+id/contact_more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/contact_more"
         />
     
     <TextView
+        android:id="@+id/contact_info_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/contact_info_name"
@@ -25,12 +28,14 @@
     
     
     <TextView
+        android:id="@+id/contact_info_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/contact_info_email"
         />
     
     <TextView
+        android:id="@+id/contact_info_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/contact_info_number"
