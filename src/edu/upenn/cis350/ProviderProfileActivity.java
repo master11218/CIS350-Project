@@ -212,9 +212,9 @@ public class ProviderProfileActivity extends Activity{
 			else
 				list_result = (LinearLayout)convertView;
 			//populate the new view
-			TextView tv_rating = (TextView)list_result.findViewById(R.id.providerpf_comment_rating);
+			//TextView tv_rating = (TextView)list_result.findViewById(R.id.providerpf_comment_rating);
 			Integer temp = m_ratings.get(position).getRating();
-			tv_rating.setText("Rating: " + temp.toString() + ".0");
+			
 			if (temp==5) {
 				ImageView stars= (ImageView)list_result.findViewById(R.id.providerpf_comment_stars);
 				stars.setImageResource(R.drawable.fivestars);

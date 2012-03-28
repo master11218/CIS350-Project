@@ -23,7 +23,51 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:text="Detail" />
+            android:background="@drawable/netvibes"
+             />
+        <!-- 
+        <LinearLayout
+            android:id="@+id/provider_yes_no_properties"
+            android:layout_width="wrap_content"
+            android:layout_height="10dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            
+            >
+            
+            <Button android:id="@+id/provider_parking"
+        		android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+        		android:background="@drawable/autos" />
+            
+            <Button android:id="@+id/provider_creditcard"
+        		android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+        		android:background="@drawable/card_credit" />
+            
+            <Button android:id="@+id/provider_accepting"
+        		android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+        		android:background="@drawable/group_add" />
+            
+            <Button android:id="@+id/provider_appointments"
+        		android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+        		android:background="@drawable/session_idle_time" />
+            
+             <Button android:id="@+id/provider_PCP"
+        		android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+        		android:background="@drawable/heart" />
+             
+              <Button android:id="@+id/provider_specialist"
+        		android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+        		android:background="@drawable/heart_add" />
+            
+        </LinearLayout>
+        
+         -->
 
     </RelativeLayout>
     
