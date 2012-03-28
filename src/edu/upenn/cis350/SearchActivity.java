@@ -45,7 +45,7 @@ public class SearchActivity extends Activity{
 	}
 
 	
-	/**
+	/** 
 	 * This is the button listener that invokes the search result page.
 	 * If the user input contains any error, a toast will be popped up
 	 * @author henryou
@@ -53,7 +53,6 @@ public class SearchActivity extends Activity{
 	 */
 	private class searchResultInvoker implements OnClickListener{
 
-		@Override
 		public void onClick(View arg0) {
 			
 			Intent i = new Intent(SearchActivity.this, SearchResultActivity.class);
