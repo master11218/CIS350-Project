@@ -6,7 +6,13 @@
 
     android:layout_height="fill_parent"
 
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    
+    
+    
+    >
+    
+    
 
     
 
@@ -61,8 +67,12 @@
                 android:layout_height="wrap_content"
 
                 android:text="Provider Name "
+                
+
 
                 />
+            
+            
 
             <TextView
 
@@ -70,9 +80,20 @@
 
                 android:layout_height="wrap_content"
 
-                android:text="Rating:5.00"
+                android:text="Rating:"
+                
+
 
                 />
+            
+            <ImageView 
+                android:id="@+id/ratingpicture"
+                android:src="@drawable/fivestars"
+                android:layout_height="20dp"
+                android:layout_width="fill_parent"
+                
+                />
+            
 
            
 
@@ -83,11 +104,13 @@
     <Button
 
 
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
 
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
 
         android:layout_alignParentRight="true"
+        
+        android:background="@drawable/squarebutton4"
 
         android:text="View" />
 

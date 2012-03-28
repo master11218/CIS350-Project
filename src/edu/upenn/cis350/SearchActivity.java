@@ -11,11 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class SearchActivity extends Activity{
@@ -71,6 +73,12 @@ public class SearchActivity extends Activity{
         
         //temporarily generate data
         generateProviderList();
+        
+        Spinner spinner= (Spinner) findViewById(R.id.search_provider_spinner);
+        ArrayAdapter<CharSequence> adapter= ArrayAdapter.createFromResource(
+        		this, R.array.provider_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
         
     }
 

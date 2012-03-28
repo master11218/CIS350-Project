@@ -3,38 +3,45 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" 
+    android:background="@drawable/starsbg"
     android:gravity="center">
 
     <TextView 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#000"
         android:text="Profile"
         />
     <TextView
         android:id="@+id/profile_existing_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#000"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     <TextView
         android:id="@+id/profile_existing_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#000"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     <TextView
         android:id="@+id/profile_existing_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#000"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     <TextView
         android:id="@+id/profile_existing_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#000"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     <TextView
         android:id="@+id/profile_existing_gender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#000"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 
