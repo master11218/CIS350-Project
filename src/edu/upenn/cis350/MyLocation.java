@@ -58,8 +58,8 @@ public class MyLocation {
         public void onLocationChanged(Location location) {
             timer1.cancel();
             locationResult.gotLocation(location);
-            lm.removeUpdates(this);
-            lm.removeUpdates(locationListenerNetwork);
+//            lm.removeUpdates(this);
+//            lm.removeUpdates(locationListenerNetwork);
         }
         public void onProviderDisabled(String provider) {}
         public void onProviderEnabled(String provider) {}
@@ -70,8 +70,8 @@ public class MyLocation {
         public void onLocationChanged(Location location) {
             timer1.cancel();
             locationResult.gotLocation(location);
-            lm.removeUpdates(this);
-            lm.removeUpdates(locationListenerGps);
+//            lm.removeUpdates(this);
+//            lm.removeUpdates(locationListenerGps);
         }
         public void onProviderDisabled(String provider) {}
         public void onProviderEnabled(String provider) {}
@@ -81,8 +81,8 @@ public class MyLocation {
     class GetLastLocation extends TimerTask {
         @Override
         public void run() {
-             lm.removeUpdates(locationListenerGps);
-             lm.removeUpdates(locationListenerNetwork);
+//             lm.removeUpdates(locationListenerGps);
+//             lm.removeUpdates(locationListenerNetwork);
 
              Location net_loc=null, gps_loc=null;
              if(gps_enabled)

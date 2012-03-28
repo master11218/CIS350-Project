@@ -42,7 +42,10 @@ public class MapItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		
 		TextView ratingText = (TextView) dialog.findViewById(R.id.map_provider_rating);
 		Double rating = currentProvider.getAvgRating();
-		ratingText.setText(rating.toString());
+		//if it's not 0.0, that means it's an actual rating, so display it
+		if(rating != 0.0) ratingText.setText(rating.toString());
+		//else if it is, then it's the actual user's location
+		else ratingText.setText("");
 		
 		dialog.show();
 		return true;
