@@ -16,11 +16,11 @@ public class Provider implements Serializable{
 	private String state;
 	private String zip;
 	private String phone;
-	private String accepting_new;
-	private String has_parking;
+	private boolean accepting_new;
+	private boolean has_parking;
 	private String type;
-	private String credit_cards;
-	private String appointment;
+	private boolean credit_cards;
+	private boolean appointment;
 	private ArrayList<Rating> ratings = new ArrayList<Rating>();
 	private ArrayList<String> comments = new ArrayList<String>();
 	private Double longitude;
@@ -28,8 +28,8 @@ public class Provider implements Serializable{
 	//private GeoPoint location;
 	
 	public Provider(long id, String name, String address, String city, String state, String zip, String phone, 
-			String accepting_new, String has_parking, String type, String credit_cards,
-			String appointment, ArrayList<Rating> rates, 
+			boolean accepting_new, boolean has_parking, String type, boolean credit_cards,
+			boolean appointment, ArrayList<Rating> rates, 
 			double longitude, double latitude){
 		this.id = id;
 		this.name = name;
@@ -59,11 +59,33 @@ public class Provider implements Serializable{
 	public String getAddress(){
 		return address;
 	}
-	
+	public String getCity() {
+		return city;
+	}
+	public String getState() {
+		return state;
+	}
+	public String getZip() {
+		return zip;
+	}
 	public String getPhone(){
 		return phone;
 	}
-	
+	public boolean getAccepting() {
+		return accepting_new;
+	}
+	public boolean getParking() {
+		return has_parking;
+	}
+	public String getType() {
+		return type;
+	}
+	public boolean getCreditCards() {
+		return credit_cards;
+	}
+	public boolean getAppointment() {
+		return appointment;
+	}
 	public ArrayList<Rating> getRatings(){
 		return ratings;
 	}

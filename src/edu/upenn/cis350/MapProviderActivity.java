@@ -49,7 +49,7 @@ public class MapProviderActivity extends MapActivity{
 		ratings.add(fourth);
 		
 		//initialize a dummy provider.
-		return new Provider(1, name, "3400 Spruce Street", "Philadelphia", "PA", "19104", "(215)662-3228", "yes", "no", "PCP", "no", "yes", ratings, latitude, longitude);
+		return new Provider(1, name, "3400 Spruce Street", "Philadelphia", "PA", "19104", "(215)662-3228", true, false, "PCP", false, true, ratings, latitude, longitude);
 	}
 	
 	public void generateProviderList(){
@@ -82,7 +82,7 @@ public class MapProviderActivity extends MapActivity{
 		//you as a person will be identified as a dummy provider, with a null ratings. 
 		Provider personal =  new Provider(1, settings.getString("Name", "You"),
 				settings.getString("Address", "(" + m_lat + ", " + m_long + ")"), "Philadelphia", "PA", "19104", settings.getString("Phone",""), 
-				"yes", "no", "PCP", "no", "yes", null, m_lat, m_long);
+				true, false, "PCP", false, true, null, m_lat, m_long);
 		//create an arraylist just containing this to pass to the mapitemized overlay
 		ArrayList<Provider> personal_templist = new ArrayList<Provider>();
 		personalLocationOverlay.setProviders(personal_templist);
