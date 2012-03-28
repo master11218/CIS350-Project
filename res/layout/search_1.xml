@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/search_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/search_title"
+        android:textSize="26dp"/>
+    <EditText
+        android:id="@+id/search_submit"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_title"
+        android:maxLines="1"
+        android:hint="Search"
+        />
+    
+    <TextView
+        android:id="@+id/search_provider_prompt"
+      
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/provider_prompt"
+        />
+    
+    <Spinner 
+        android:id="@+id/search_provider_spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        
+        android:prompt="@string/provider_prompt"
+        />
+    
+    <Button
+        android:id="@+id/search_submit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button3"
+        android:layout_below="@id/search_submit"
+        android:text="Search" />
+    
+    <Button
+        android:id="@+id/search_filter_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_submit"
+        android:background="@drawable/button3"
+        android:layout_toRightOf="@id/search_submit_button"
+        android:layout_marginLeft="50dp"
+        android:text="Filter" />
+
+	<ListView
+	    android:id="@+id/search_results"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@id/search_submit_button"
+	    />
+
+</RelativeLayout>

@@ -21,10 +21,11 @@ public class VoiceActivity extends Activity {
     private final Context m_context = this;
     private User currentUser;
     
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.main2);
     }
 
 	@Override
@@ -49,11 +50,13 @@ public class VoiceActivity extends Activity {
         
         System.out.println(currentUser);
         
-        m_button_search = (Button)this.findViewById(R.id.button_search);
-        m_button_profile= (Button)this.findViewById(R.id.button_profile);
-        m_button_history = (Button)this.findViewById(R.id.button_history);
-        m_button_map = (Button)this.findViewById(R.id.button_map);
-        m_button_contact = (Button)this.findViewById(R.id.button_contact);
+        
+        m_button_search = (Button)this.findViewById(R.id.home_btn_search);
+        m_button_profile= (Button)this.findViewById(R.id.home_btn_profile);
+        m_button_history = (Button)this.findViewById(R.id.home_btn_history);
+        m_button_map = (Button)this.findViewById(R.id.home_btn_map);
+        m_button_contact = (Button)this.findViewById(R.id.home_btn_contact);
+        
         
         m_button_search.setOnClickListener(new OnClickListener(){
 			
