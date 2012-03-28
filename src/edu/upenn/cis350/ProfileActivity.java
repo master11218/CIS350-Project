@@ -52,6 +52,7 @@ public class ProfileActivity extends Activity{
 					SharedPreferences settings = getSharedPreferences("UserData", 0);
 					SharedPreferences.Editor editor = settings.edit();
 					
+					//get the user's information
 					name = nameField.getText().toString();
 					email = emailField.getText().toString();
 					address = addressField.getText().toString();
@@ -61,7 +62,18 @@ public class ProfileActivity extends Activity{
 		        	else
 		        		gender = "Female";
 					
-					editor.putString("Id", "1");
+					//get the user's id via the http request, and store it in the database
+					HttpRequest http = new HttpRequest();
+					String uri = "http://spectrackulo.us/350/register.php?name=" + name + 
+							"&address=" + address + "&gender=" + gender + "&email=" + email + "&phone=" + phone;
+					
+					System.out.println(uri);
+					String id = http.execHttpRequest(uri, HttpRequest.HttpMethod.Get, "");
+					System.out.println(id);
+					
+					
+					//store the information on the device
+					editor.putString("Id", id);
 					editor.putString("Name", name);
 					editor.putString("Address", address);
 					editor.putString("Email", email);
@@ -69,9 +81,10 @@ public class ProfileActivity extends Activity{
 					editor.putString("Gender", gender);
 					editor.commit();
 					
+					//let the user know that their information has been saved
 					Toast.makeText(ownContext, "Your information has been saved", Toast.LENGTH_SHORT).show();
 					finish();
-				}
+				} 
         	});
         } else {
         	setContentView(R.layout.profile_existing);

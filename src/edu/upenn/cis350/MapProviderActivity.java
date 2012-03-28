@@ -7,11 +7,13 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
+import edu.upenn.cis350.HttpRequest.HttpMethod;
 import edu.upenn.cis350.MyLocation.LocationResult;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
@@ -32,6 +34,8 @@ public class MapProviderActivity extends MapActivity{
 	//gloabl variable mapOverlays so that we can add personal location after we've received the location
 	private List<Overlay> mapOverlays;
 	private ProgressDialog m_loading_dialog;
+	private GeoPoint m_current_location;
+	private List<GeoPoint> m_pathList;
 
 	//actual code
 	MyLocation m_location = new MyLocation();
@@ -39,15 +43,16 @@ public class MapProviderActivity extends MapActivity{
 		System.out.println("HIT LOCATION CLICK");
 		m_location.getLocation(this, locationResult);
 	}
-	
+
 	public void displayCurrentLocationOnMap(){
 		//add your current location pin to the map
 		Drawable current_location_drawable = this.getResources().getDrawable(R.drawable.current_location_marker);
 		MapItemizedOverlay personalLocationOverlay = new MapItemizedOverlay(current_location_drawable, this);
 		//you as a person will be identified as a dummy provider, with a null ratings. 
-		Provider personal =  new Provider(1, settings.getString("Name", "You"),
-				settings.getString("Address", "(" + m_lat + ", " + m_long + ")"), "Philadelphia", "PA", "19104", settings.getString("Phone",""), 
-				true, false, "PCP", false, true, null, m_lat, m_long);
+		Provider personal = new Provider(1, "adsf", "3400 Spruce Street", "Philadelphia", "PA", "19104", "(215)662-3228", 
+				"yes", "yes", "PCP", "yes", "yes",
+				"yes", 3, 
+				1.1, 1.1, "None", "stfu");
 		//create an arraylist just containing this to pass to the mapitemized overlay
 		ArrayList<Provider> personal_templist = new ArrayList<Provider>();
 		personalLocationOverlay.setProviders(personal_templist);
@@ -55,12 +60,91 @@ public class MapProviderActivity extends MapActivity{
 		GeoPoint p = new GeoPoint((int)(m_lat * 1000000), (int)(m_long * 1000000));
 		OverlayItem overlayitem = new OverlayItem(p, "", "");
 		personalLocationOverlay.addOverlay(overlayitem);
-		
+
 		//add yourself
 		mapOverlays.add(personalLocationOverlay);
-		
+
+
+		//temp location to test drawing.
+		GeoPoint pennLocation = new GeoPoint(39951481, -75200987);
+		drawPath(m_current_location, pennLocation, Color.RED);
 
 		System.out.println("NEW MAPOVERLAY ADDED< SHOULD'VE RESET.");
+		
+		m_loading_dialog.hide();
+	}
+
+	//method to draw the path.
+	private void drawPath(GeoPoint current, GeoPoint destination, int color) {
+		String mapURL = buildMapsURL(current, destination);
+		
+		HttpRequest http = new HttpRequest();
+		String encoded = http.execHttpRequest(mapURL, HttpRequest.HttpMethod.Get, null);
+		
+		decodePoints(encoded);
+
+		for (int i = 1; i < m_pathList.size(); i++) {
+			mapOverlays.add(new RouteOverlay(m_pathList.get(i - 1), m_pathList.get(i), color));
+		}
+	}
+	
+	//decode the points
+	private void decodePoints(String encoded){
+		// get only the encoded geopoints
+		System.out.println(encoded);
+		encoded = encoded.split("points:\"")[1]
+				.split("\",")[0];
+		// replace two backslashes by one (some error from the transmission)
+		encoded = encoded.replace("\\\\", "\\");
+		
+		//decoding
+		List<GeoPoint> poly = new ArrayList<GeoPoint>();
+		int index = 0, len = encoded.length();
+		int lat = 0, lng = 0;
+
+		while (index < len) {
+			int b, shift = 0, result = 0;
+			do {
+				b = encoded.charAt(index++) - 63;
+				result |= (b & 0x1f) << shift;
+				shift += 5;
+			} while (b >= 0x20);
+			int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+			lat += dlat;
+
+			shift = 0;
+			result = 0;
+			do {
+				b = encoded.charAt(index++) - 63;
+				result |= (b & 0x1f) << shift;
+				shift += 5;
+			} while (b >= 0x20);
+			int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+			lng += dlng;
+			GeoPoint p = new GeoPoint((int) (((double) lat / 1E5) * 1E6), (int) (((double) lng / 1E5) * 1E6));
+			poly.add(p);
+		}
+		
+		m_pathList = poly;
+	}
+	
+	//method to build the maps url
+	private String buildMapsURL(GeoPoint src, GeoPoint dest){
+		
+		StringBuilder urlString = new StringBuilder();
+		 
+		urlString.append("http://maps.google.com/maps?f=d&hl=en");
+		urlString.append("&saddr=");
+		urlString.append(Double.toString((double) src.getLatitudeE6() / 1.0E6));
+		urlString.append(",");
+		urlString.append(Double.toString((double) src.getLongitudeE6() / 1.0E6));
+		urlString.append("&daddr=");// to
+		urlString.append(Double.toString((double) dest.getLatitudeE6() / 1.0E6));
+		urlString.append(",");
+		urlString.append(Double.toString((double) dest.getLongitudeE6() / 1.0E6));
+		urlString.append("&ie=UTF8&0&om=0&output=dragdir");
+		  
+		return urlString.toString();
 	}
 
 	public LocationResult locationResult = new LocationResult(){
@@ -70,126 +154,137 @@ public class MapProviderActivity extends MapActivity{
 				System.out.println("INSIDE GOT LOCATION");
 				m_lat = (float)location.getLatitude();
 				m_long = (float)location.getLongitude();
-				
+
 				//Save your location in the User info is set in the shared preferences.
 				SharedPreferences.Editor editor = settings.edit();
 				editor.putFloat("latitude", m_lat);
 				editor.putFloat("longitude", m_long);
 				editor.commit();
-				
+
 				//debug   + "Your current location is (" + m_lat.toString() + ", " + m_long.toString() + ")"
 				//Toast.makeText(m_context, "Your location has been saved. ", Toast.LENGTH_SHORT).show();
-				
+
 				System.out.println("CURRENT LOCATION WAS GOTTEN, SHOULD'VE DISPLAYED TOAST");
+				m_current_location = new GeoPoint((int)(1000000*location.getLatitude()), (int)(1000000*location.getLongitude()));
 				
 				//displayyourself on map
 				displayCurrentLocationOnMap();
-				
+				//center to yourself
+				_myMapController.animateTo(m_current_location);
+
+				displayAllProviders();
 			}
 			//Got the location!
 
 		}
 	};
-	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
+	
 		settings = getSharedPreferences("UserData", 0);
+		//set the loading screen. This will get destroyed when location is found via locationResult
 		m_loading_dialog = ProgressDialog.show(MapProviderActivity.this, "", 
-	            "Finding your current location. Please wait...", true);
+				"Finding your current location. Please wait...", true);
+
+		//set up map
+		_myMapView = (MapView) findViewById(R.id.mapview);
+		_myMapController = _myMapView.getController();
+		_myMapController.setZoom(15);
+		_myMapView.setBuiltInZoomControls(true);
+		mapOverlays = _myMapView.getOverlays();
 		
 		System.out.println("JUST PRINTED THE LOADING DIALOG");
 		//grab the location, set the latitude and longitude
 		locationClick();
-		
+
+	}
+
+	@Override
+	public void onResume(){
+		super.onResume();
+	}
+
+ 
+	private void displayAllProviders(){
 		//grab the providers from the previous activity, if there are any.
 		Provider intentProvider = (Provider)getIntent().getSerializableExtra("providers");
 		if(intentProvider == null)
 			generateProviderList();
 		else
 			_providers.add(intentProvider);
+		
 		if(_providers.size() == 1){
 			System.out.println("Would have shown directions");
 		}
-
-		_myMapView = (MapView) findViewById(R.id.mapview);
-		_myMapController = _myMapView.getController();
-		_myMapController.setZoom(15);
-		_myMapView.setBuiltInZoomControls(true);
+		
 
 		//center the map to Penn
 		GeoPoint pennLocation = new GeoPoint(39951481, -75200987);
 		_myMapController.animateTo(pennLocation);
-		
+
 		//add additional "pins" to the map
 		mapOverlays = _myMapView.getOverlays();
 		Drawable drawable = this.getResources().getDrawable(R.drawable.current_location_marker_bw);
 		MapItemizedOverlay itemizedoverlay = new MapItemizedOverlay(drawable, this);
 		itemizedoverlay.setProviders(_providers);
-		
+
 		for(int i = 0; i < _providers.size(); i++){
 			GeoPoint p = new GeoPoint((int)(_providers.get(i).getLongitude() * 1000000), (int)(_providers.get(i).getLatitude()*1000000));
 			OverlayItem overlayitem = new OverlayItem(p, "", "");
 			itemizedoverlay.addOverlay(overlayitem);
 		}
-		
+
 		//adding yourself comes after the location has been received.
 		mapOverlays.add(itemizedoverlay);
 	}
-	
-	@Override
-	public void onResume(){
-		super.onResume();
-	}
-
 
 	
 	@Override
 	protected boolean isRouteDisplayed() {
 		return false;
 	}
-	
-	
-	
-	
 
+	
 	//For temporary shit
 	public Provider generateProvider(String name, double latitude, double longitude){
-		Rating first = new Rating(3,1,new Date(System.currentTimeMillis()), "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+		Rating first = new Rating(3,1,"", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 				5);
-		Rating second = new Rating(4,1,new Date(System.currentTimeMillis()), " adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehend",
+		Rating second = new Rating(4,1,"", " adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehend",
 				3);
-		Rating third = new Rating(5,1,new Date(System.currentTimeMillis()), " This guy is awesome!!!!!!!!!!!!!!!!!!!!!!!",
+		Rating third = new Rating(5,1,"", " This guy is awesome!!!!!!!!!!!!!!!!!!!!!!!",
 				3);
-		Rating fourth= new Rating(5,1,new Date(System.currentTimeMillis()), " I don't speak latin );",
+		Rating fourth= new Rating(5,1,"", " I don't speak latin );",
 				4);
 		ArrayList<Rating> ratings = new ArrayList<Rating>();
-		
+
 		ratings.add(first);
 		ratings.add(second);
 		ratings.add(third);
 		ratings.add(fourth);
-		
+
 		//initialize a dummy provider.
-		return new Provider(1, name, "3400 Spruce Street, 8 Ravdin", "Philadelphia", "PA", "19104", "(215)662-3228", true, true, "pcp", true, true, ratings, latitude, longitude);
-		
+		return new Provider(1, name, "3400 Spruce Street", "Philadelphia", "PA", "19104", "(215)662-3228", 
+				"yes", "yes", "PCP", "yes", "yes",
+				"yes", 3, 
+				longitude, latitude, "None", "stfu");
 	}
 
 	public void generateProviderList(){
 
-        //Generate a bunch of temporary random providers
-        _providers.add(generateProvider("Loraine Zachery", 39.951481, -75.180987));
-        _providers.add(generateProvider("Tyrone Bolan", 39.952481, -75.190987));
-        _providers.add(generateProvider("Roslyn Chico", 39.9512376, -75.100987));
-        _providers.add(generateProvider("Sharron Becher", 39.941237, -75.211987));
-        _providers.add(generateProvider("Steidl Zachery", 39.912731, -75.223421));
-        _providers.add(generateProvider("Hugh Tandy", 39.91111, -75.0843728));
-        _providers.add(generateProvider("Mathew Dimas", 39.957481, -75.200987));
-        _providers.add(generateProvider("Milagros Siegmund", 39.958481, -75.178178));
-        _providers.add(generateProvider("Serena Champine", 39.959481, -75.192789));
-        _providers.add(generateProvider("Allie Lunday", 39.950481, -75.188687));
+		//Generate a bunch of temporary random providers
+		_providers.add(generateProvider("Loraine Zachery", 39.951481, -75.180987));
+		_providers.add(generateProvider("Tyrone Bolan", 39.952481, -75.190987));
+		_providers.add(generateProvider("Roslyn Chico", 39.9512376, -75.100987));
+		_providers.add(generateProvider("Sharron Becher", 39.941237, -75.211987));
+		_providers.add(generateProvider("Steidl Zachery", 39.912731, -75.223421));
+		_providers.add(generateProvider("Hugh Tandy", 39.91111, -75.0843728));
+		_providers.add(generateProvider("Mathew Dimas", 39.957481, -75.200987));
+		_providers.add(generateProvider("Milagros Siegmund", 39.958481, -75.178178));
+		_providers.add(generateProvider("Serena Champine", 39.959481, -75.192789));
+		_providers.add(generateProvider("Allie Lunday", 39.950481, -75.188687));
 	}
-	
+
 }

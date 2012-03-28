@@ -44,27 +44,24 @@ public class ProviderProfileActivity extends Activity{
 		m_comments = (ListView)this.findViewById(R.id.providerpf_comments);
 		m_comments.setAdapter(new CommentAdapter(m_context));
 
-
 		m_provider_name = (TextView)this.findViewById(R.id.provider_name);
 		m_provider_phone = (TextView)this.findViewById(R.id.provider_phone);
 		m_provider_address = (TextView)this.findViewById(R.id.provider_address);
-		m_provider_rating = (TextView)this.findViewById(R.id.provider_rating);
+		m_provider_rating = (TextView)this.findViewById(R.id.providerpf_average_rating_text);
 	}
 
 
 	@Override
 	public void onResume(){
 		super.onResume();
-
-
 		//grab what's passed to it
 		m_provider = (Provider)getIntent().getSerializableExtra("providers");
-		m_ratings = m_provider.getRatings();
+		//m_ratings = m_provider.getAverageRating();
 
 		m_button_map.setOnClickListener(new OnClickListener(){
 			public void onClick(View v) {
 				if(v==m_button_map) {
-					m_button_map.setBackgroundResource(R.drawable.mapdown2);
+					
 				}
 				Intent intent = new Intent(m_context, MapProviderActivity.class);
 				intent.putExtra("providers", m_provider);
@@ -72,27 +69,93 @@ public class ProviderProfileActivity extends Activity{
 				m_button_map.setBackgroundResource(R.drawable.map2);
 			}
 		});
-     
 
 		m_button_review.setOnClickListener(new OnClickListener() {
-
 			public void onClick(View v) {
 				Dialog dialog = new Dialog(m_context);
 
 				dialog.setContentView(R.layout.provider_pf_rate);
 				dialog.setTitle("Rate and Review this Provider!");
 				dialog.show();
-
 			}
 		});
-
-
-
+		
 		//set the provider info
 		m_provider_name.setText(m_provider.getName());
 		m_provider_phone.setText(m_provider.getPhone());
 		m_provider_address.setText(m_provider.getAddress());
-		m_provider_rating.setText(m_provider.getAvgRating().toString());
+		Double averageRating = m_provider.getAverageRating();
+		m_provider_rating.setText(averageRating.toString());
+		m_provider_address.setText(m_provider.getAddress() + ", " + m_provider.getCity() + ", " + m_provider.getState() + "  " + m_provider.getZip());
+
+		//set up icons for each of the yes/no answers
+		Button parking= (Button)this.findViewById(R.id.provider_parking);
+		Button creditcard= (Button)this.findViewById(R.id.provider_creditcard);
+		Button accepting= (Button)this.findViewById(R.id.provider_accepting);
+		Button appointment= (Button)this.findViewById(R.id.provider_appointments);
+		Button PCP= (Button)this.findViewById(R.id.provider_PCP);
+		Button specialist= (Button)this.findViewById(R.id.provider_specialist);
+
+		//show or hide icons as appropriate
+		if (m_provider.getParking().equals("yes")) {
+			parking.setVisibility(Button.VISIBLE);
+		} else {
+			parking.setVisibility(Button.GONE);
+		}
+
+		if (m_provider.getCreditCards().equals("yes")){
+			creditcard.setVisibility(Button.VISIBLE);
+		} else {
+			creditcard.setVisibility(Button.GONE);
+		}
+
+		if (m_provider.getAppointment().equals("yes")){
+			appointment.setVisibility(Button.VISIBLE);
+		} else {
+			appointment.setVisibility(Button.GONE);
+		}
+
+		if (m_provider.getAccepting().equals("yes")){
+			accepting.setVisibility(Button.VISIBLE);
+		} else {
+			accepting.setVisibility(Button.GONE);
+		}
+
+		if (m_provider.getType().equals("PCP")) {
+			PCP.setVisibility(Button.VISIBLE);
+			specialist.setVisibility(Button.GONE);
+		} else {
+			PCP.setVisibility(Button.GONE);
+			specialist.setVisibility(Button.VISIBLE);
+		}
+
+		//		//use group_add.png
+		//		String accepting= convertText(m_provider.getAccepting());
+		//		//use autos.png
+		//		String parking= convertText(m_provider.getParking());
+		//		//use card_credit.png
+		//		String creditcards= convertText(m_provider.getCreditCards());
+		//		//use session_idle_time.png
+		//		String appointment= convertText(m_provider.getAppointment());
+
+		
+
+		ImageView m_provider_star_rating = (ImageView)this.findViewById(R.id.providerpf_average_stars);
+
+		Integer avg= (int)m_provider.getAverageRating();
+
+		m_provider_star_rating.setImageResource(R.drawable.onestar);
+		if (avg==5) {
+			m_provider_star_rating.setImageResource(R.drawable.fivestars);
+		} else if (avg==4) {
+			m_provider_star_rating.setImageResource(R.drawable.fourstars);
+		} else if (avg==3) {
+			m_provider_star_rating.setImageResource(R.drawable.threestars);
+		} else if (avg==2) {
+			m_provider_star_rating.setImageResource(R.drawable.twostars);
+		} else if (avg==4) {
+			m_provider_star_rating.setImageResource(R.drawable.onestar);
+		}
 
 	}
 
@@ -159,6 +222,13 @@ public class ProviderProfileActivity extends Activity{
 			tv_provider_date.setText(m_ratings.get(position).getDate().toString());
 
 			return list_result;
+		}
+	}
+	public static String convertText(boolean input) {
+		if (input) {
+			return "yes";
+		} else {
+			return "no";
 		}
 	}
 }

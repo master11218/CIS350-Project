@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 public class SearchActivity extends Activity{
-
 	Spinner parking_spinner;
 	Spinner newPatient_spinner;
     Spinner handicap_spinner;
@@ -45,12 +44,11 @@ public class SearchActivity extends Activity{
 	}
 
 	
-	/**
+	/** 
 	 * This is the button listener that invokes the search result page.
 	 */
 	private class searchResultInvoker implements OnClickListener{
 
-		@Override
 		public void onClick(View arg0) {
 			
 			Intent i = new Intent(SearchActivity.this, SearchResultActivity.class);
@@ -68,7 +66,6 @@ public class SearchActivity extends Activity{
 			//Add more information to the intent
 			startActivity(i);
 		}
-		
 	}
 	
 	/**
@@ -117,7 +114,4 @@ public class SearchActivity extends Activity{
         providertype_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         providertype_spinner.setAdapter(providertype_adapter);
 	}
-
-
-  
 }
