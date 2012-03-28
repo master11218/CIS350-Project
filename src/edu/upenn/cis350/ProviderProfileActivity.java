@@ -168,7 +168,6 @@ public class ProviderProfileActivity extends Activity{
 
 
 
-
 	class CommentAdapter extends BaseAdapter{
 		private Context m_context;
 		public CommentAdapter(Context c){

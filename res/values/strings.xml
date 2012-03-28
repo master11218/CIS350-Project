@@ -23,5 +23,46 @@
         <item>Gateway</item>
     </string-array>
     
+    <string name="parking_prompt">Parking</string>
+    <string-array name="parking_array">
+        <item>Doesn\'t matter</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    
+    <string name="newpatient_prompt">Accept new patient</string>
+    <string-array name="newpatient_array">
+        <item>Doesn\'t matter</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    
+    <string name="handicap_prompt">Handicap Accessibility</string>
+    <string-array name="handicap_array">
+        <item>Doesn\'t matter</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    
+    <string name="creditcard_prompt">Accept Credit card</string>
+    <string-array name="creditcard_array">
+        <item>Doesn\'t matter</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    
+    <string name="appointmentonly_prompt">Appointment Only</string>
+    <string-array name="appointmentonly_array">
+        <item>Doesn\'t matter</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    
+    <string name="providertype_prompt">Provder Type</string>
+    <string-array name="providertype_array">
+        <item>Doesn\'t matter</item>
+        <item>Primary Care</item>
+        <item>Specialist</item>
+    </string-array>
 
 </resources>

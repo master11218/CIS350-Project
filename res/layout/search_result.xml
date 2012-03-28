@@ -1,38 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-  <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      >
-      <LinearLayout
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:layout_centerVertical="true"
-          android:gravity="center_vertical"
-          >
-           
-       <TextView
-           android:id="@+id/search_result_name"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="Provider Name "
-           />
-       <TextView
-           android:id="@+id/search_result_rating"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="Rating:5.00"
-           />
-      
-      </LinearLayout>
-     
-	<Button
-        android:id="@+id/search_result_button"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:background="@drawable/netvibes"
-	    android:layout_alignParentRight="true"
-	   	 />
-    
-  </RelativeLayout>
+
+    <Button
+        android:id="@+id/addBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go Back" />
+
+    <ListView
+        android:id="@+id/search_result_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:drawSelectorOnTop="false" />
+
+</LinearLayout>
