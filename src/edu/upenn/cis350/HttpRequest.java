@@ -23,54 +23,52 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.util.EntityUtils;
 
-import android.app.Activity;
-
 //Internal base deal request object - makes actual HTTP Request (GET/POST)
 public class HttpRequest {
-
+	
 	// Internal Http Method Enumeration
 	public enum HttpMethod {
 		Get,
 		Post
 	};
-
+	
 	protected HttpClient m_client;
-
+	
 	public HttpRequest() {
-
+		
 		SchemeRegistry schemeRegistry = new SchemeRegistry();
 		schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
 		schemeRegistry.register(new Scheme("https", new EasySSLSocketFactory(), 443));
-
+		 
 		HttpParams params = new BasicHttpParams();
 		params.setParameter(ConnManagerPNames.MAX_TOTAL_CONNECTIONS, 30);
 		params.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE, new ConnPerRouteBean(30));
 		params.setParameter(HttpProtocolParams.USE_EXPECT_CONTINUE, false);
 		HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
-
+		 
 		ClientConnectionManager cm = new SingleClientConnManager(params, schemeRegistry);
 		m_client = new DefaultHttpClient(cm, params);
 	}
-
+	
 	//protected
 	public HttpRequest(HttpClient client) {
 		SchemeRegistry schemeRegistry = new SchemeRegistry();
 		schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
 		schemeRegistry.register(new Scheme("https", new EasySSLSocketFactory(), 443));
-
+		 
 		HttpParams params = new BasicHttpParams();
 		params.setParameter(ConnManagerPNames.MAX_TOTAL_CONNECTIONS, 30);
 		params.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE, new ConnPerRouteBean(30));
 		params.setParameter(HttpProtocolParams.USE_EXPECT_CONTINUE, false);
 		HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
-
+		 
 		ClientConnectionManager cm = new SingleClientConnManager(params, schemeRegistry);
 		m_client = new DefaultHttpClient(cm, params);
 	}		
 	//protected
 	public String execHttpRequest(String uri, HttpMethod method, String body) {	
 		HttpRequestBase request;
-
+		
 		if (method == HttpMethod.Get)
 			request = new HttpGet();
 		else if (method == HttpMethod.Post)
@@ -80,7 +78,7 @@ public class HttpRequest {
 
 		try {			
 			request.setURI(new URI(uri.toString()));
-
+			
 			// Set Headers
             request.addHeader("User-Agent", "YP Mobile Android/2.1");
             
@@ -107,11 +105,11 @@ public class HttpRequest {
 
 	    return null;
 	}
-
+	
 	//protected
 	public byte[] execBinaryHttpRequest(String uri, HttpMethod method, String body) {	
 		HttpRequestBase request;
-
+		
 		if (method == HttpMethod.Get)
 			request = new HttpGet();
 		else if (method == HttpMethod.Post)
@@ -121,7 +119,7 @@ public class HttpRequest {
 
 		try {			
 			request.setURI(new URI(uri.toString()));
-
+			
 			// Set Headers
             request.addHeader("User-Agent", "YP Mobile Android/2.1");
             

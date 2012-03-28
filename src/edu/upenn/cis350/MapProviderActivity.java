@@ -44,14 +44,73 @@ public class MapProviderActivity extends MapActivity{
 		m_location.getLocation(this, locationResult);
 	}
 
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.map);
+	
+		settings = getSharedPreferences("UserData", 0);
+		//set the loading screen. This will get destroyed when location is found via locationResult
+		m_loading_dialog = ProgressDialog.show(MapProviderActivity.this, "", 
+				"Finding your current location. Please wait...", true);
+
+		//set up map
+		_myMapView = (MapView) findViewById(R.id.mapview);
+		_myMapController = _myMapView.getController();
+		_myMapController.setZoom(15);
+		_myMapView.setBuiltInZoomControls(true);
+		mapOverlays = _myMapView.getOverlays();
+		
+		System.out.println("JUST PRINTED THE LOADING DIALOG");
+		//grab the location, set the latitude and longitude
+
+	}
+
+	@Override
+	public void onResume(){
+		super.onResume();
+		//do everything with location stuff. LocationClick() will cause locationresult to run when finished in thread.
+		locationClick();
+	}
+	
+	public LocationResult locationResult = new LocationResult(){
+		@Override
+		public void gotLocation(Location location){
+			if(location != null){
+				System.out.println("INSIDE GOT LOCATION");
+				m_lat = (float)location.getLatitude();
+				m_long = (float)location.getLongitude();
+				//Save your location in the User info is set in the shared preferences.
+				SharedPreferences.Editor editor = settings.edit();
+				editor.putFloat("latitude", m_lat);
+				editor.putFloat("longitude", m_long);
+				editor.commit();
+				//Set the current location in this activity
+				System.out.println("CURRENT LOCATION WAS GOTTEN, SHOULD'VE DISPLAYED TOAST");
+				m_current_location = new GeoPoint((int)(1000000*location.getLatitude()), (int)(1000000*location.getLongitude()));
+				//displayyourself on map
+				displayCurrentLocationOnMap();
+				//center to yourself
+				_myMapController.animateTo(m_current_location);
+				
+				
+				displayAllProviders();
+				System.out.println("Should've finished displaying providers");
+			}
+		}
+	};
+
+
+
 	public void displayCurrentLocationOnMap(){
 		//add your current location pin to the map
 		Drawable current_location_drawable = this.getResources().getDrawable(R.drawable.current_location_marker);
 		MapItemizedOverlay personalLocationOverlay = new MapItemizedOverlay(current_location_drawable, this);
 		//you as a person will be identified as a dummy provider, with a null ratings. 
-		Provider personal =  new Provider(1, settings.getString("Name", "You"),
-				settings.getString("Address", "(" + m_lat + ", " + m_long + ")"), "Philadelphia", "PA", "19104", settings.getString("Phone",""), 
-				true, false, "PCP", false, true, null, m_lat, m_long);
+		Provider personal = new Provider(1, "adsf", "3400 Spruce Street", "Philadelphia", "PA", "19104", "(215)662-3228", 
+				"yes", "yes", "PCP", "yes", "yes",
+				"yes", 3, 
+				1.1, 1.1, "None", "stfu");
 		//create an arraylist just containing this to pass to the mapitemized overlay
 		ArrayList<Provider> personal_templist = new ArrayList<Provider>();
 		personalLocationOverlay.setProviders(personal_templist);
@@ -76,10 +135,7 @@ public class MapProviderActivity extends MapActivity{
 			Drawable drawable = this.getResources().getDrawable(R.drawable.current_location_marker_bw);
 			MapItemizedOverlay itemizedoverlay = new MapItemizedOverlay(drawable, this);
 			OverlayItem tempoverlayitem = new OverlayItem(providerLocation, "", "");
-			itemizedoverlay.addOverlay(overlayitem);
-			
-			
-			
+			itemizedoverlay.addOverlay(overlayitem);			
 		}
 		System.out.println("NEW MAPOVERLAY ADDED< SHOULD'VE RESET.");
 		
@@ -159,65 +215,6 @@ public class MapProviderActivity extends MapActivity{
 		return urlString.toString();
 	}
 
-	public LocationResult locationResult = new LocationResult(){
-		@Override
-		public void gotLocation(Location location){
-			if(location != null){
-				System.out.println("INSIDE GOT LOCATION");
-				m_lat = (float)location.getLatitude();
-				m_long = (float)location.getLongitude();
-
-				//Save your location in the User info is set in the shared preferences.
-				SharedPreferences.Editor editor = settings.edit();
-				editor.putFloat("latitude", m_lat);
-				editor.putFloat("longitude", m_long);
-				editor.commit();
-
-				//debug   + "Your current location is (" + m_lat.toString() + ", " + m_long.toString() + ")"
-				//Toast.makeText(m_context, "Your location has been saved. ", Toast.LENGTH_SHORT).show();
-
-				System.out.println("CURRENT LOCATION WAS GOTTEN, SHOULD'VE DISPLAYED TOAST");
-				m_current_location = new GeoPoint((int)(1000000*location.getLatitude()), (int)(1000000*location.getLongitude()));
-				
-				//displayyourself on map
-				displayCurrentLocationOnMap();
-				//center to yourself
-				_myMapController.animateTo(m_current_location);
-
-				displayAllProviders();
-			}
-			//Got the location!
-
-		}
-	};
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.map);
-	
-		settings = getSharedPreferences("UserData", 0);
-		//set the loading screen. This will get destroyed when location is found via locationResult
-		m_loading_dialog = ProgressDialog.show(MapProviderActivity.this, "", 
-				"Finding your current location. Please wait...", true);
-
-		//set up map
-		_myMapView = (MapView) findViewById(R.id.mapview);
-		_myMapController = _myMapView.getController();
-		_myMapController.setZoom(15);
-		_myMapView.setBuiltInZoomControls(true);
-		mapOverlays = _myMapView.getOverlays();
-		
-		System.out.println("JUST PRINTED THE LOADING DIALOG");
-		//grab the location, set the latitude and longitude
-		locationClick();
-
-	}
-
-	@Override
-	public void onResume(){
-		super.onResume();
-	}
 
  
 	private void displayAllProviders(){
@@ -265,13 +262,13 @@ public class MapProviderActivity extends MapActivity{
 	
 	//For temporary shit
 	public Provider generateProvider(String name, double latitude, double longitude){
-		Rating first = new Rating(3,1,new Date(System.currentTimeMillis()), "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+		Rating first = new Rating(3,1,"", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 				5);
-		Rating second = new Rating(4,1,new Date(System.currentTimeMillis()), " adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehend",
+		Rating second = new Rating(4,1,"", " adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehend",
 				3);
-		Rating third = new Rating(5,1,new Date(System.currentTimeMillis()), " This guy is awesome!!!!!!!!!!!!!!!!!!!!!!!",
+		Rating third = new Rating(5,1,"", " This guy is awesome!!!!!!!!!!!!!!!!!!!!!!!",
 				3);
-		Rating fourth= new Rating(5,1,new Date(System.currentTimeMillis()), " I don't speak latin );",
+		Rating fourth= new Rating(5,1,"", " I don't speak latin );",
 				4);
 		ArrayList<Rating> ratings = new ArrayList<Rating>();
 
@@ -281,8 +278,10 @@ public class MapProviderActivity extends MapActivity{
 		ratings.add(fourth);
 
 		//initialize a dummy provider.
-		return new Provider(1, name, "3400 Spruce Street, 8 Ravdin", "Philadelphia", "PA", "19104", "(215)662-3228", true, true, "pcp", true, true, ratings, latitude, longitude);
-
+		return new Provider(1, name, "3400 Spruce Street", "Philadelphia", "PA", "19104", "(215)662-3228", 
+				"yes", "yes", "PCP", "yes", "yes",
+				"yes", 3, 
+				longitude, latitude, "None", "stfu");
 	}
 
 	public void generateProviderList(){

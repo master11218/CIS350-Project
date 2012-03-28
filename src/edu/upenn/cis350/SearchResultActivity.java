@@ -3,20 +3,24 @@ package edu.upenn.cis350;
 import java.util.ArrayList;
 
 import edu.upenn.cis350.MyLocation.LocationResult;
+import edu.upenn.cis350.ProviderProfileActivity.CommentAdapter;
 import edu.upenn.cis350.util.ProviderHelper;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class SearchResultActivity extends Activity{
@@ -25,6 +29,8 @@ public class SearchResultActivity extends Activity{
 	private Double m_latitude;
 	private Double m_longitude;
 	private ProgressDialog m_loading_dialog;
+	private ListView providerList;
+	ArrayList<Provider> satisfiedproviders = new ArrayList<Provider>();
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,13 +59,13 @@ public class SearchResultActivity extends Activity{
 			}
 			
 			//Obtain a list of satisfied provider
-			ArrayList<Provider> satisfied = ProviderHelper.getSatisfiedProvider(provider_name, has_parking, 
+			this.satisfiedproviders = ProviderHelper.getSatisfiedProvider(provider_name, has_parking, 
 	        		accepting_new, handicap,appointment_only,credit_card,type,distance, this.m_latitude, this.m_longitude); 
         
 			
-			//TODO: generate a list of search results
-			
-			
+			//Set up the list view for the search results
+			this.providerList = (ListView)this.findViewById(R.id.search_result_list);
+			this.providerList.setAdapter(new SearchResultAdapter(this));
         
 			
 			
@@ -85,74 +91,56 @@ public class SearchResultActivity extends Activity{
 	    };
 	
 	    
-//    class SearchResultAdapter extends BaseAdapter{
-//		private Context m_context;
-//		public CommentAdapter(Context c){
-//			m_context = c;
-//		}
-//		public int getCount() {
-//			if(m_ratings != null)
-//				return m_ratings.size();
-//			else
-//				return 0;
-//		}
-//		public Object getItem(int position) {
-//			if(m_ratings != null)
-//				return m_ratings.get(position);
-//			else
-//				return 0;
-//		}
-//		public long getItemId(int position) {
-//			return position;
-//		}
-//		public View getView(final int position, View convertView, ViewGroup parent) {
-//
-//
-//			//inflate the view
-//			LinearLayout list_result;
-//			if(convertView == null){
-//				LayoutInflater inf = (LayoutInflater)m_context.getSystemService(
-//						Context.LAYOUT_INFLATER_SERVICE);
-//				list_result = (LinearLayout) inf.inflate(R.layout.provider_pf_comment, null);
-//
-//			}
-//			else
-//				list_result = (LinearLayout)convertView;
-//			//populate the new view
-//			TextView tv_rating = (TextView)list_result.findViewById(R.id.providerpf_comment_rating);
-//			Integer temp = m_ratings.get(position).getRating();
-//			tv_rating.setText("Rating: " + temp.toString() + ".0");
-//			if (temp==5) {
-//				ImageView stars= (ImageView)list_result.findViewById(R.id.providerpf_comment_stars);
-//				stars.setImageResource(R.drawable.fivestars);
-//			} else if (temp==4) {
-//				ImageView stars= (ImageView)list_result.findViewById(R.id.providerpf_comment_stars);
-//				stars.setImageResource(R.drawable.fourstars);
-//			} else if (temp==3) {
-//				ImageView stars= (ImageView)list_result.findViewById(R.id.providerpf_comment_stars);
-//				stars.setImageResource(R.drawable.threestars);
-//			} else if (temp==2) {
-//				ImageView stars= (ImageView)list_result.findViewById(R.id.providerpf_comment_stars);
-//				stars.setImageResource(R.drawable.twostars);
-//			} else if (temp==1) {
-//				ImageView stars= (ImageView)list_result.findViewById(R.id.providerpf_comment_stars);
-//				stars.setImageResource(R.drawable.onestar);
-//			}
-//
-//			TextView tv_provider_desc = (TextView)list_result.findViewById(R.id.providerpf_comment_review);
-//			tv_provider_desc.setText(m_ratings.get(position).getReview());
-//
-//			TextView tv_provider_date = (TextView)list_result.findViewById(R.id.providerpf_comment_date);
-//			tv_provider_date.setText(m_ratings.get(position).getDate().toString());
-//			
-//			Button.onclick{
-//				
-//				m_provider.get(position)
-//				
-//			}
-//
-//			return list_result;
-//		}
-//	}
+    class SearchResultAdapter extends BaseAdapter{
+		private Context m_context;
+		public SearchResultAdapter(Context c){
+			m_context = c;
+		}
+		public int getCount() {
+			if(satisfiedproviders != null)
+				return satisfiedproviders.size();
+			else
+				return 0;
+		}
+		public Object getItem(int position) {
+			if(satisfiedproviders != null)
+				return satisfiedproviders.get(position);
+			else
+				return 0;
+		}
+		public long getItemId(int position) {
+			return position;
+		}
+		public View getView(final int position, View convertView, ViewGroup parent) {
+			//inflate the view
+			LinearLayout list_result;
+			if(convertView == null){
+				LayoutInflater inf = (LayoutInflater)m_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				list_result = (LinearLayout) inf.inflate(R.layout.search_result_entry, null);
+			}
+			else {
+				list_result = (LinearLayout)convertView;
+			}
+				
+			//populate the new view
+			TextView providerName = (TextView)list_result.findViewById(R.id.search_result_name);
+			final Provider currProvider = satisfiedproviders.get(position);
+			String tempName = currProvider.getName();
+			providerName.setText(tempName);
+
+			
+			Button viewButton = (Button)list_result.findViewById(R.id.search_result_button);
+			viewButton.setOnClickListener(new OnClickListener(){
+				public void onClick(View arg0) {
+					Intent i = new Intent(SearchResultActivity.this, ProviderProfileActivity.class);
+					i.putExtra("providers", currProvider);
+					
+					startActivity(i);
+				}
+			});	
+
+			return list_result;
+		}
+	}
 
 }
