@@ -31,6 +31,8 @@ public class VoiceActivity extends Activity {
 	public void onResume(){
 		super.onResume();
 		
+		
+		
         SharedPreferences userData = getSharedPreferences("UserData", 0);
         if(!userData.contains("Id")){
         	currentUser = null;

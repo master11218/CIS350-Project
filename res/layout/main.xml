@@ -2,36 +2,62 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="@drawable/findadoc2"
+    android:gravity="center"
+    
+    >
+    
 
+    
+    
+	
+	    
+	
     <Button
         android:id="@+id/button_search"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="@drawable/menubutton2"
+        android:layout_gravity= "center"
+        android:layout_margin="10dp"
         android:text="search" />
     
     <Button
         android:id="@+id/button_history"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="@drawable/menubutton2"
+        android:layout_gravity= "center"
+        android:layout_margin="10dp"
         android:text="history" />
 
     <Button
         android:id="@+id/button_profile"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="@drawable/menubutton2"
+        android:layout_gravity= "center"
+        android:layout_margin="10dp"
+        android:dither="true"
         android:text="profile" />
     
     <Button
         android:id="@+id/button_contact"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="@drawable/menubutton2"
+        android:layout_gravity= "center"
+        android:layout_margin="10dp"
         android:text="contact" />
 
     <Button
         android:id="@+id/button_map"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="@drawable/menubutton2"
+        android:layout_gravity= "center"
+        android:layout_margin="10dp"
         android:text="map" />
 
 </LinearLayout>

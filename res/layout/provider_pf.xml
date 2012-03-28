@@ -8,9 +8,11 @@
 
     <Button
         android:id="@+id/button_providerpf_map"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentRight="true"
+        android:background="@drawable/map2"
+        
         android:text="Map" />
 
     <LinearLayout
@@ -50,20 +52,14 @@
         </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/providerpf_rate_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/providerpf_top"
-        android:text="Review and Rate!" />
+    
 
     <LinearLayout
         android:id="@+id/providerpf_middle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/providerpf_rate_button"
-        android:layout_below="@id/providerpf_top"
+        android:layout_below="@id/providerpf_rate_button"
         android:layout_gravity="center_vertical"
         android:layout_toLeftOf="@+id/providerpf_rate_button"
         android:gravity="center_vertical" >
@@ -76,12 +72,24 @@
             android:textSize="18dp"
             android:text="Rating: 5.00" />
     </LinearLayout>
+    
+    <Button
+        android:id="@+id/providerpf_rate_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/providerpf_top"
+        android:background="@drawable/button3"
+        android:text="Review and Rate!" />
 
     <TextView
         android:id="@+id/providerpf_comment_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/providerpf_middle"
+        android:layout_marginTop="40dp"
+        android:layout_centerInParent="true"
         android:text="Reviews"
         android:textSize="20dp" />
     
@@ -89,6 +97,7 @@
 	    android:id="@+id/providerpf_comments"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
+	    
 	    android:layout_below="@id/providerpf_comment_header"
 	    />
     

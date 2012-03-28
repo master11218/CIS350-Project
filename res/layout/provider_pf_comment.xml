@@ -10,6 +10,13 @@
         android:layout_height="wrap_content"
      	android:text="Rating: "
         />
+    
+    <ImageView
+        android:id="@+id/providerpf_comment_stars"
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        
+        />
             <TextView
                 android:id="@+id/providerpf_comment_review"
                 android:layout_width="fill_parent"
