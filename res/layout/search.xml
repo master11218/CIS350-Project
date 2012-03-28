@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Provider name (leave blank if don't know)" />
+
+        <EditText
+            android:id="@+id/search_provider_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ems="10" >
+
+        </EditText>
+        
+         <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Parking?" />
+
+         <Spinner
+             android:id="@+id/parking_spinner"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:prompt="@string/parking_prompt" />
+         
+         <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accept New Patient?" />
+
+         <Spinner
+             android:id="@+id/newpatient_spinner"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:prompt="@string/newpatient_prompt" />
+
+         <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Handicap Accessibility" />
+
+         <Spinner
+             android:id="@+id/handicap_spinner"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:prompt="@string/handicap_prompt" />
+         
+          <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accept Credit Card" />
+
+         <Spinner
+             android:id="@+id/creditcard_spinner"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:prompt="@string/creditcard_prompt" />
+         
+         <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Appointment Only" />
+
+         <Spinner
+             android:id="@+id/appointmentonly_spinner"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:prompt="@string/appointmentonly_prompt" />
+         
+         <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Provider Type" />
+
+         <Spinner
+             android:id="@+id/providertype_spinner"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:prompt="@string/providertype_prompt" />
+         
+         <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Distance (within - miles)" />
+
+         <EditText
+             android:id="@+id/search_distance"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:ems="10"
+             android:inputType="number" />
+
+         <Button
+             android:id="@+id/search_button"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:text="Find the provider!" />
+         
+    </LinearLayout>
+
+
+    </ScrollView>
+
+</RelativeLayout>

@@ -1,7 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="hello">Hello World, VoiceActivity!</string>
+    <string name="app_name">Voice</string>
+    <string name="yes">Profile</string>
+    <string name="no">Cancel</string>
+    <string name="providerpf_rate_review_label1">&quot;Review this provider!&quot;</string>
+    <string name="submit">Submit</string>
+    <string name="contact_copyright">ProviderPlus is an app provided by the University of Pennsylvania School of Nursing</string>
+    <string name="contact_more">For more information, please contact:</string>
+    <string name="contact_info_name">Evan Wu</string>
+    <string name="contact_info_email">evanswu@nursing.seas.upenn.edu</string>
+    <string name="contact_info_number">1-215-255-2555</string>
+    <string name="search_title">Search for Provider</string>
 
-    <string name="hello">Hello World, ConsumerVoiceActivity!</string>
-    <string name="app_name">Consumer Voice</string>
+    
+    <string name="provider_prompt">Select your insurance provider</string>
+    <string-array name="provider_array">
+        <item>Aetna</item>
+        <item>Highmark</item>
+        <item>Keystone</item>
+        <item>Vista</item>
+        <item>Gateway</item>
+    </string-array>
+    
+    <string name="parking_prompt">Parking</string>
+    <string-array name="parking_array">
+        <item>Doesn\'t matter</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    
+    <string name="newpatient_prompt">Accept new patient</string>
+    <string-array name="newpatient_array">
+        <item>Doesn\'t matter</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    
+    <string name="handicap_prompt">Handicap Accessibility</string>
+    <string-array name="handicap_array">
+        <item>Doesn\'t matter</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    
+    <string name="creditcard_prompt">Accept Credit card</string>
+    <string-array name="creditcard_array">
+        <item>Doesn\'t matter</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    
+    <string name="appointmentonly_prompt">Appointment Only</string>
+    <string-array name="appointmentonly_array">
+        <item>Doesn\'t matter</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    
+    <string name="providertype_prompt">Provder Type</string>
+    <string-array name="providertype_array">
+        <item>Doesn\'t matter</item>
+        <item>Primary Care</item>
+        <item>Specialist</item>
+    </string-array>
 
 </resources>
