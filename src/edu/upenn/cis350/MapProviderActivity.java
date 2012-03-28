@@ -40,6 +40,7 @@ public class MapProviderActivity extends MapActivity{
 		System.out.println("HIT LOCATION CLICK");
 		m_location.getLocation(this, locationResult);
 	}
+	
 
 	public LocationResult locationResult = new LocationResult(){
 		@Override
@@ -129,8 +130,10 @@ public class MapProviderActivity extends MapActivity{
 		MapItemizedOverlay personalLocationOverlay = new MapItemizedOverlay(current_location_drawable, this);
 		//you as a person will be identified as a dummy provider, with a null ratings. 
 		Provider personal =  new Provider(1, settings.getString("Name", "You"),
-				settings.getString("Address", "(" + m_lat + ", " + m_long + ")"), settings.getString("Phone",""), 
-				null, m_lat, m_long);
+				settings.getString("Address", "(" + m_lat + ", " + m_long + ")"), 
+				"City", "State", "Zip", settings.getString("Phone",""), 
+				true, true, "pcp", true, true, null, m_lat, m_long);
+		
 		//create an arraylist just containing this to pass to the mapitemized overlay
 		ArrayList<Provider> personal_templist = new ArrayList<Provider>();
 		personal_templist.add(personal);
@@ -178,7 +181,8 @@ public class MapProviderActivity extends MapActivity{
 		ratings.add(fourth);
 		
 		//initialize a dummy provider.
-		return new Provider(1, name, "3400 Spruce Street, 8 Ravdin, Philadelphia, PA", "(215)662-3228", ratings, latitude, longitude);
+		return new Provider(1, name, "3400 Spruce Street, 8 Ravdin", "Philadelphia", "PA", "19104", "(215)662-3228", true, true, "pcp", true, true, ratings, latitude, longitude);
+		
 	}
 
 	public void generateProviderList(){

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<edu.upenn.cis350.DashboardLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/findadoc2"
+    
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+    <Button android:id="@+id/home_btn_search"
+        style="@style/DashboardButton"
+        android:text="search"
+        android:textColor="#000"
+        android:drawableTop="@drawable/browser" />
+    <Button android:id="@+id/home_btn_map"
+        style="@style/DashboardButton"
+        android:textColor="#000"
+        android:text="map"
+        android:drawableTop="@drawable/map" />
+    <Button android:id="@+id/home_btn_profile"
+        style="@style/DashboardButton"
+        android:text="profile"
+        android:textColor="#000"
+        android:drawableTop="@drawable/contacts" />
+    <Button android:id="@+id/home_btn_history"
+        style="@style/DashboardButton"
+        android:text="history"
+        android:textColor="#000"
+        android:drawableTop="@drawable/document" />
+    <Button android:id="@+id/home_btn_contact"
+        style="@style/DashboardButton"
+        android:text="contact us"
+        android:textColor="#000"
+        android:drawableTop="@drawable/note" />
+    
+    
+    
+    </edu.upenn.cis350.DashboardLayout>
+
+    

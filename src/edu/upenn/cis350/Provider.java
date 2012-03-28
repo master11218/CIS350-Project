@@ -12,19 +12,36 @@ public class Provider implements Serializable{
 	private long id;
 	private String name;
 	private String address;
+	private String city;
+	private String state;
+	private String zip;
 	private String phone;
+	private boolean accepting_new;
+	private boolean has_parking;
+	private String type;
+	private boolean credit_cards;
+	private boolean appointment;
 	private ArrayList<Rating> ratings = new ArrayList<Rating>();
 	private ArrayList<String> comments = new ArrayList<String>();
 	private Double longitude;
 	private Double latitude;
 	//private GeoPoint location;
 	
-	public Provider(long id, String name, String address, String phone, ArrayList<Rating> rates, 
+	public Provider(long id, String name, String address, String city, String state, String zip, String phone, 
+			boolean accepting_new, boolean has_parking, String type, boolean credit_cards,
+			boolean appointment, ArrayList<Rating> rates, 
 			double longitude, double latitude){
 		this.id = id;
 		this.name = name;
 		this.address = address;
+		this.city = city;
+		this.state = state;
 		this.phone = phone;
+		this.accepting_new = accepting_new;
+		this.has_parking = has_parking;
+		this.type = type;
+		this.credit_cards = credit_cards;
+		this.appointment = appointment;
 		//if rates is not null,
 		if(rates != null) this.ratings = rates;
 		this.longitude = longitude;
