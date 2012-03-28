@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content" >
+
+      <Button
+          android:id="@+id/history_activity_button"
+          android:layout_width="100dp"
+          android:layout_height="50dp"
+          android:layout_alignParentRight="true"
+          android:layout_alignParentTop="true"
+          android:background="@drawable/squarebutton4"
+          android:text="View" />
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentTop="true"
+          android:gravity="center_vertical"
+          android:orientation="vertical" >
+
+          <TextView
+              android:id="@+id/history_activity_provider_name"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Provider Name " />
+
+          <TextView
+              android:id="@+id/history_activity_date_visited"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Date Visited " />
+
+          <TextView
+              android:id="@+id/history_activity_rating"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Rated:5.00" />
+
+          <TextView
+              android:id="@+id/history_activity_review"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Review" />
+      </LinearLayout>
+
+  </RelativeLayout>

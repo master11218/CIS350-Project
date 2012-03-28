@@ -55,11 +55,9 @@ public class ProviderProfileActivity extends Activity{
 	@Override
 	public void onResume(){
 		super.onResume();
-
-
 		//grab what's passed to it
 		m_provider = (Provider)getIntent().getSerializableExtra("providers");
-		m_ratings = m_provider.getRatings();
+		//m_ratings = m_provider.getAverageRating();
 
 		m_button_map.setOnClickListener(new OnClickListener(){
 			public void onClick(View v) {
@@ -92,7 +90,8 @@ public class ProviderProfileActivity extends Activity{
 		m_provider_name.setText(m_provider.getName());
 		m_provider_phone.setText(m_provider.getPhone());
 		m_provider_address.setText(m_provider.getAddress());
-		m_provider_rating.setText(m_provider.getAvgRating().toString());
+		Double averageRating = m_provider.getAverageRating();
+		m_provider_rating.setText(averageRating.toString());
 
 	}
 
