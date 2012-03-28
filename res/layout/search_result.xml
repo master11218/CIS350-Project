@@ -15,16 +15,10 @@
             android:layout_height="fill_parent"
             android:orientation="vertical" >
 
-            <Button
-                android:id="@+id/addBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Go Back" />
-
             <ListView
                 android:id="@+id/search_result_list"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="484dp"
                 android:drawSelectorOnTop="false" />
         </LinearLayout>
         

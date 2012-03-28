@@ -126,12 +126,11 @@ public class SearchResultActivity extends Activity{
 			TextView providerName = (TextView)list_result.findViewById(R.id.search_result_name);
 			final Provider currProvider = satisfiedproviders.get(position);
 			String tempName = currProvider.getName();
-			providerName.setText("Provider Name: "+tempName);
+			providerName.setText(tempName);
 
 			
 			Button viewButton = (Button)list_result.findViewById(R.id.search_result_button);
 			viewButton.setOnClickListener(new OnClickListener(){
-				@Override
 				public void onClick(View arg0) {
 					Intent i = new Intent(SearchResultActivity.this, ProviderProfileActivity.class);
 					i.putExtra("providers", currProvider);

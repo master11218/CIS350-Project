@@ -97,7 +97,7 @@ public class HistoryActivity extends Activity{
 			providerName.setText(pid);
 	        
 	        TextView rating = (TextView)list_result.findViewById(R.id.history_activity_rating);
-	        rating.setText(_ratings.get(position).getRating().toString());
+	        rating.setText("Rating: " + _ratings.get(position).getRating().toString());
 	        
 	        TextView review = (TextView)list_result.findViewById(R.id.history_activity_review);
 	        review.setText(_ratings.get(position).getReview());
@@ -121,7 +121,6 @@ public class HistoryActivity extends Activity{
 						String actualJsonString = fakeJson.getString("provider");
 						JSONObject json = new JSONObject(actualJsonString);
 						System.out.println(json.getString("name"));
-						
 						
 						buttonProvider = new Provider(Long.parseLong(json.getString("pid")), json.getString("name"), json.getString("address"), 
 								json.getString("city"), json.getString("state"), json.getString("zip"), json.getString("phone"),
