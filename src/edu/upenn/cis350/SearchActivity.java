@@ -47,9 +47,6 @@ public class SearchActivity extends Activity{
 	
 	/** 
 	 * This is the button listener that invokes the search result page.
-	 * If the user input contains any error, a toast will be popped up
-	 * @author henryou
-	 *
 	 */
 	private class searchResultInvoker implements OnClickListener{
 
@@ -57,16 +54,15 @@ public class SearchActivity extends Activity{
 			
 			Intent i = new Intent(SearchActivity.this, SearchResultActivity.class);
 			
-			//Pass all the parameters into the intent
-			SearchActivity currAct = SearchActivity.this;			
-			i.putExtra("provider_name",currAct.provider_name.getText());
-			i.putExtra("has_parking", currAct.parking_spinner.getSelectedItem().toString().toLowerCase());
-			i.putExtra("accepting_new", currAct.newPatient_spinner.getSelectedItem().toString().toLowerCase());
-			i.putExtra("handicap", currAct.handicap_spinner.getSelectedItem().toString().toLowerCase());
-			i.putExtra("appointment_only", currAct.appointmentonly_spinner.getSelectedItem().toString().toLowerCase());
-			i.putExtra("credit_card", currAct.creditcard_spinner.getSelectedItem().toString().toLowerCase());
-			i.putExtra("type", currAct.providertype_spinner.getSelectedItem().toString().toLowerCase());
-			i.putExtra("distance", currAct.distance.getText());
+			//Pass all the parameters into the intent			
+			i.putExtra("provider_name",provider_name.getText().toString());
+			i.putExtra("has_parking", parking_spinner.getSelectedItem().toString().toLowerCase());
+			i.putExtra("accepting_new", newPatient_spinner.getSelectedItem().toString().toLowerCase());
+			i.putExtra("handicap", handicap_spinner.getSelectedItem().toString().toLowerCase());
+			i.putExtra("appointment_only", appointmentonly_spinner.getSelectedItem().toString().toLowerCase());
+			i.putExtra("credit_card", creditcard_spinner.getSelectedItem().toString().toLowerCase());
+			i.putExtra("type", providertype_spinner.getSelectedItem().toString().toLowerCase());
+			i.putExtra("distance", distance.getText().toString());
 			
 			//Add more information to the intent
 			startActivity(i);
