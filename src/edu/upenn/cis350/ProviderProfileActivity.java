@@ -3,6 +3,9 @@ package edu.upenn.cis350;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -56,6 +59,30 @@ public class ProviderProfileActivity extends Activity{
 		super.onResume();
 		//grab what's passed to it
 		m_provider = (Provider)getIntent().getSerializableExtra("providers");
+		
+		String uri = "http://spectrackulo.us/350/ratings.php?mode=view&pid=" + m_provider.getID();
+		System.out.println(uri);
+
+		HttpRequest http = new HttpRequest();
+		String ratings = http.execHttpRequest(uri, HttpRequest.HttpMethod.Get, "");
+		System.out.println(ratings);
+
+		m_ratings = new ArrayList<Rating>();
+		try{
+			JSONObject json = new JSONObject(ratings);
+			JSONArray reviews = json.getJSONArray("reviews");
+			
+			for(int i=0;i < reviews.length();i++){						
+				JSONObject current = reviews.getJSONObject(i);
+				Rating currentRating = new Rating(
+						Long.parseLong(current.getString("uid")), Long.parseLong(current.getString("pid")), 
+						current.getString("time"), current.getString("review"),
+						Integer.parseInt(current.getString("rating")));
+				m_ratings.add(currentRating);
+			}
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 		//m_ratings = m_provider.getAverageRating();
 
 		m_button_map.setOnClickListener(new OnClickListener(){
@@ -128,16 +155,6 @@ public class ProviderProfileActivity extends Activity{
 			PCP.setVisibility(Button.GONE);
 			specialist.setVisibility(Button.VISIBLE);
 		}
-
-		//		//use group_add.png
-		//		String accepting= convertText(m_provider.getAccepting());
-		//		//use autos.png
-		//		String parking= convertText(m_provider.getParking());
-		//		//use card_credit.png
-		//		String creditcards= convertText(m_provider.getCreditCards());
-		//		//use session_idle_time.png
-		//		String appointment= convertText(m_provider.getAppointment());
-
 		
 
 		ImageView m_provider_star_rating = (ImageView)this.findViewById(R.id.providerpf_average_stars);
