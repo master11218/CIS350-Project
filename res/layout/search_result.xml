@@ -29,10 +29,10 @@
      
 	<Button
         android:id="@+id/search_result_button"
-	    android:layout_width="100dp"
-	    android:layout_height="100dp"
-	    android:background="@drawable/squarebutton4"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:background="@drawable/netvibes"
 	    android:layout_alignParentRight="true"
-	    android:text="View" />
+	   	 />
     
   </RelativeLayout>
