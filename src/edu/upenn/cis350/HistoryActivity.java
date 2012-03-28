@@ -56,6 +56,7 @@ public class HistoryActivity extends Activity{
 		} catch (Exception e){
 			e.printStackTrace();
 		}
+		
 	}
 	
 	class HistoryAdapter extends BaseAdapter{
@@ -144,5 +145,9 @@ public class HistoryActivity extends Activity{
 	@Override
 	public void onResume(){
 		super.onResume();
+		if (_ratings.size()<1) {
+			TextView nohistory= (TextView)this.findViewById(R.id.history_no_history_message);
+			nohistory.setText("You have not rated any providers yet");
+		}
 	}
 }
