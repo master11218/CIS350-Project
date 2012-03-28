@@ -25,7 +25,8 @@ public class Provider implements Serializable{
 		this.name = name;
 		this.address = address;
 		this.phone = phone;
-		this.ratings = rates;
+		//if rates is not null,
+		if(rates != null) this.ratings = rates;
 		this.longitude = longitude;
 		this.latitude = latitude;
 	}
@@ -52,6 +53,8 @@ public class Provider implements Serializable{
 	
 	public Double getAvgRating(){
 		double totalRating = 0;
+		if(this.getRatings().size() == 0)
+			return 0.0;
 		for(Rating r: this.getRatings())
 			totalRating += r.getRating();
 		return totalRating/(double)this.getRatings().size();
