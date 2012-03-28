@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" 
-    android:background="@drawable/findadoc2"
+    android:background="@drawable/cubes"
     android:gravity="center">
      
     <TextView

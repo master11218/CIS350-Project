@@ -65,9 +65,22 @@ public class MapProviderActivity extends MapActivity{
 
 
 		//temp location to test drawing.
-		GeoPoint pennLocation = new GeoPoint(39951481, -75200987);
-		drawPath(m_current_location, pennLocation, Color.RED);
 
+		if(_providers.size() == 1){
+			double temp_latitude = _providers.get(0).getLatitude();
+			double temp_longitude = _providers.get(0).getLatitude();
+			GeoPoint providerLocation = new GeoPoint((int)temp_latitude * 1000000, (int)temp_longitude * 100000);
+			drawPath(m_current_location, providerLocation, Color.RED);
+			
+			//Add the final pin
+			Drawable drawable = this.getResources().getDrawable(R.drawable.current_location_marker_bw);
+			MapItemizedOverlay itemizedoverlay = new MapItemizedOverlay(drawable, this);
+			OverlayItem tempoverlayitem = new OverlayItem(providerLocation, "", "");
+			itemizedoverlay.addOverlay(overlayitem);
+			
+			
+			
+		}
 		System.out.println("NEW MAPOVERLAY ADDED< SHOULD'VE RESET.");
 		
 		m_loading_dialog.hide();
@@ -235,9 +248,12 @@ public class MapProviderActivity extends MapActivity{
 			OverlayItem overlayitem = new OverlayItem(p, "", "");
 			itemizedoverlay.addOverlay(overlayitem);
 		}
+		
 
 		//adding yourself comes after the location has been received.
 		mapOverlays.add(itemizedoverlay);
+		
+		_myMapView.invalidate();
 	}
 
 	
