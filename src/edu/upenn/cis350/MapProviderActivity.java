@@ -112,7 +112,7 @@ public class MapProviderActivity extends MapActivity{
 				editor.commit();
 				
 				//debug   + "Your current location is (" + m_lat.toString() + ", " + m_long.toString() + ")"
-				Toast.makeText(m_context, "Your location has been saved. ", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(m_context, "Your location has been saved. ", Toast.LENGTH_SHORT).show();
 				
 				System.out.println("CURRENT LOCATION WAS GOTTEN, SHOULD'VE DISPLAYED TOAST");
 				
