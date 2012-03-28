@@ -40,7 +40,7 @@ public class SearchActivity extends Activity{
 		
 		ratings.add(first);
 		ratings.add(second);
-		ratings.add(third);
+		ratings.add(third); 
 		ratings.add(fourth);
 		
 		//initialize a dummy provider.
@@ -115,6 +115,7 @@ public class SearchActivity extends Activity{
 		}
 		public View getView(final int position, View convertView, ViewGroup parent) {
 
+			//generate the new layout for each provider
 	        RelativeLayout list_result;
 	        if(convertView == null){
 	        	LayoutInflater inf = (LayoutInflater)m_context.getSystemService(

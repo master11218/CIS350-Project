@@ -10,6 +10,7 @@ import com.google.android.maps.OverlayItem;
 import edu.upenn.cis350.MyLocation.LocationResult;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
@@ -23,13 +24,14 @@ public class MapProviderActivity extends MapActivity{
 	private MapView _myMapView;
 	private MapController _myMapController;
 	private ArrayList<Provider> _providers = new ArrayList<Provider>();;
-	private Double m_lat;
-	private Double m_long;
+	private Float m_lat;
+	private Float m_long;
 	private Context m_context = this;
+	private SharedPreferences settings;
+	//gloabl variable mapOverlays so that we can add personal location after we've received the location
+	private List<Overlay> mapOverlays;
 
 	//For temporary shit
-	
-
 	public Provider generateProvider(String name, double latitude, double longitude){
 		Rating first = new Rating(3,1,new Date(System.currentTimeMillis()), "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 				5);
@@ -72,23 +74,61 @@ public class MapProviderActivity extends MapActivity{
 	private void locationClick() {
 		m_location.getLocation(this, locationResult);
 	}
+	
+	public void displayCurrentLocationOnMap(){
+		//add your current location pin to the map
+		Drawable current_location_drawable = this.getResources().getDrawable(R.drawable.current_location_marker);
+		MapItemizedOverlay personalLocationOverlay = new MapItemizedOverlay(current_location_drawable, this);
+		//you as a person will be identified as a dummy provider, with a null ratings. 
+		Provider personal =  new Provider(1, settings.getString("Name", "You"),
+				settings.getString("Address", "(" + m_lat + ", " + m_long + ")"), settings.getString("Phone",""), 
+				null, m_lat, m_long);
+		//create an arraylist just containing this to pass to the mapitemized overlay
+		ArrayList<Provider> personal_templist = new ArrayList<Provider>();
+		personalLocationOverlay.setProviders(personal_templist);
+		//create a geopoint and overlay item for yourself.
+		GeoPoint p = new GeoPoint((int)(m_lat * 1000000), (int)(m_long * 1000000));
+		OverlayItem overlayitem = new OverlayItem(p, "", "");
+		personalLocationOverlay.addOverlay(overlayitem);
+		
+		//add yourself
+		mapOverlays.add(personalLocationOverlay);
+		
+
+		System.out.println("NEW MAPOVERLAY ADDED< SHOULD'VE RESET.");
+	}
 
 	public LocationResult locationResult = new LocationResult(){
 		@Override
 		public void gotLocation(Location location){
 			if(location != null){
-				m_lat = location.getLatitude();
-				m_long = location.getLongitude();
-				Toast.makeText(m_context, "Your current location is (" + m_lat.toString() + ", " + m_long.toString() + ")", Toast.LENGTH_SHORT).show();
+				m_lat = (float)location.getLatitude();
+				m_long = (float)location.getLongitude();
+				
+				//Save your location in the User info is set in the shared preferences.
+				SharedPreferences.Editor editor = settings.edit();
+				editor.putFloat("latitude", m_lat);
+				editor.putFloat("longitude", m_long);
+				editor.commit();
+				
+				//debug   + "Your current location is (" + m_lat.toString() + ", " + m_long.toString() + ")"
+				//Toast.makeText(m_context, "Your location has been saved. ", Toast.LENGTH_SHORT).show();
+				
+				System.out.println("CURRENT LOCATION WAS GOTTEN, SHOULD'VE DISPLAYED TOAST");
+				
+				//displayyourself on map
+				displayCurrentLocationOnMap();
 				
 			}
 			//Got the location!
+
 		}
 	};
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		settings = getSharedPreferences("UserData", 0);
 		
 		//grab the location, set the latitude and longitude
 		locationClick();
@@ -113,8 +153,8 @@ public class MapProviderActivity extends MapActivity{
 		_myMapController.animateTo(pennLocation);
 		
 		//add additional "pins" to the map
-		List<Overlay> mapOverlays = _myMapView.getOverlays();
-		Drawable drawable = this.getResources().getDrawable(R.drawable.androidmarker);
+		mapOverlays = _myMapView.getOverlays();
+		Drawable drawable = this.getResources().getDrawable(R.drawable.current_location_marker_bw);
 		MapItemizedOverlay itemizedoverlay = new MapItemizedOverlay(drawable, this);
 		itemizedoverlay.setProviders(_providers);
 		
@@ -123,7 +163,8 @@ public class MapProviderActivity extends MapActivity{
 			OverlayItem overlayitem = new OverlayItem(p, "", "");
 			itemizedoverlay.addOverlay(overlayitem);
 		}
-
+		
+		//adding yourself comes after the location has been received.
 		mapOverlays.add(itemizedoverlay);
 	}
 	

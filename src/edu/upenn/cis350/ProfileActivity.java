@@ -48,6 +48,7 @@ public class ProfileActivity extends Activity{
         	save.setOnClickListener(new OnClickListener(){
 
 				public void onClick(View v) {
+					//User info is set in the shared preferences.
 					SharedPreferences settings = getSharedPreferences("UserData", 0);
 					SharedPreferences.Editor editor = settings.edit();
 					

@@ -72,7 +72,7 @@ public class ProviderProfileActivity extends Activity{
 				m_button_map.setBackgroundResource(R.drawable.map2);
 			}
 		});
-
+     
 
 		m_button_review.setOnClickListener(new OnClickListener() {
 
