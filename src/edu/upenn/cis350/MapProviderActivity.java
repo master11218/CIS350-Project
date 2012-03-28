@@ -33,7 +33,6 @@ public class MapProviderActivity extends MapActivity{
 	private List<Overlay> mapOverlays;
 	private ProgressDialog m_loading_dialog;
 
-	
 	//actual code
 	MyLocation m_location = new MyLocation();
 	private void locationClick() {
@@ -41,6 +40,28 @@ public class MapProviderActivity extends MapActivity{
 		m_location.getLocation(this, locationResult);
 	}
 	
+	public void displayCurrentLocationOnMap(){
+		//add your current location pin to the map
+		Drawable current_location_drawable = this.getResources().getDrawable(R.drawable.current_location_marker);
+		MapItemizedOverlay personalLocationOverlay = new MapItemizedOverlay(current_location_drawable, this);
+		//you as a person will be identified as a dummy provider, with a null ratings. 
+		Provider personal =  new Provider(1, settings.getString("Name", "You"),
+				settings.getString("Address", "(" + m_lat + ", " + m_long + ")"), "Philadelphia", "PA", "19104", settings.getString("Phone",""), 
+				true, false, "PCP", false, true, null, m_lat, m_long);
+		//create an arraylist just containing this to pass to the mapitemized overlay
+		ArrayList<Provider> personal_templist = new ArrayList<Provider>();
+		personalLocationOverlay.setProviders(personal_templist);
+		//create a geopoint and overlay item for yourself.
+		GeoPoint p = new GeoPoint((int)(m_lat * 1000000), (int)(m_long * 1000000));
+		OverlayItem overlayitem = new OverlayItem(p, "", "");
+		personalLocationOverlay.addOverlay(overlayitem);
+		
+		//add yourself
+		mapOverlays.add(personalLocationOverlay);
+		
+
+		System.out.println("NEW MAPOVERLAY ADDED< SHOULD'VE RESET.");
+	}
 
 	public LocationResult locationResult = new LocationResult(){
 		@Override
@@ -123,35 +144,6 @@ public class MapProviderActivity extends MapActivity{
 		super.onResume();
 	}
 
-	
-	public void displayCurrentLocationOnMap(){
-		//add your current location pin to the map
-		Drawable current_location_drawable = this.getResources().getDrawable(R.drawable.current_location_marker);
-		MapItemizedOverlay personalLocationOverlay = new MapItemizedOverlay(current_location_drawable, this);
-		//you as a person will be identified as a dummy provider, with a null ratings. 
-		Provider personal =  new Provider(1, settings.getString("Name", "You"),
-				settings.getString("Address", "(" + m_lat + ", " + m_long + ")"), 
-				"City", "State", "Zip", settings.getString("Phone",""), 
-				true, true, "pcp", true, true, null, m_lat, m_long);
-		
-		//create an arraylist just containing this to pass to the mapitemized overlay
-		ArrayList<Provider> personal_templist = new ArrayList<Provider>();
-		personal_templist.add(personal);
-		personalLocationOverlay.setProviders(personal_templist);
-		//create a geopoint and overlay item for yourself.
-		GeoPoint p = new GeoPoint((int)(m_lat * 1000000), (int)(m_long * 1000000));
-		OverlayItem overlayitem = new OverlayItem(p, "", "");
-		personalLocationOverlay.addOverlay(overlayitem);
-		
-		//add yourself
-		mapOverlays.add(personalLocationOverlay);
-
-		
-		_myMapView.postInvalidate();
-		
-		m_loading_dialog.hide();
-		System.out.println("NEW MAPOVERLAY ADDED< SHOULD'VE RESET.");
-	}
 
 	
 	@Override

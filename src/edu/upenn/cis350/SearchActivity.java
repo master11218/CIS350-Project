@@ -44,8 +44,8 @@ public class SearchActivity extends Activity{
 		ratings.add(fourth);
 		
 		//initialize a dummy provider.
-		return new Provider(1, name, "3400 Spruce Street, 8 Ravdin", "Philadelphia", "PA", "19104", "(215)662-3228", true, true, "pcp", true, true, ratings, latitude, longitude);
-		
+		return new Provider(1, name, "3400 Spruce Street", "Philadelphia", "PA", "19104", "(215)662-3228", true, false, "PCP", false, true, ratings, latitude, longitude);
+
 	}
 	
 	public void generateProviderList(){

@@ -59,11 +59,33 @@ public class Provider implements Serializable{
 	public String getAddress(){
 		return address;
 	}
-	
+	public String getCity() {
+		return city;
+	}
+	public String getState() {
+		return state;
+	}
+	public String getZip() {
+		return zip;
+	}
 	public String getPhone(){
 		return phone;
 	}
-	
+	public boolean getAccepting() {
+		return accepting_new;
+	}
+	public boolean getParking() {
+		return has_parking;
+	}
+	public String getType() {
+		return type;
+	}
+	public boolean getCreditCards() {
+		return credit_cards;
+	}
+	public boolean getAppointment() {
+		return appointment;
+	}
 	public ArrayList<Rating> getRatings(){
 		return ratings;
 	}
