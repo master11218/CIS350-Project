@@ -88,14 +88,19 @@ public class MapProviderActivity extends MapActivity{
 				//Set the current location in this activity
 				System.out.println("CURRENT LOCATION WAS GOTTEN, SHOULD'VE DISPLAYED TOAST");
 				m_current_location = new GeoPoint((int)(1000000*location.getLatitude()), (int)(1000000*location.getLongitude()));
+
+				displayAllProviders();
+				
 				//displayyourself on map
 				displayCurrentLocationOnMap();
 				//center to yourself
 				_myMapController.animateTo(m_current_location);
 				
 				
-				displayAllProviders();
 				System.out.println("Should've finished displaying providers");
+				
+				//refresh the map
+				_myMapView.invalidate();
 			}
 		}
 	};
@@ -123,31 +128,36 @@ public class MapProviderActivity extends MapActivity{
 		mapOverlays.add(personalLocationOverlay);
 
 
-		//temp location to test drawing.
+		//if only one provider, draw the path.
 
 		if(_providers.size() == 1){
 			double temp_latitude = _providers.get(0).getLatitude();
-			double temp_longitude = _providers.get(0).getLatitude();
-			GeoPoint providerLocation = new GeoPoint((int)temp_latitude * 1000000, (int)temp_longitude * 100000);
+			double temp_longitude = _providers.get(0).getLongitude();
+			GeoPoint providerLocation = new GeoPoint((int)(temp_latitude * 1000000), (int)(temp_longitude * 1000000));
+			System.out.println("INSIDE THE ONE ONLY"); 
 			drawPath(m_current_location, providerLocation, Color.RED);
-			
-			//Add the final pin
+					//Add the final pin
 			Drawable drawable = this.getResources().getDrawable(R.drawable.current_location_marker_bw);
 			MapItemizedOverlay itemizedoverlay = new MapItemizedOverlay(drawable, this);
 			OverlayItem tempoverlayitem = new OverlayItem(providerLocation, "", "");
 			itemizedoverlay.addOverlay(overlayitem);			
+			mapOverlays.add(itemizedoverlay);
 		}
 		System.out.println("NEW MAPOVERLAY ADDED< SHOULD'VE RESET.");
 		
 		m_loading_dialog.hide();
 	}
-
+ 
 	//method to draw the path.
 	private void drawPath(GeoPoint current, GeoPoint destination, int color) {
 		String mapURL = buildMapsURL(current, destination);
 		
 		HttpRequest http = new HttpRequest();
 		String encoded = http.execHttpRequest(mapURL, HttpRequest.HttpMethod.Get, null);
+		System.out.println("URL: " + mapURL);
+		
+		System.out.println("Latitude:" + destination.getLatitudeE6() + " Longitude: " + destination.getLongitudeE6());
+		
 		
 		decodePoints(encoded);
 
@@ -241,9 +251,11 @@ public class MapProviderActivity extends MapActivity{
 		itemizedoverlay.setProviders(_providers);
 
 		for(int i = 0; i < _providers.size(); i++){
-			GeoPoint p = new GeoPoint((int)(_providers.get(i).getLongitude() * 1000000), (int)(_providers.get(i).getLatitude()*1000000));
+			GeoPoint p = new GeoPoint((int)(_providers.get(i).getLatitude() * 1000000), (int)(_providers.get(i).getLongitude()*1000000));
 			OverlayItem overlayitem = new OverlayItem(p, "", "");
+			System.out.println(p.getLatitudeE6()+" AND " + p.getLongitudeE6());
 			itemizedoverlay.addOverlay(overlayitem);
+			System.out.println(_providers.get(i).getName());
 		}
 		
 

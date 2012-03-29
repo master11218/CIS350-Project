@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 public class SearchResultActivity extends Activity{
 
-	private MyLocation myLocation; 
+	private MyLocation myLocation = new MyLocation();
 	private Double m_latitude;
 	private Double m_longitude;
 	private ProgressDialog m_loading_dialog;
@@ -52,7 +52,7 @@ public class SearchResultActivity extends Activity{
 	     
 			if (distance.length()>0){
 				//Only load the current location when the search criteria includes distance
-				this.myLocation = new MyLocation();
+				locationClick();
 				//load the longitude and latitude here
 				this.m_loading_dialog = ProgressDialog.show(this, "", 
 	    	            "Finding your current location. Please wait...", true);
