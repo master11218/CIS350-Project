@@ -38,6 +38,7 @@ public class SearchResultActivity extends Activity{
         setContentView(R.layout.search_result);
         
         Bundle extras = getIntent().getExtras(); 
+        
 
         if (extras != null) {
         	//Fetch all the parameters from the caller activity

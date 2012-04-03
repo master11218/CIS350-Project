@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.content.SharedPreferences;
@@ -95,6 +96,7 @@ public class VoiceActivity extends Activity {
         m_button_contact.setOnClickListener(new OnClickListener(){
 			
 			public void onClick(View v) {
+				
 	        	Intent intent = new Intent(m_context, ContactActivity.class);
 				startActivity(intent);
 			}
