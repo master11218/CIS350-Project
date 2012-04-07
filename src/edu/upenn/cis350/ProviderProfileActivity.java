@@ -24,7 +24,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+/**
+ * This Activity displays the profile of a provider. 
+ *
+ */
 public class ProviderProfileActivity extends Activity{
 
 	private static final String BASE_URL="http://spectrackulo.us/350/ratings.php?mode=view&pid=";
@@ -65,17 +70,49 @@ public class ProviderProfileActivity extends Activity{
 		m_provider_rating = (TextView)this.findViewById(R.id.providerpf_average_rating_text);
 		m_provider_star_rating = (ImageView) this
 				.findViewById(R.id.providerpf_average_stars);
+
+		//Initialize the icons of "has parking", "appointment only", etc
+		this.initializeIcons();	
+	}
+
+	/**
+	 * Set up icons for attributes. Add a listener to each button so that a
+	 * toast is shown to explain what the icon means once being clicked
+	 */
+	private void initializeIcons() {
 		
-		//icons for attributes
 		parking = (Button) this.findViewById(R.id.provider_parking);
-		creditcard = (Button) this
-				.findViewById(R.id.provider_creditcard);
+		this.addDescriptionToast(parking, "The provider has parking");
+		creditcard = (Button) this.findViewById(R.id.provider_creditcard);
+		this.addDescriptionToast(creditcard, "The provider accepts credit card");
 		accepting = (Button) this.findViewById(R.id.provider_accepting);
-		appointment = (Button) this
-				.findViewById(R.id.provider_appointments);
+		this.addDescriptionToast(accepting, "This provider accepts new patient");
+		appointment = (Button) this.findViewById(R.id.provider_appointments);
+		this.addDescriptionToast(appointment, "Appointment Only");
 		PCP = (Button) this.findViewById(R.id.provider_PCP);
-		specialist = (Button) this
-				.findViewById(R.id.provider_specialist);
+		this.addDescriptionToast(PCP, "Primary Care Provider");
+		specialist = (Button) this.findViewById(R.id.provider_specialist);
+		this.addDescriptionToast(specialist, "Specialist");
+
+	}
+
+	/**
+	 * add a listen to the icon button so that a description is displayed when
+	 * clicked
+	 * 
+	 * @param icon
+	 * @param description
+	 */
+	private void addDescriptionToast(Button icon, final String description) {
+		icon.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Context context = getApplicationContext();
+				Toast toast = Toast.makeText(context, description,Toast.LENGTH_SHORT);
+				toast.show();
+			}
+		});
+		
 	}
 
 
@@ -138,6 +175,7 @@ public class ProviderProfileActivity extends Activity{
 
 	}
 
+	
 	private void populateRatings() {
 		// make the HttpRequest
 		String uri = BASE_URL + m_provider.getID();
