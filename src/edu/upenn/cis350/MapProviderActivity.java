@@ -224,9 +224,10 @@ public class MapProviderActivity extends MapActivity{
 	}
 
 
- 
+ /**
+  * Grabs the providers from the previous activity, if any
+  */
 	private void displayAllProviders(){
-		//grab the providers from the previous activity, if there are any.
 		Provider intentProvider = (Provider)getIntent().getSerializableExtra("providers");
 		if(intentProvider == null)
 			generateProviderList();

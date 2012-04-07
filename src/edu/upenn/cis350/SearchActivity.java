@@ -27,7 +27,9 @@ public class SearchActivity extends Activity{
     EditText provider_name;
     EditText distance;
 
-	@Override
+	/**
+	 * Set up the Activity on creation
+	 */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
@@ -45,13 +47,15 @@ public class SearchActivity extends Activity{
        
     }
 	
-	@Override
+	/**
+	 * Set up the Activity when bringing up the Search Activity
+	 */
 	public void onResume(){
 		super.onResume();
 	}
 	
 	/**
-	 * Initialize all the spinner in the activity
+	 * Initialize all the spinners in the activity
 	 */
 	private void initializeSpinners() {
 		//The spinner for parking

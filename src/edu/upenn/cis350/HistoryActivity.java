@@ -28,29 +28,41 @@ public class HistoryActivity extends Activity{
 	private ListView m_results;
 	
 	@Override
+	/**
+	 * Set up the view each time the History Activity is brought up
+	 */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.history);
-		
+		//load the List to be used in the ListView in m_results
         m_results = (ListView)this.findViewById(R.id.history_res);
+        //loads the Adapter required for adapting the data to the ListView
         m_results.setAdapter(new HistoryAdapter(this));
-
+        //extracts the id from the Intent in Long format
 		long id = (Long)getIntent().getSerializableExtra("id");
 
+		//The uri is the connection to our back-end
 		String uri = "http://spectrackulo.us/350/history.php?uid=" + id;
-		System.out.println(uri);
+		
 
 		HttpRequest http = new HttpRequest();
-		String history = http.execHttpRequest(uri, HttpRequest.HttpMethod.Get, "");
-		System.out.println(history);
-
+		
+		//historyAsString is a String that contains encoded information for the provider
+		String historyAsString = http.execHttpRequest(uri, HttpRequest.HttpMethod.Get, "");
+		
+		//ratings is an ArrayList which contains all of Ratings instances pertaining to a provider
 		_ratings = new ArrayList<Rating>();
 		try{
-			JSONObject json = new JSONObject(history);
-			JSONArray reviews = json.getJSONArray("reviews");
+			//First, obtain the user's history in JSON format
+			JSONObject jsonHistory = new JSONObject(historyAsString);
+			//extract reviews such that it contains the reviews in a JSONArray
+			JSONArray reviews = jsonHistory.getJSONArray("reviews");
 			
+			//Add to the _ratings array a new Rating instance for each provider
 			for(int i=0;i < reviews.length();i++){						
+				//current contains the information on the provider being analyzed, in JSON format
 				JSONObject current = reviews.getJSONObject(i);
+				//Create a Ratings instance for each provider and add to the _ratings array
 				Rating currentRating = new Rating(
 						id, Long.parseLong(current.getString("pid")), 
 						current.getString("time"), current.getString("review"),
