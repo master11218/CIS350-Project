@@ -1,15 +1,13 @@
 package edu.upenn.cis350;
 
-import java.util.ArrayList;
+import edu.upenn.cis350.entities.User;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.content.SharedPreferences;

@@ -1,5 +1,7 @@
 package edu.upenn.cis350;
 
+import edu.upenn.cis350.entities.User;
+import edu.upenn.cis350.util.HttpRequest;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;

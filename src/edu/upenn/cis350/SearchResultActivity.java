@@ -3,7 +3,7 @@ package edu.upenn.cis350;
 import java.util.ArrayList;
 
 import edu.upenn.cis350.MyLocation.LocationResult;
-import edu.upenn.cis350.ProviderProfileActivity.CommentAdapter;
+import edu.upenn.cis350.entities.Provider;
 import edu.upenn.cis350.util.ProviderHelper;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -17,8 +17,6 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;

@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import edu.upenn.cis350.entities.Provider;
+import edu.upenn.cis350.entities.Rating;
+import edu.upenn.cis350.util.HttpRequest;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;

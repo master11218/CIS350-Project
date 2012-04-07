@@ -5,8 +5,7 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import edu.upenn.cis350.Provider;
-import edu.upenn.cis350.Rating;
+import edu.upenn.cis350.entities.Provider;
 
 public class ProviderHelper {
 

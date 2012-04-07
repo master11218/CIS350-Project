@@ -4,6 +4,8 @@ import android.graphics.drawable.Drawable;
 
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
+
+import edu.upenn.cis350.entities.Provider;
 import android.content.Context;
 import android.app.Dialog;
 import android.widget.TextView;

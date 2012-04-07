@@ -7,9 +7,10 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
-import edu.upenn.cis350.HttpRequest.HttpMethod;
 import edu.upenn.cis350.MyLocation.LocationResult;
-
+import edu.upenn.cis350.entities.Provider;
+import edu.upenn.cis350.entities.Rating;
+import edu.upenn.cis350.util.HttpRequest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -17,10 +18,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
-import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class MapProviderActivity extends MapActivity{
