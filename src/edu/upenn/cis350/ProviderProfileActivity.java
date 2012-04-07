@@ -136,11 +136,10 @@ public class ProviderProfileActivity extends Activity{
 		setRatingImage();
 
 	}
-	
-	private void populateRatings(){
+
+	private void populateRatings() {
 		// make the HttpRequest
-		String uri = BASE_URL
-				+ m_provider.getID();
+		String uri = BASE_URL + m_provider.getID();
 		HttpRequest requestManager = new HttpRequest();
 		String ratingsJSON = requestManager.execHttpRequest(uri,
 				HttpRequest.HttpMethod.Get, "");
