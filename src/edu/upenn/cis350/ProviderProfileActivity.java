@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 public class ProviderProfileActivity extends Activity{
 
+	private static final String BASE_URL="http://spectrackulo.us/350/ratings.php?mode=view&pid=";
 	private TextView m_provider_name;
 	private TextView m_provider_phone;
 	private TextView m_provider_address;
@@ -39,6 +40,13 @@ public class ProviderProfileActivity extends Activity{
 	private ArrayList<Rating> m_ratings;
 	private Provider m_provider;
 	private ListView m_comments;
+	private ImageView m_provider_star_rating;
+	private Button parking;
+	private Button creditcard;
+	private Button accepting;
+	private Button appointment; 
+	private Button PCP; 
+	private Button specialist;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -48,50 +56,45 @@ public class ProviderProfileActivity extends Activity{
 		m_button_map = (Button)this.findViewById(R.id.button_providerpf_map);
 		m_button_review = (Button)this.findViewById(R.id.providerpf_rate_button);
 		m_comments = (ListView)this.findViewById(R.id.providerpf_comments);
-		m_comments.setAdapter(new CommentAdapter(m_context));
+		m_comments.setAdapter(new RatingAdapter(m_context));
 
 		m_provider_name = (TextView)this.findViewById(R.id.provider_name);
 		m_provider_phone = (TextView)this.findViewById(R.id.provider_phone);
 		m_provider_address = (TextView)this.findViewById(R.id.provider_address);
 		m_provider_rating = (TextView)this.findViewById(R.id.providerpf_average_rating_text);
+		m_provider_star_rating = (ImageView) this
+				.findViewById(R.id.providerpf_average_stars);
+		
+		//icons for attributes
+		parking = (Button) this.findViewById(R.id.provider_parking);
+		creditcard = (Button) this
+				.findViewById(R.id.provider_creditcard);
+		accepting = (Button) this.findViewById(R.id.provider_accepting);
+		appointment = (Button) this
+				.findViewById(R.id.provider_appointments);
+		PCP = (Button) this.findViewById(R.id.provider_PCP);
+		specialist = (Button) this
+				.findViewById(R.id.provider_specialist);
 	}
 
 
 	@Override
-	public void onResume(){
+	public void onResume() {
 		super.onResume();
-		//grab what's passed to it
-		m_provider = (Provider)getIntent().getSerializableExtra("providers");
-		
-		String uri = "http://spectrackulo.us/350/ratings.php?mode=view&pid=" + m_provider.getID();
-		System.out.println(uri);
-
-		HttpRequest http = new HttpRequest();
-		String ratings = http.execHttpRequest(uri, HttpRequest.HttpMethod.Get, "");
-		System.out.println(ratings);
-
+		// get existing Intent data (the ID of provider to be looked at), and
+		// initialize a list of ratings to be populated for the provider.
+		m_provider = (Provider) getIntent().getSerializableExtra("providers");
 		m_ratings = new ArrayList<Rating>();
-		try{
-			JSONObject json = new JSONObject(ratings);
-			JSONArray reviews = json.getJSONArray("reviews");
-			
-			for(int i=0;i < reviews.length();i++){						
-				JSONObject current = reviews.getJSONObject(i);
-				Rating currentRating = new Rating(
-						Long.parseLong(current.getString("uid")), Long.parseLong(current.getString("pid")), 
-						current.getString("time"), current.getString("review"),
-						Integer.parseInt(current.getString("rating")));
-				m_ratings.add(currentRating);
-			}
-		} catch (Exception e){
-			e.printStackTrace();
-		}
-		//m_ratings = m_provider.getAverageRating();
 
-		m_button_map.setOnClickListener(new OnClickListener(){
+		//populate ratings, for RatingAdapter
+		populateRatings();
+
+		// initialize buttons, map, review, passing on the now-initialized
+		// provider
+		m_button_map.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				if(v==m_button_map) {
-					
+				if (v == m_button_map) {
+
 				}
 				Intent intent = new Intent(m_context, MapProviderActivity.class);
 				intent.putExtra("providers", m_provider);
@@ -100,6 +103,7 @@ public class ProviderProfileActivity extends Activity{
 			}
 		});
 
+		//review dialog pops up.
 		m_button_review.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Dialog dialog = new Dialog(m_context);
@@ -109,81 +113,84 @@ public class ProviderProfileActivity extends Activity{
 				dialog.show();
 			}
 		});
-		
-		//set the provider info
+
+		// set the provider info in TextViews
 		m_provider_name.setText(m_provider.getName());
 		m_provider_phone.setText(m_provider.getPhone());
 		m_provider_address.setText(m_provider.getAddress());
 		Double averageRating = m_provider.getAverageRating();
 		m_provider_rating.setText(averageRating.toString());
-		m_provider_address.setText(m_provider.getAddress() + ", " + m_provider.getCity() + ", " + m_provider.getState() + "  " + m_provider.getZip());
+		m_provider_address.setText(m_provider.getAddress() + ", "
+				+ m_provider.getCity() + ", " + m_provider.getState() + "  "
+				+ m_provider.getZip());
 
-		//set up icons for each of the yes/no answers
-		Button parking= (Button)this.findViewById(R.id.provider_parking);
-		Button creditcard= (Button)this.findViewById(R.id.provider_creditcard);
-		Button accepting= (Button)this.findViewById(R.id.provider_accepting);
-		Button appointment= (Button)this.findViewById(R.id.provider_appointments);
-		Button PCP= (Button)this.findViewById(R.id.provider_PCP);
-		Button specialist= (Button)this.findViewById(R.id.provider_specialist);
 
-		//show or hide icons as appropriate
-		if (m_provider.getParking().equals("yes")) {
-			parking.setVisibility(Button.VISIBLE);
-		} else {
-			parking.setVisibility(Button.GONE);
-		}
-
-		if (m_provider.getCreditCards().equals("yes")){
-			creditcard.setVisibility(Button.VISIBLE);
-		} else {
-			creditcard.setVisibility(Button.GONE);
-		}
-
-		if (m_provider.getAppointment().equals("yes")){
-			appointment.setVisibility(Button.VISIBLE);
-		} else {
-			appointment.setVisibility(Button.GONE);
-		}
-
-		if (m_provider.getAccepting().equals("yes")){
-			accepting.setVisibility(Button.VISIBLE);
-		} else {
-			accepting.setVisibility(Button.GONE);
-		}
-
-		if (m_provider.getType().equals("PCP")) {
-			PCP.setVisibility(Button.VISIBLE);
-			specialist.setVisibility(Button.GONE);
-		} else {
-			PCP.setVisibility(Button.GONE);
-			specialist.setVisibility(Button.VISIBLE);
-		}
+		// show or hide icons as appropriate
+		toggleIconVisibility(parking,m_provider.getParking());
+		toggleIconVisibility(creditcard,m_provider.getCreditCards());
+		toggleIconVisibility(appointment,m_provider.getAppointment());
+		toggleIconVisibility(accepting,m_provider.getAccepting());
+		toggleIconVisibility(PCP,m_provider.getType());
 		
-
-		ImageView m_provider_star_rating = (ImageView)this.findViewById(R.id.providerpf_average_stars);
-
-		Integer avg= (int)m_provider.getAverageRating();
-
-		m_provider_star_rating.setImageResource(R.drawable.onestar);
-		if (avg==5) {
-			m_provider_star_rating.setImageResource(R.drawable.fivestars);
-		} else if (avg==4) {
-			m_provider_star_rating.setImageResource(R.drawable.fourstars);
-		} else if (avg==3) {
-			m_provider_star_rating.setImageResource(R.drawable.threestars);
-		} else if (avg==2) {
-			m_provider_star_rating.setImageResource(R.drawable.twostars);
-		} else if (avg==4) {
-			m_provider_star_rating.setImageResource(R.drawable.onestar);
-		}
+		//
+		setRatingImage();
 
 	}
+	
+	private void populateRatings(){
+		// make the HttpRequest
+		String uri = BASE_URL
+				+ m_provider.getID();
+		HttpRequest requestManager = new HttpRequest();
+		String ratingsJSON = requestManager.execHttpRequest(uri,
+				HttpRequest.HttpMethod.Get, "");
+		// parse the JSON and populate m_ratings from JSON for m_provider
+		try {
+			JSONObject json = new JSONObject(ratingsJSON);
+			JSONArray reviews = json.getJSONArray("reviews");
+			for (int i = 0; i < reviews.length(); i++) {
+				JSONObject current = reviews.getJSONObject(i);
+				Rating currentRating = new Rating(Long.parseLong(current
+						.getString("uid")), Long.parseLong(current
+						.getString("pid")), current.getString("time"),
+						current.getString("review"), Integer.parseInt(current
+								.getString("rating")));
+				m_ratings.add(currentRating);
+			}
+		} catch (Exception e) {
+			// for logging
+			e.printStackTrace();
+		}
+	}
+	
+	private void setRatingImage(){
+		Integer avg = (int) m_provider.getAverageRating();
 
+		m_provider_star_rating.setImageResource(R.drawable.onestar);
+		if (avg == 5) {
+			m_provider_star_rating.setImageResource(R.drawable.fivestars);
+		} else if (avg == 4) {
+			m_provider_star_rating.setImageResource(R.drawable.fourstars);
+		} else if (avg == 3) {
+			m_provider_star_rating.setImageResource(R.drawable.threestars);
+		} else if (avg == 2) {
+			m_provider_star_rating.setImageResource(R.drawable.twostars);
+		} else if (avg == 4) {
+			m_provider_star_rating.setImageResource(R.drawable.onestar);
+		}
+	}
 
-
-	class CommentAdapter extends BaseAdapter{
+	private void toggleIconVisibility(Button button, String result){
+		if (result.equals("yes") || result.equals("PCP")) {
+			button.setVisibility(Button.VISIBLE);
+		} else {
+			button.setVisibility(Button.GONE);
+		}
+	}
+	
+	class RatingAdapter extends BaseAdapter{
 		private Context m_context;
-		public CommentAdapter(Context c){
+		public RatingAdapter(Context c){
 			m_context = c;
 		}
 		public int getCount() {
