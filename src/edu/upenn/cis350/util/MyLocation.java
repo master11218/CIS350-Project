@@ -1,4 +1,4 @@
-package edu.upenn.cis350;
+package edu.upenn.cis350.util;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -9,20 +9,23 @@ import android.location.LocationManager;
 import android.os.Bundle;
 
 
-//to use:
-//		MyLocation myLocation = new MyLocation();
-//		private void locationClick() {
-//		    myLocation.getLocation(this, locationResult));
-//		}
-//		
-//		public LocationResult locationResult = new LocationResult(){
-//		    @Override
-//		    public void gotLocation(final Location location){
-//		        //Got the location!
-//		        });
-//		    }
-//		};
-
+/**
+ * This is a method that is used to get the current location
+ * of the user
+ * to use it in other classes:
+		MyLocation myLocation = new MyLocation();
+		private void locationClick() {
+		    myLocation.getLocation(this, locationResult));
+		}
+		
+		public LocationResult locationResult = new LocationResult(){
+		    @Override
+		    public void gotLocation(final Location location){
+		        //Got the location!
+		        });
+		    }
+		};
+ */
 public class MyLocation {
     Timer timer1;
     LocationManager lm;
@@ -30,6 +33,7 @@ public class MyLocation {
     boolean gps_enabled=false;
     boolean network_enabled=false;
 
+    
     public boolean getLocation(Context context, LocationResult result)
     {
         //I use LocationResult callback class to pass location value from MyLocation to user code.

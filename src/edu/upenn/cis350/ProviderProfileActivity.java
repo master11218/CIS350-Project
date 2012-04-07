@@ -38,7 +38,6 @@ public class ProviderProfileActivity extends Activity{
 	private TextView m_provider_address;
 	private TextView m_provider_rating;
 
-
 	private Button m_button_map;
 	private Button m_button_review;
 	private final Context m_context = this;
@@ -60,11 +59,13 @@ public class ProviderProfileActivity extends Activity{
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.provider_pf);
+		//layout elements
 		m_button_map = (Button)this.findViewById(R.id.button_providerpf_map);
 		m_button_review = (Button)this.findViewById(R.id.providerpf_rate_button);
 		m_comments = (ListView)this.findViewById(R.id.providerpf_comments);
 		m_comments.setAdapter(new RatingAdapter(m_context));
 
+		//provider metadata
 		m_provider_name = (TextView)this.findViewById(R.id.provider_name);
 		m_provider_phone = (TextView)this.findViewById(R.id.provider_phone);
 		m_provider_address = (TextView)this.findViewById(R.id.provider_address);
@@ -142,11 +143,10 @@ public class ProviderProfileActivity extends Activity{
 		setRatingImage();
 
 	}
-	
-	private void populateRatings(){
+
+	private void populateRatings() {
 		// make the HttpRequest
-		String uri = BASE_URL
-				+ m_provider.getID();
+		String uri = BASE_URL + m_provider.getID();
 		HttpRequest requestManager = new HttpRequest();
 		String ratingsJSON = requestManager.execHttpRequest(uri,
 				HttpRequest.HttpMethod.Get, "");
@@ -203,6 +203,7 @@ public class ProviderProfileActivity extends Activity{
 		}
 	}
 	
+	//inner class for rating adapter. Needs to reference m_ratings
 	class RatingAdapter extends BaseAdapter{
 		private Context m_context;
 		public RatingAdapter(Context c){
@@ -264,13 +265,6 @@ public class ProviderProfileActivity extends Activity{
 			tv_provider_date.setText(m_ratings.get(position).getDate().toString());
 
 			return list_result;
-		}
-	}
-	public static String convertText(boolean input) {
-		if (input) {
-			return "yes";
-		} else {
-			return "no";
 		}
 	}
 }

@@ -2,7 +2,8 @@ package edu.upenn.cis350;
 
 import java.util.ArrayList;
 
-import edu.upenn.cis350.MyLocation.LocationResult;
+import edu.upenn.cis350.util.MyLocation;
+import edu.upenn.cis350.util.MyLocation.LocationResult;
 import edu.upenn.cis350.entities.Provider;
 import edu.upenn.cis350.util.ProviderHelper;
 import android.app.Activity;
@@ -45,7 +46,6 @@ public class SearchResultActivity extends Activity{
         
         Bundle extras = getIntent().getExtras(); 
         
-
         if (extras != null) {
         	//Fetch all the parameters from the caller activity
 			String provider_name = extras.getString("provider_name");
