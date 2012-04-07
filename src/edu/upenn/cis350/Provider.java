@@ -1,7 +1,6 @@
 package edu.upenn.cis350;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class Provider implements Serializable{
 	
@@ -20,11 +19,13 @@ public class Provider implements Serializable{
 	private String has_parking;
 	private String type;
 	private String credit_cards;
+	private String handicap_access;
 	private String appointment;
 	double averageRating;
 	private Double longitude;
 	private Double latitude;
-	//private GeoPoint location;
+	private String website;
+	private String hours;
 	
 	public Provider(long id, String name, String address, String city, String state, String zip, String phone, 
 			String accepting_new, String has_parking, String type, String credit_cards, String handicap_access,
@@ -44,6 +45,9 @@ public class Provider implements Serializable{
 		this.averageRating = averageRating;
 		this.longitude = longitude;
 		this.latitude = latitude;
+		this.handicap_access = handicap_access;
+		this.website = website;
+		this.hours = hours;
 	}
 	
 	public long getID(){
@@ -52,6 +56,18 @@ public class Provider implements Serializable{
 	
 	public String getName(){
 		return name;
+	}
+	
+	public String getHours(){
+		return hours;
+	}
+	
+	public String getWebsite(){
+		return website;
+	}
+	
+	public String getHandicapAccess(){
+		return handicap_access;
 	}
 	
 	public String getAddress(){

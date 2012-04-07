@@ -44,6 +44,69 @@ public class MapProviderActivity extends MapActivity{
 		m_location.getLocation(this, locationResult);
 	}
 
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.map);
+	
+		settings = getSharedPreferences("UserData", 0);
+		//set the loading screen. This will get destroyed when location is found via locationResult
+		m_loading_dialog = ProgressDialog.show(MapProviderActivity.this, "", 
+				"Finding your current location. Please wait...", true);
+
+		//set up map
+		_myMapView = (MapView) findViewById(R.id.mapview);
+		_myMapController = _myMapView.getController();
+		_myMapController.setZoom(15);
+		_myMapView.setBuiltInZoomControls(true);
+		mapOverlays = _myMapView.getOverlays();
+		
+		System.out.println("JUST PRINTED THE LOADING DIALOG");
+		//grab the location, set the latitude and longitude
+
+	}
+
+	@Override
+	public void onResume(){
+		super.onResume();
+		//do everything with location stuff. LocationClick() will cause locationresult to run when finished in thread.
+		locationClick();
+	}
+	
+	public LocationResult locationResult = new LocationResult(){
+		@Override
+		public void gotLocation(Location location){
+			if(location != null){
+				System.out.println("INSIDE GOT LOCATION");
+				m_lat = (float)location.getLatitude();
+				m_long = (float)location.getLongitude();
+				//Save your location in the User info is set in the shared preferences.
+				SharedPreferences.Editor editor = settings.edit();
+				editor.putFloat("latitude", m_lat);
+				editor.putFloat("longitude", m_long);
+				editor.commit();
+				//Set the current location in this activity
+				System.out.println("CURRENT LOCATION WAS GOTTEN, SHOULD'VE DISPLAYED TOAST");
+				m_current_location = new GeoPoint((int)(1000000*location.getLatitude()), (int)(1000000*location.getLongitude()));
+
+				displayAllProviders();
+				
+				//displayyourself on map
+				displayCurrentLocationOnMap();
+				//center to yourself
+				_myMapController.animateTo(m_current_location);
+				
+				
+				System.out.println("Should've finished displaying providers");
+				
+				//refresh the map
+				_myMapView.invalidate();
+			}
+		}
+	};
+
+
+
 	public void displayCurrentLocationOnMap(){
 		//add your current location pin to the map
 		Drawable current_location_drawable = this.getResources().getDrawable(R.drawable.current_location_marker);
@@ -65,21 +128,36 @@ public class MapProviderActivity extends MapActivity{
 		mapOverlays.add(personalLocationOverlay);
 
 
-		//temp location to test drawing.
-		GeoPoint pennLocation = new GeoPoint(39951481, -75200987);
-		drawPath(m_current_location, pennLocation, Color.RED);
+		//if only one provider, draw the path.
 
+		if(_providers.size() == 1){
+			double temp_latitude = _providers.get(0).getLatitude();
+			double temp_longitude = _providers.get(0).getLongitude();
+			GeoPoint providerLocation = new GeoPoint((int)(temp_latitude * 1000000), (int)(temp_longitude * 1000000));
+			System.out.println("INSIDE THE ONE ONLY"); 
+			drawPath(m_current_location, providerLocation, Color.RED);
+					//Add the final pin
+			Drawable drawable = this.getResources().getDrawable(R.drawable.current_location_marker_bw);
+			MapItemizedOverlay itemizedoverlay = new MapItemizedOverlay(drawable, this);
+			OverlayItem tempoverlayitem = new OverlayItem(providerLocation, "", "");
+			itemizedoverlay.addOverlay(overlayitem);			
+			mapOverlays.add(itemizedoverlay);
+		}
 		System.out.println("NEW MAPOVERLAY ADDED< SHOULD'VE RESET.");
 		
 		m_loading_dialog.hide();
 	}
-
+ 
 	//method to draw the path.
 	private void drawPath(GeoPoint current, GeoPoint destination, int color) {
 		String mapURL = buildMapsURL(current, destination);
 		
 		HttpRequest http = new HttpRequest();
 		String encoded = http.execHttpRequest(mapURL, HttpRequest.HttpMethod.Get, null);
+		System.out.println("URL: " + mapURL);
+		
+		System.out.println("Latitude:" + destination.getLatitudeE6() + " Longitude: " + destination.getLongitudeE6());
+		
 		
 		decodePoints(encoded);
 
@@ -147,65 +225,6 @@ public class MapProviderActivity extends MapActivity{
 		return urlString.toString();
 	}
 
-	public LocationResult locationResult = new LocationResult(){
-		@Override
-		public void gotLocation(Location location){
-			if(location != null){
-				System.out.println("INSIDE GOT LOCATION");
-				m_lat = (float)location.getLatitude();
-				m_long = (float)location.getLongitude();
-
-				//Save your location in the User info is set in the shared preferences.
-				SharedPreferences.Editor editor = settings.edit();
-				editor.putFloat("latitude", m_lat);
-				editor.putFloat("longitude", m_long);
-				editor.commit();
-
-				//debug   + "Your current location is (" + m_lat.toString() + ", " + m_long.toString() + ")"
-				//Toast.makeText(m_context, "Your location has been saved. ", Toast.LENGTH_SHORT).show();
-
-				System.out.println("CURRENT LOCATION WAS GOTTEN, SHOULD'VE DISPLAYED TOAST");
-				m_current_location = new GeoPoint((int)(1000000*location.getLatitude()), (int)(1000000*location.getLongitude()));
-				
-				//displayyourself on map
-				displayCurrentLocationOnMap();
-				//center to yourself
-				_myMapController.animateTo(m_current_location);
-
-				displayAllProviders();
-			}
-			//Got the location!
-
-		}
-	};
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.map);
-	
-		settings = getSharedPreferences("UserData", 0);
-		//set the loading screen. This will get destroyed when location is found via locationResult
-		m_loading_dialog = ProgressDialog.show(MapProviderActivity.this, "", 
-				"Finding your current location. Please wait...", true);
-
-		//set up map
-		_myMapView = (MapView) findViewById(R.id.mapview);
-		_myMapController = _myMapView.getController();
-		_myMapController.setZoom(15);
-		_myMapView.setBuiltInZoomControls(true);
-		mapOverlays = _myMapView.getOverlays();
-		
-		System.out.println("JUST PRINTED THE LOADING DIALOG");
-		//grab the location, set the latitude and longitude
-		locationClick();
-
-	}
-
-	@Override
-	public void onResume(){
-		super.onResume();
-	}
 
  
 	private void displayAllProviders(){
@@ -232,13 +251,18 @@ public class MapProviderActivity extends MapActivity{
 		itemizedoverlay.setProviders(_providers);
 
 		for(int i = 0; i < _providers.size(); i++){
-			GeoPoint p = new GeoPoint((int)(_providers.get(i).getLongitude() * 1000000), (int)(_providers.get(i).getLatitude()*1000000));
+			GeoPoint p = new GeoPoint((int)(_providers.get(i).getLatitude() * 1000000), (int)(_providers.get(i).getLongitude()*1000000));
 			OverlayItem overlayitem = new OverlayItem(p, "", "");
+			System.out.println(p.getLatitudeE6()+" AND " + p.getLongitudeE6());
 			itemizedoverlay.addOverlay(overlayitem);
+			System.out.println(_providers.get(i).getName());
 		}
+		
 
 		//adding yourself comes after the location has been received.
 		mapOverlays.add(itemizedoverlay);
+		
+		_myMapView.invalidate();
 	}
 
 	

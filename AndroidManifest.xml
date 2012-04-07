@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
  
     <application
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/health"
         android:label="@string/app_name" 
         android:debuggable="true" >
         <activity
@@ -21,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
+         
         
         <activity android:name = "edu.upenn.cis350.HistoryActivity" />
         <activity android:name = "edu.upenn.cis350.MapProviderActivity"/>
@@ -33,6 +33,11 @@
         
         
         <uses-library android:name="com.google.android.maps" />
+        
+        
     </application>
+    <uses-sdk android:minSdkVersion="3" />
+    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
+    
 
 </manifest>

@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 public class SearchResultActivity extends Activity{
 
-	private MyLocation myLocation; 
+	private MyLocation myLocation = new MyLocation();
 	private Double m_latitude;
 	private Double m_longitude;
 	private ProgressDialog m_loading_dialog;
@@ -38,6 +38,7 @@ public class SearchResultActivity extends Activity{
         setContentView(R.layout.search_result);
         
         Bundle extras = getIntent().getExtras(); 
+        
 
         if (extras != null) {
         	//Fetch all the parameters from the caller activity
@@ -52,7 +53,7 @@ public class SearchResultActivity extends Activity{
 	     
 			if (distance.length()>0){
 				//Only load the current location when the search criteria includes distance
-				this.myLocation = new MyLocation();
+				locationClick();
 				//load the longitude and latitude here
 				this.m_loading_dialog = ProgressDialog.show(this, "", 
 	    	            "Finding your current location. Please wait...", true);
@@ -126,12 +127,11 @@ public class SearchResultActivity extends Activity{
 			TextView providerName = (TextView)list_result.findViewById(R.id.search_result_name);
 			final Provider currProvider = satisfiedproviders.get(position);
 			String tempName = currProvider.getName();
-			providerName.setText("Provider Name: "+tempName);
+			providerName.setText(tempName);
 
 			
 			Button viewButton = (Button)list_result.findViewById(R.id.search_result_button);
 			viewButton.setOnClickListener(new OnClickListener(){
-				@Override
 				public void onClick(View arg0) {
 					Intent i = new Intent(SearchResultActivity.this, ProviderProfileActivity.class);
 					i.putExtra("providers", currProvider);

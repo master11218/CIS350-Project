@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.content.SharedPreferences;
@@ -41,7 +42,7 @@ public class VoiceActivity extends Activity {
         if(!userData.contains("Id")){
         	currentUser = null;
         } else {
-        	id = Long.parseLong(userData.getString("Id", "Not found"));
+        	id = Long.parseLong(userData.getString("Id", "-1"));
         	name = userData.getString("Name", "Not found");
         	address = userData.getString("Address", "Not found");
         	email = userData.getString("Email", "Not found");
@@ -74,7 +75,7 @@ public class VoiceActivity extends Activity {
         m_button_history.setOnClickListener(new OnClickListener(){
 			
 			public void onClick(View v) {
-				if(id.equals("Not found")){
+				if(id == null){
 					Toast.makeText(m_context,"You must register your app before being " +
 							"able to view your history. You can register in the 'profile' section.", 
 							Toast.LENGTH_SHORT).show();
@@ -95,6 +96,7 @@ public class VoiceActivity extends Activity {
         m_button_contact.setOnClickListener(new OnClickListener(){
 			
 			public void onClick(View v) {
+				
 	        	Intent intent = new Intent(m_context, ContactActivity.class);
 				startActivity(intent);
 			}

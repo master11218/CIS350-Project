@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" 
-    android:background="@drawable/findadoc2"
+    android:background="@drawable/cubes"
     android:gravity="center">
      
     <TextView
@@ -31,21 +31,25 @@
         />
     
     
-    <TextView
-        android:id="@+id/contact_info_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-		android:textColor="#000"
-        android:text="@string/contact_info_email"
-        />
+
     
-    <TextView
-        android:id="@+id/contact_info_number"
-        android:layout_width="wrap_content"
+    <Button android:id="@+id/contact_info_email_now"
+        
         android:layout_height="wrap_content"
-		android:textColor="#000"
-        android:text="@string/contact_info_number"
-        />
+        android:layout_width="wrap_content"
+        android:textColor="#000"
+        android:text="evanswu@nursingupenn.edu"
+		
+         />
+    
+    <Button android:id="@+id/contact_info_call"
+        
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textColor="#000"
+        android:text="1-215-255-2555"
+		
+         />
     
     <ImageView 
         android:id="@+id/nursinglogo"

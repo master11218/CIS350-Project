@@ -1,7 +1,12 @@
 package edu.upenn.cis350.util;
 
 import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import edu.upenn.cis350.Provider;
+import edu.upenn.cis350.Rating;
 
 public class ProviderHelper {
 
@@ -55,14 +60,25 @@ public class ProviderHelper {
 		System.out.println(jsonString);
 		
 		if (jsonString!=null && jsonString.length()>0){
-			//allproviders = getProviderFromJson(jsonString);
-			
-			// TODO: parse the response
-			
-			
-			// TODO: reflect the object
-			
-			
+			try{
+				JSONObject jsonobj = new JSONObject(jsonString);
+				JSONArray providers = jsonobj.getJSONArray("providers");
+				
+				for(int i=0;i < providers.length();i++){						
+					JSONObject json = providers.getJSONObject(i);
+					
+					Provider currentProvider = new Provider(Long.parseLong(json.getString("pid")), json.getString("name"), json.getString("address"), 
+							json.getString("city"), json.getString("state"), json.getString("zip"), json.getString("phone"),
+							json.getString("accepting_new"), json.getString("has_parking"),
+							json.getString("type"), json.getString("credit_cards"), json.getString("handicap_access"),
+							json.getString("appointment_only"), Double.parseDouble(json.getString("average_rating")),
+							Double.parseDouble(json.getString("longitude")), Double.parseDouble(json.getString("latitude")), json.getString("website"), json.getString("hours"));
+					
+					allproviders.add(currentProvider);
+				}
+			} catch (Exception e){
+				e.printStackTrace();
+			}
 		}
 		
 		return allproviders;
