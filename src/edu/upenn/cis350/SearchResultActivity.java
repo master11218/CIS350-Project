@@ -45,7 +45,6 @@ public class SearchResultActivity extends Activity{
         
         Bundle extras = getIntent().getExtras(); 
         
-
         if (extras != null) {
         	//Fetch all the parameters from the caller activity
 			String provider_name = extras.getString("provider_name");
