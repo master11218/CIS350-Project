@@ -27,7 +27,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
+<<<<<<< HEAD
  * This Activity displays the profile of a provider. 
+=======
+ * Contains information about a provider
+ * @author DXU
+>>>>>>> e515ea7b74160d59dc63c28c23d2248fb9dfde4e
  *
  */
 public class ProviderProfileActivity extends Activity{
@@ -52,7 +57,9 @@ public class ProviderProfileActivity extends Activity{
 	private Button PCP; 
 	private Button specialist;
 
-	@Override
+	/**
+	 * Create each provider's profile
+	 */
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
@@ -127,8 +134,7 @@ public class ProviderProfileActivity extends Activity{
 		//populate ratings, for RatingAdapter
 		populateRatings();
 
-		// initialize buttons, map, review, passing on the now-initialized
-		// provider
+		// initialize buttons, map, review, passing on the now-initialized provider
 		m_button_map.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				if (v == m_button_map) {
