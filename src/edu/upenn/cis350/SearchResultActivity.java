@@ -56,9 +56,9 @@ public class SearchResultActivity extends Activity{
 			String credit_card = extras.getString("credit_card");
 			String type = extras.getString("type");
 			String distance = extras.getString("distance");
-	     
+			
+			//Only load the current location when the search criteria includes distance
 			if (distance.length()>0){
-				//Only load the current location when the search criteria includes distance
 				locationClick();
 				//load the longitude and latitude here
 				this.m_loading_dialog = ProgressDialog.show(this, "", 
@@ -95,7 +95,11 @@ public class SearchResultActivity extends Activity{
 	    	
 	    };
 	
-	    
+	/**
+	 * An adapter used to display every search result loaded
+	 * @author henryou
+	 *
+	 */
     class SearchResultAdapter extends BaseAdapter{
 		private Context m_context;
 		public SearchResultAdapter(Context c){
@@ -116,6 +120,11 @@ public class SearchResultActivity extends Activity{
 		public long getItemId(int position) {
 			return position;
 		}
+		
+		/**
+		 * Every view should include a brief summary of the provider information and
+		 * a button link to the detailed information page 
+		 */
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			//inflate the view
 			LinearLayout list_result;
