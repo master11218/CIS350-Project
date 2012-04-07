@@ -49,7 +49,45 @@ public class SearchActivity extends Activity{
 	public void onResume(){
 		super.onResume();
 	}
+	
+	/**
+	 * Initialize all the spinner in the activity
+	 */
+	private void initializeSpinners() {
+		//The spinner for parking
+        this.parking_spinner = this.createSpinner(R.id.parking_spinner,R.array.parking_array);
+        
+        //The spinner for acceptNewPatient
+        this.newPatient_spinner = this.createSpinner(R.id.newpatient_spinner, R.array.newpatient_array);
+        
+        //The spinner for handicap accessibility
+        this.handicap_spinner = this.createSpinner(R.id.handicap_spinner,R.array.handicap_array);
+        
+        //The spinner for accepting credit card
+        this.creditcard_spinner = this.createSpinner(R.id.creditcard_spinner, R.array.creditcard_array);
+        
+        //The spinner for appointment only
+        this.appointmentonly_spinner = this.createSpinner(R.id.appointmentonly_spinner, R.array.appointmentonly_array);
+        
+        //The spinner for provider type
+        this.providertype_spinner = this.createSpinner(R.id.providertype_spinner, R.array.providertype_array);
+	}
 
+	/**
+	 * This method retrieves a spinner by a spinnerId and set the adapter
+	 * of that spinner with the array from the choiceArrayId
+	 * @param spinnerId The id of the spinner to retrieve
+	 * @param choiceArrayId The id of the array of the choice array
+	 * @return
+	 */
+	private Spinner createSpinner(int spinnerId, int choiceArrayId) {
+		Spinner spinner = (Spinner) findViewById(spinnerId);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, choiceArrayId, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);		
+		return spinner;
+	}
 	
 	/** 
 	 * This is the button listener that invokes the search result page.
@@ -94,44 +132,5 @@ public class SearchActivity extends Activity{
 		private String getEditTextEntry(EditText input){
 			return input.getText().toString();
 		}
-	}
-	
-	/**
-	 * Initialize all the spinner in the activity
-	 */
-	private void initializeSpinners() {
-		//The spinner for parking
-        this.parking_spinner = this.createSpinner(R.id.parking_spinner,R.array.parking_array);
-        
-        //The spinner for acceptNewPatient
-        this.newPatient_spinner = this.createSpinner(R.id.newpatient_spinner, R.array.newpatient_array);
-        
-        //The spinner for handicap accessibility
-        this.handicap_spinner = this.createSpinner(R.id.handicap_spinner,R.array.handicap_array);
-        
-        //The spinner for accepting credit card
-        this.creditcard_spinner = this.createSpinner(R.id.creditcard_spinner, R.array.creditcard_array);
-        
-        //The spinner for appointment only
-        this.appointmentonly_spinner = this.createSpinner(R.id.appointmentonly_spinner, R.array.appointmentonly_array);
-        
-        //The spinner for provider type
-        this.providertype_spinner = this.createSpinner(R.id.providertype_spinner, R.array.providertype_array);
-	}
-
-	/**
-	 * This method retrieves a spinner by a spinnerId and set the adapter
-	 * of that spinner with the array from the choiceArrayId
-	 * @param spinnerId The id of the spinner to retrieve
-	 * @param choiceArrayId The id of the array of the choice array
-	 * @return
-	 */
-	private Spinner createSpinner(int spinnerId, int choiceArrayId) {
-		Spinner spinner = (Spinner) findViewById(spinnerId);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this, choiceArrayId, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);		
-		return spinner;
 	}
 }
