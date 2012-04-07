@@ -182,7 +182,16 @@ public class ProviderProfileActivity extends Activity{
 	private void toggleIconVisibility(Button button, String result){
 		if (result.equals("yes") || result.equals("PCP")) {
 			button.setVisibility(Button.VISIBLE);
-		} else {
+		}
+		else if(result.equals("PCP")){
+			specialist.setVisibility(Button.GONE);
+			PCP.setVisibility(Button.VISIBLE);
+		}
+		else if(result.equals("specialist")){
+			specialist.setVisibility(Button.VISIBLE);
+			PCP.setVisibility(Button.GONE);
+		}
+		else {
 			button.setVisibility(Button.GONE);
 		}
 	}

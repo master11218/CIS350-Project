@@ -32,14 +32,18 @@ public class VoiceActivity extends Activity {
         setContentView(R.layout.main2);
     }
 
-	@Override
+	/**
+	 * Set up the activity when the main screen is brought up
+	 */
 	public void onResume(){
 		super.onResume();
-		
+		//Retrieve the user information shared across the application
         SharedPreferences userData = getSharedPreferences("UserData", 0);
         if(!userData.contains("Id")){
+        	//no user is found
         	currentUser = null;
         } else {
+        	//parse the user data
         	id = Long.parseLong(userData.getString("Id", "-1"));
         	name = userData.getString("Name", "Not found");
         	address = userData.getString("Address", "Not found");
