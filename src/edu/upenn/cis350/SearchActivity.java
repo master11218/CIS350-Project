@@ -10,6 +10,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+/**
+ * This is the page that allows the user to perform search on providers.
+ * The user can search the provider by keyword and filter the result by 
+ * other criteria
+ * @author henryou
+ *
+ */
 public class SearchActivity extends Activity{
 	Spinner parking_spinner;
 	Spinner newPatient_spinner;
@@ -25,10 +32,10 @@ public class SearchActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
 
-        //Initialize the spinners
+        //Initialize the spinners for the filter criteria
         this.initializeSpinners();
         
-        //Initialize the EditText
+        //Initialize the EditText for search by distance and search by provider name
         this.provider_name = (EditText)findViewById(R.id.search_provider_name);
         this.distance = (EditText)findViewById(R.id.search_distance);
         		
@@ -46,6 +53,7 @@ public class SearchActivity extends Activity{
 	
 	/** 
 	 * This is the button listener that invokes the search result page.
+	 * It passes all the user criteria to the SearchResultActivity 
 	 */
 	private class searchResultInvoker implements OnClickListener{
 
@@ -54,17 +62,37 @@ public class SearchActivity extends Activity{
 			Intent i = new Intent(SearchActivity.this, SearchResultActivity.class);
 			
 			//Pass all the parameters into the intent			
-			i.putExtra("provider_name",provider_name.getText().toString());
-			i.putExtra("has_parking", parking_spinner.getSelectedItem().toString().toLowerCase());
-			i.putExtra("accepting_new", newPatient_spinner.getSelectedItem().toString().toLowerCase());
-			i.putExtra("handicap", handicap_spinner.getSelectedItem().toString().toLowerCase());
-			i.putExtra("appointment_only", appointmentonly_spinner.getSelectedItem().toString().toLowerCase());
-			i.putExtra("credit_card", creditcard_spinner.getSelectedItem().toString().toLowerCase());
-			i.putExtra("type", providertype_spinner.getSelectedItem().toString().toLowerCase());
-			i.putExtra("distance", distance.getText().toString());
+			i.putExtra("provider_name",getEditTextEntry(provider_name));
+			i.putExtra("has_parking", getSpinnerSelection(parking_spinner));
+			i.putExtra("accepting_new", getSpinnerSelection(newPatient_spinner));
+			i.putExtra("handicap", getSpinnerSelection(handicap_spinner));
+			i.putExtra("appointment_only", getSpinnerSelection(appointmentonly_spinner));
+			i.putExtra("credit_card", getSpinnerSelection(creditcard_spinner));
+			i.putExtra("type", getSpinnerSelection(providertype_spinner));
+			i.putExtra("distance", getEditTextEntry(distance));
 			
 			//Add more information to the intent
 			startActivity(i);
+		}
+
+		/**
+		 * Return the text of the selected item in the spinner
+		 * Note that for consistency all the text is converted to 
+		 * lowercase
+		 * @param spinner
+		 * @return
+		 */
+		private String getSpinnerSelection(Spinner spinner) {
+			return spinner.getSelectedItem().toString().toLowerCase();
+		}
+		
+		/**
+		 * Return the text of the EditText
+		 * @param input
+		 * @return
+		 */
+		private String getEditTextEntry(EditText input){
+			return input.getText().toString();
 		}
 	}
 	
@@ -73,45 +101,37 @@ public class SearchActivity extends Activity{
 	 */
 	private void initializeSpinners() {
 		//The spinner for parking
-        parking_spinner = (Spinner) findViewById(R.id.parking_spinner);
-        ArrayAdapter<CharSequence> parking_adapter = ArrayAdapter.createFromResource(
-                this, R.array.parking_array, android.R.layout.simple_spinner_item);
-        parking_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        parking_spinner.setAdapter(parking_adapter);
+        this.parking_spinner = this.createSpinner(R.id.parking_spinner,R.array.parking_array);
         
         //The spinner for acceptNewPatient
-        newPatient_spinner = (Spinner) findViewById(R.id.newpatient_spinner);
-        ArrayAdapter<CharSequence> newPatient_adapter = ArrayAdapter.createFromResource(
-                this, R.array.newpatient_array, android.R.layout.simple_spinner_item);
-        newPatient_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        newPatient_spinner.setAdapter(newPatient_adapter);
-
+        this.newPatient_spinner = this.createSpinner(R.id.newpatient_spinner, R.array.newpatient_array);
+        
         //The spinner for handicap accessibility
-        handicap_spinner = (Spinner) findViewById(R.id.handicap_spinner);
-        ArrayAdapter<CharSequence> handicap_adapter = ArrayAdapter.createFromResource(
-                this, R.array.handicap_array, android.R.layout.simple_spinner_item);
-        handicap_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        handicap_spinner.setAdapter(handicap_adapter);
+        this.handicap_spinner = this.createSpinner(R.id.handicap_spinner,R.array.handicap_array);
         
         //The spinner for accepting credit card
-        creditcard_spinner = (Spinner) findViewById(R.id.creditcard_spinner);
-        ArrayAdapter<CharSequence> creditcard_adapter = ArrayAdapter.createFromResource(
-                this, R.array.creditcard_array, android.R.layout.simple_spinner_item);
-        creditcard_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        creditcard_spinner.setAdapter(creditcard_adapter);
+        this.creditcard_spinner = this.createSpinner(R.id.creditcard_spinner, R.array.creditcard_array);
         
         //The spinner for appointment only
-        appointmentonly_spinner = (Spinner) findViewById(R.id.appointmentonly_spinner);
-        ArrayAdapter<CharSequence> appointmentonly_adapter = ArrayAdapter.createFromResource(
-                this, R.array.appointmentonly_array, android.R.layout.simple_spinner_item);
-        appointmentonly_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        appointmentonly_spinner.setAdapter(appointmentonly_adapter);
+        this.appointmentonly_spinner = this.createSpinner(R.id.appointmentonly_spinner, R.array.appointmentonly_array);
         
         //The spinner for provider type
-        providertype_spinner = (Spinner) findViewById(R.id.providertype_spinner);
-        ArrayAdapter<CharSequence> providertype_adapter = ArrayAdapter.createFromResource(
-                this, R.array.providertype_array, android.R.layout.simple_spinner_item);
-        providertype_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        providertype_spinner.setAdapter(providertype_adapter);
+        this.providertype_spinner = this.createSpinner(R.id.providertype_spinner, R.array.providertype_array);
+	}
+
+	/**
+	 * This method retrieves a spinner by a spinnerId and set the adapter
+	 * of that spinner with the array from the choiceArrayId
+	 * @param spinnerId The id of the spinner to retrieve
+	 * @param choiceArrayId The id of the array of the choice array
+	 * @return
+	 */
+	private Spinner createSpinner(int spinnerId, int choiceArrayId) {
+		Spinner spinner = (Spinner) findViewById(spinnerId);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, choiceArrayId, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);		
+		return spinner;
 	}
 }

@@ -21,6 +21,14 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/**
+ * This activity displays all the result from the search page. It first gets the
+ * user search criteria from the searchActivity and then load the matched
+ * information by making a request to the backend server
+ * 
+ * @author henryou
+ * 
+ */
 public class SearchResultActivity extends Activity{
 
 	private MyLocation myLocation = new MyLocation();
@@ -66,8 +74,6 @@ public class SearchResultActivity extends Activity{
 			this.providerList = (ListView)this.findViewById(R.id.search_result_list);
 			this.providerList.setAdapter(new SearchResultAdapter(this));
         
-			
-			
 			
 			//TODO: next step: buffer the output, generate 10 outputs at a time
         }
