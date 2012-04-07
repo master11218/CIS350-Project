@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class HistoryActivity extends Activity{
+	private static final String BASE_URL = "http://spectrackulo.us/350/history.php?uid=";
 	private ArrayList<Rating> _ratings;
 	private ListView m_results;
 	
@@ -42,19 +43,19 @@ public class HistoryActivity extends Activity{
 		long id = (Long)getIntent().getSerializableExtra("id");
 
 		//The uri is the connection to our back-end
-		String uri = "http://spectrackulo.us/350/history.php?uid=" + id;
+		String uri = BASE_URL + id;
 		
 
 		HttpRequest http = new HttpRequest();
 		
 		//historyAsString is a String that contains encoded information for the provider
-		String historyAsString = http.execHttpRequest(uri, HttpRequest.HttpMethod.Get, "");
+		String historyJSON = http.execHttpRequest(uri, HttpRequest.HttpMethod.Get, "");
 		
 		//ratings is an array which contains all of Ratings instances pertaining to a provider
 		_ratings = new ArrayList<Rating>();
 		try{
 			//First, obtain the user's history in JSON format
-			JSONObject jsonHistory = new JSONObject(historyAsString);
+			JSONObject jsonHistory = new JSONObject(historyJSON);
 			//extract reviews such that it contains the reviews in a JSONArray
 			JSONArray reviews = jsonHistory.getJSONArray("reviews");
 			
@@ -70,11 +71,22 @@ public class HistoryActivity extends Activity{
 				_ratings.add(currentRating);
 			}
 		} catch (Exception e){
+			//for logging
 			e.printStackTrace();
 		}
 		
 	}
 	
+	@Override
+	public void onResume(){
+		super.onResume();
+		if (_ratings.size()<1) {
+			TextView nohistory= (TextView)this.findViewById(R.id.history_no_history_message);
+			nohistory.setText("You have not rated any providers yet");
+		}
+	}
+	
+
 	class HistoryAdapter extends BaseAdapter{
 		private Context m_context;
 		public HistoryAdapter(Context c){
@@ -158,12 +170,4 @@ public class HistoryActivity extends Activity{
 		}
 	}
 
-	@Override
-	public void onResume(){
-		super.onResume();
-		if (_ratings.size()<1) {
-			TextView nohistory= (TextView)this.findViewById(R.id.history_no_history_message);
-			nohistory.setText("You have not rated any providers yet");
-		}
-	}
 }
