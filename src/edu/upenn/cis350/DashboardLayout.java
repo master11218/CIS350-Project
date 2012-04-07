@@ -31,8 +31,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Custom layout that arranges children in a grid-like manner, optimizing for even horizontal and
- * vertical whitespace.
+ * Dashboard layout which spaces the visible children equally
+ * @author DXU
+ *
  */
 public class DashboardLayout extends ViewGroup {
 
@@ -40,6 +41,18 @@ public class DashboardLayout extends ViewGroup {
 
     private int mMaxChildWidth = 0;
     private int mMaxChildHeight = 0;
+    
+    
+    private int width;
+    private int height;
+    private int bestSpaceDifference;
+    private int spaceDifference;
+    private int visibleCount;
+    private int hSpace;
+    private int vSpace;
+
+    private int cols;
+    private int rows;
 
     public DashboardLayout(Context context) {
         super(context, null);
@@ -83,13 +96,13 @@ public class DashboardLayout extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        int width = r - l;
-        int height = b - t;
+        width = r - l;
+        height = b - t;
 
         final int count = getChildCount();
 
         // Calculate the number of visible children.
-        int visibleCount = 0;
+        visibleCount = 0;
         for (int i = 0; i < count; i++) {
             final View child = getChildAt(i);
             if (child.getVisibility() == GONE) {
@@ -102,17 +115,53 @@ public class DashboardLayout extends ViewGroup {
             return;
         }
 
-        // Calculate what number of rows and columns will optimize for even horizontal and
+        optimizeLayout();
+
+        // Lay out children based on calculated best-fit number of rows and cols.
+
+        // If we chose a layout that has negative horizontal or vertical space, force it to zero.
+        hSpace = Math.max(0, hSpace);
+        vSpace = Math.max(0, vSpace);
+
+        // Re-use width/height variables to be child width/height.
+        width = (width - hSpace * (cols + 1)) / cols;
+        height = (height - vSpace * (rows + 1)) / rows;
+        
+
+
+        int left, top;
+        int col, row;
+        int visibleIndex = 0;
+        for (int i = 0; i < count; i++) {
+            final View child = getChildAt(i);
+            if (child.getVisibility() == GONE) {
+                continue;
+            }
+
+            row = visibleIndex / cols;
+            col = visibleIndex % cols;
+
+            left = l + hSpace * (col + 1) + width * col;
+            top = t + vSpace * (row + 1) + height * row;
+
+            child.layout(left, top,
+                    (hSpace == 0 && col == cols - 1) ? r : (left + width),
+                    (vSpace == 0 && row == rows - 1) ? b : (top + height));
+            ++visibleIndex;
+        }
+    }
+    public void optimizeLayout() {
+    	// Calculate what number of rows and columns will optimize for even horizontal and
         // vertical whitespace between items. Start with a 1 x N grid, then try 2 x N, and so on.
-        int bestSpaceDifference = Integer.MAX_VALUE;
-        int spaceDifference;
+        bestSpaceDifference = Integer.MAX_VALUE;
+        
 
         // Horizontal and vertical space between items
-        int hSpace = 0;
-        int vSpace = 0;
+        hSpace = 0;
+        vSpace = 0;
 
-        int cols = 1;
-        int rows;
+        cols = 1;
+        
 
         while (true) {
             rows = (visibleCount - 1) / cols + 1;
@@ -144,37 +193,6 @@ public class DashboardLayout extends ViewGroup {
             }
 
             ++cols;
-        }
-
-        // Lay out children based on calculated best-fit number of rows and cols.
-
-        // If we chose a layout that has negative horizontal or vertical space, force it to zero.
-        hSpace = Math.max(0, hSpace);
-        vSpace = Math.max(0, vSpace);
-
-        // Re-use width/height variables to be child width/height.
-        width = (width - hSpace * (cols + 1)) / cols;
-        height = (height - vSpace * (rows + 1)) / rows;
-
-        int left, top;
-        int col, row;
-        int visibleIndex = 0;
-        for (int i = 0; i < count; i++) {
-            final View child = getChildAt(i);
-            if (child.getVisibility() == GONE) {
-                continue;
-            }
-
-            row = visibleIndex / cols;
-            col = visibleIndex % cols;
-
-            left = l + hSpace * (col + 1) + width * col;
-            top = t + vSpace * (row + 1) + height * row;
-
-            child.layout(left, top,
-                    (hSpace == 0 && col == cols - 1) ? r : (left + width),
-                    (vSpace == 0 && row == rows - 1) ? b : (top + height));
-            ++visibleIndex;
         }
     }
 }

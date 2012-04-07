@@ -25,6 +25,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/**
+ * Contains information about a provider
+ * @author DXU
+ *
+ */
 public class ProviderProfileActivity extends Activity{
 
 	private static final String BASE_URL="http://spectrackulo.us/350/ratings.php?mode=view&pid=";
@@ -48,7 +53,9 @@ public class ProviderProfileActivity extends Activity{
 	private Button PCP; 
 	private Button specialist;
 
-	@Override
+	/**
+	 * Create each provider's profile
+	 */
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
@@ -89,8 +96,7 @@ public class ProviderProfileActivity extends Activity{
 		//populate ratings, for RatingAdapter
 		populateRatings();
 
-		// initialize buttons, map, review, passing on the now-initialized
-		// provider
+		// initialize buttons, map, review, passing on the now-initialized provider
 		m_button_map.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				if (v == m_button_map) {
