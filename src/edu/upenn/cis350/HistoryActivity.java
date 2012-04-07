@@ -50,7 +50,7 @@ public class HistoryActivity extends Activity{
 		//historyAsString is a String that contains encoded information for the provider
 		String historyAsString = http.execHttpRequest(uri, HttpRequest.HttpMethod.Get, "");
 		
-		//ratings is an array which contains all of Ratings instances pertaining to a provider
+		//ratings is an ArrayList which contains all of Ratings instances pertaining to a provider
 		_ratings = new ArrayList<Rating>();
 		try{
 			//First, obtain the user's history in JSON format
