@@ -2,7 +2,8 @@ package edu.upenn.cis350;
 
 import java.util.ArrayList;
 
-import edu.upenn.cis350.MyLocation.LocationResult;
+import edu.upenn.cis350.util.MyLocation;
+import edu.upenn.cis350.util.MyLocation.LocationResult;
 import edu.upenn.cis350.entities.Provider;
 import edu.upenn.cis350.util.ProviderHelper;
 import android.app.Activity;

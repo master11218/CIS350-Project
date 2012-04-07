@@ -3,7 +3,6 @@ package edu.upenn.cis350.util;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import edu.upenn.cis350.entities.Provider;

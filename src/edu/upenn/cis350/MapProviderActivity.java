@@ -7,7 +7,8 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
-import edu.upenn.cis350.MyLocation.LocationResult;
+import edu.upenn.cis350.util.MyLocation;
+import edu.upenn.cis350.util.MyLocation.LocationResult;
 import edu.upenn.cis350.entities.Provider;
 import edu.upenn.cis350.entities.Rating;
 import edu.upenn.cis350.util.HttpRequest;
