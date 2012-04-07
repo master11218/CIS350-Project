@@ -24,7 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class HistoryActivity extends Activity{
-	private static final String BASE_URL = "http://spectrackulo.us/350/history.php?uid=";
+	private static final String BASE_P_URL = "http://spectrackulo.us/350/history.php?uid=";
 	private ArrayList<Rating> _ratings;
 	private ListView m_results;
 	
@@ -43,7 +43,7 @@ public class HistoryActivity extends Activity{
 		long id = (Long)getIntent().getSerializableExtra("id");
 
 		//The uri is the connection to our back-end
-		String uri = BASE_URL + id;
+		String uri = BASE_P_URL + id;
 		
 
 		HttpRequest http = new HttpRequest();
