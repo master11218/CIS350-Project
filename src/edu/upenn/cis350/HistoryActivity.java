@@ -27,7 +27,7 @@ public class HistoryActivity extends Activity{
 	private static final String BASE_P_URL = "http://spectrackulo.us/350/history.php?uid=";
 	private ArrayList<Rating> _ratings;
 	private ListView m_results;
-	
+
 	@Override
 	/**
 	 * Set up the view each time the History Activity is brought up
@@ -36,47 +36,56 @@ public class HistoryActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.history);
 		//load the List to be used in the ListView in m_results
-        m_results = (ListView)this.findViewById(R.id.history_res);
-        //loads the Adapter required for adapting the data to the ListView
-        m_results.setAdapter(new HistoryAdapter(this));
-        //extracts the id from the Intent in Long format
-		long id = (Long)getIntent().getSerializableExtra("id");
+		m_results = (ListView)this.findViewById(R.id.history_res);
+		//loads the Adapter required for adapting the data to the ListView
+		m_results.setAdapter(new HistoryAdapter(this));
+		//extracts the id from the Intent in Long format
+		long user_id = (Long)getIntent().getSerializableExtra("id");
 
 		//The uri is the connection to our back-end
-		String uri = BASE_P_URL + id;
-		
+		String uri = BASE_P_URL + user_id;
 
 		HttpRequest http = new HttpRequest();
-		
-		//historyAsString is a String that contains encoded information for the provider
-		String historyJSON = http.execHttpRequest(uri, HttpRequest.HttpMethod.Get, "");
-		
+
+		//history_JSON is a String that contains encoded information for the provider
+		String history_JSON = http.execHttpRequest(uri, HttpRequest.HttpMethod.Get, "");
+
 		//ratings is an ArrayList which contains all of Ratings instances pertaining to a provider
-		_ratings = new ArrayList<Rating>();
+		_ratings = populateRatings(user_id, history_JSON);	
+	}
+
+	/**
+	 * Helper method that parses a JSON object to return an ArrayList of Ratings
+	 * @param user_id The user id of the person who we want ratings for.
+	 * @param history_JSON The string representation of the JSON object we want to parse.
+	 * @return The ArrayList of the Ratings from the JSON object
+	 */
+	private ArrayList<Rating> populateRatings(long user_id, String history_JSON){
+		ArrayList<Rating> ratings = new ArrayList<Rating>();
 		try{
-			//First, obtain the user's history in JSON format
-			JSONObject jsonHistory = new JSONObject(historyJSON);
-			//extract reviews such that it contains the reviews in a JSONArray
+			//First, obtain the user's history in JSON format and put it into a JSONArray
+			JSONObject jsonHistory = new JSONObject(history_JSON);
 			JSONArray reviews = jsonHistory.getJSONArray("reviews");
-			
+
 			//Add to the _ratings array a new Rating instance for each provider
 			for(int i=0;i < reviews.length();i++){						
 				//current contains the information on the provider being analyzed, in JSON format
 				JSONObject current = reviews.getJSONObject(i);
+				long provider_id = Long.parseLong(current.getString("pid"));
+				String time = current.getString("time");
+				String review = current.getString("review");
+				int rating = Integer.parseInt(current.getString("rating"));
 				//Create a Ratings instance for each provider and add to the _ratings array
-				Rating currentRating = new Rating(
-						id, Long.parseLong(current.getString("pid")), 
-						current.getString("time"), current.getString("review"),
-						Integer.parseInt(current.getString("rating")));
-				_ratings.add(currentRating);
+				Rating currentRating = new Rating(user_id, provider_id, time, review, rating);
+				ratings.add(currentRating);
 			}
 		} catch (Exception e){
 			//for logging
 			e.printStackTrace();
-		}
-		
+		}	
+		return ratings;
 	}
-	
+
 	@Override
 	public void onResume(){
 		super.onResume();
@@ -85,58 +94,66 @@ public class HistoryActivity extends Activity{
 			nohistory.setText("You have not rated any providers yet");
 		}
 	}
-	
+
 
 	class HistoryAdapter extends BaseAdapter{
 		private Context m_context;
+
 		public HistoryAdapter(Context c){
 			m_context = c;
 		}
+
 		public int getCount() {
 			if(_ratings != null)
 				return _ratings.size();
 			else
 				return 0;
 		}
+
 		public Object getItem(int position) {
 			if(_ratings != null)
 				return _ratings.get(position);
 			else
 				return 0;
 		}
+
 		public long getItemId(int position) {
 			return position;
 		}
+
 		public View getView(final int position, View convertView, ViewGroup parent) {
-	        RelativeLayout list_result;
-	        if(convertView == null){
-	        	LayoutInflater inf = (LayoutInflater)m_context.getSystemService(
+			RelativeLayout list_result;
+			if(convertView == null){
+				LayoutInflater inf = (LayoutInflater)m_context.getSystemService(
 						Context.LAYOUT_INFLATER_SERVICE);
 				list_result = (RelativeLayout) inf.inflate(R.layout.history_result, null);
-	        }
-	        else
-	        	list_result = (RelativeLayout)convertView;
-	        
-	        //populate the inflated view.
-	        TextView providerName = (TextView)list_result.findViewById(R.id.history_activity_provider_name);
-	        String uri = "http://spectrackulo.us/350/provider.php?pid=" + _ratings.get(position).getProvider();
-	        System.out.println(uri);
+			} else {
+				list_result = (RelativeLayout)convertView;
+			}
+
+			//get the current rating object
+			Rating currentRating = _ratings.get(position);
+
+			//populate the inflated view.
+			TextView providerName = (TextView)list_result.findViewById(R.id.history_activity_provider_name);
+			String uri = "http://spectrackulo.us/350/provider.php?pid=" + currentRating.getProvider();
 			HttpRequest http = new HttpRequest();
 			final String pid = http.execHttpRequest(uri, HttpRequest.HttpMethod.Get, "");
 			providerName.setText(pid);
-	        
-	        TextView rating = (TextView)list_result.findViewById(R.id.history_activity_rating);
-	        rating.setText("Rating: " + _ratings.get(position).getRating().toString());
-	        
-	        TextView review = (TextView)list_result.findViewById(R.id.history_activity_review);
-	        review.setText(_ratings.get(position).getReview());
 
-	        TextView date = (TextView)list_result.findViewById(R.id.history_activity_date_visited);
-	        date.setText(_ratings.get(position).getDate());
+			//get the rating
+			Integer rating_int = currentRating.getRating();
+			TextView rating_textBox = (TextView)list_result.findViewById(R.id.history_activity_rating);
+			rating_textBox.setText("Rating: " + rating_int.toString());
 
-	        Button b = (Button)list_result.findViewById(R.id.history_activity_button);
-	        b.setOnClickListener(new OnClickListener(){
-				
+			TextView review = (TextView)list_result.findViewById(R.id.history_activity_review);
+			review.setText(currentRating.getReview());
+
+			TextView date = (TextView)list_result.findViewById(R.id.history_activity_date_visited);
+			date.setText(currentRating.getDate());
+
+			Button b = (Button)list_result.findViewById(R.id.history_activity_button);
+			b.setOnClickListener(new OnClickListener(){
 				public void onClick(View arg0) {
 					Intent intent = new Intent(m_context, ProviderProfileActivity.class);
 					String uri = "http://spectrackulo.us/350/?pid=" + _ratings.get(position).getProvider();
@@ -149,25 +166,49 @@ public class HistoryActivity extends Activity{
 						JSONObject fakeJson = new JSONObject(provider);
 						String actualJsonString = fakeJson.getString("provider");
 						JSONObject json = new JSONObject(actualJsonString);
-						System.out.println(json.getString("name"));
-						
-						buttonProvider = new Provider(Long.parseLong(json.getString("pid")), json.getString("name"), json.getString("address"), 
-								json.getString("city"), json.getString("state"), json.getString("zip"), json.getString("phone"),
-								json.getString("accepting_new"), json.getString("has_parking"),
-								json.getString("type"), json.getString("credit_cards"), json.getString("handicap_access"),
-								json.getString("appointment_only"), Double.parseDouble(json.getString("average_rating")),
-								Double.parseDouble(json.getString("longitude")), Double.parseDouble(json.getString("latitude")), json.getString("website"), json.getString("hours"));
-						
+
+						buttonProvider = generateProviderFromJSON(json);
+
 						intent.putExtra("providers", buttonProvider);
-						System.out.println(buttonProvider);
 						startActivity(intent);
 					} catch (Exception e){
 						e.printStackTrace();
 					}
 				}
-	        });
+			});
 			return list_result;
 		}
-	}
 
+		private Provider generateProviderFromJSON(JSONObject json){
+			Provider ret_provider;
+			try{
+				long provider_id = Long.parseLong(json.getString("pid"));
+				String name = json.getString("name");
+				String address = json.getString("address");
+				String city = json.getString("city");
+				String state = json.getString("state");
+				String zip = json.getString("zip");
+				String phone = json.getString("phone");
+				String accepting_new = json.getString("accepting_new");
+				String has_parking = json.getString("has_parking");
+				String type = json.getString("type");
+				String credit_cards = json.getString("credit_cards");
+				String handicap_access = json.getString("handicap_access");
+				String appointment_only = json.getString("appointment_only");
+				Double average_rating = Double.parseDouble(json.getString("average_rating"));
+				Double longitude = Double.parseDouble(json.getString("longitude"));
+				Double latitude = Double.parseDouble(json.getString("latitude"));
+				String website = json.getString("website");
+				String hours = json.getString("hours");
+
+				ret_provider = new Provider(provider_id, name, address, city, state, zip, phone, accepting_new, 
+						has_parking, type, credit_cards, handicap_access, appointment_only, average_rating,
+						longitude, latitude, website, hours);
+				return ret_provider;
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+			return null;
+		}
+	}
 }
