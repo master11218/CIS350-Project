@@ -112,7 +112,7 @@ public class ProviderProfileActivity extends Activity{
 	 */
 	private void addDescriptionToast(Button icon, final String description) {
 		icon.setOnClickListener(new OnClickListener() {
-			@Override
+			
 			public void onClick(View v) {
 				Context context = getApplicationContext();
 				Toast toast = Toast.makeText(context, description,Toast.LENGTH_SHORT);
