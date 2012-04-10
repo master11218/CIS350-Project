@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import edu.upenn.cis350.entities.Provider;
 import edu.upenn.cis350.entities.Rating;
-import edu.upenn.cis350.util.HttpRequest;
+import edu.upenn.cis350.util.InternetHelper;
 import edu.upenn.cis350.util.ProviderHelper;
 
 import android.app.Activity;
@@ -46,10 +46,8 @@ public class HistoryActivity extends Activity{
 		//The uri is the connection to our back-end
 		String uri = BASE_P_URL + user_id;
 
-		HttpRequest http = new HttpRequest();
-
 		//history_JSON is a String that contains encoded information for the provider
-		String history_JSON = http.execHttpRequest(uri, HttpRequest.HttpMethod.Get, "");
+		String history_JSON = InternetHelper.httpGetRequest(uri);
 
 		//ratings is an ArrayList which contains all of Ratings instances pertaining to a provider
 		_ratings = populateRatings(user_id, history_JSON);	
@@ -138,8 +136,8 @@ public class HistoryActivity extends Activity{
 			//populate the inflated view.
 			TextView providerName = (TextView)list_result.findViewById(R.id.history_activity_provider_name);
 			String uri = "http://spectrackulo.us/350/provider.php?pid=" + currentRating.getProvider();
-			HttpRequest http = new HttpRequest();
-			final String pid = http.execHttpRequest(uri, HttpRequest.HttpMethod.Get, "");
+			
+			final String pid = InternetHelper.httpGetRequest(uri);
 			providerName.setText(pid);
 
 			//get the rating
@@ -159,9 +157,9 @@ public class HistoryActivity extends Activity{
 					Intent intent = new Intent(m_context, ProviderProfileActivity.class);
 					String uri = "http://spectrackulo.us/350/?pid=" + _ratings.get(position).getProvider();
 
-					HttpRequest http = new HttpRequest();
-					String provider = http.execHttpRequest(uri, HttpRequest.HttpMethod.Get, "");
-
+					String provider = InternetHelper.httpGetRequest(uri);
+							
+					
 					Provider buttonProvider;
 					try{
 						JSONObject fakeJson = new JSONObject(provider);

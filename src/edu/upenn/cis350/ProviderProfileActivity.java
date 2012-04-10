@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import edu.upenn.cis350.entities.Provider;
 import edu.upenn.cis350.entities.Rating;
-import edu.upenn.cis350.util.HttpRequest;
+import edu.upenn.cis350.util.InternetHelper;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -179,10 +179,9 @@ public class ProviderProfileActivity extends Activity{
 	
 	private void populateRatings() {
 		// make the HttpRequest
-		String uri = BASE_URL + m_provider.getID();
-		HttpRequest requestManager = new HttpRequest();
-		String ratingsJSON = requestManager.execHttpRequest(uri,
-				HttpRequest.HttpMethod.Get, "");
+		String uri = BASE_URL + m_provider.getID();		
+		String ratingsJSON = InternetHelper.httpGetRequest(uri);
+		
 		// parse the JSON and populate m_ratings from JSON for m_provider
 		try {
 			JSONObject json = new JSONObject(ratingsJSON);

@@ -7,11 +7,11 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
+import edu.upenn.cis350.util.InternetHelper;
 import edu.upenn.cis350.util.MyLocation;
 import edu.upenn.cis350.util.MyLocation.LocationResult;
 import edu.upenn.cis350.entities.Provider;
 import edu.upenn.cis350.entities.Rating;
-import edu.upenn.cis350.util.HttpRequest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -151,11 +151,8 @@ public class MapProviderActivity extends MapActivity {
 	// method to draw the path.
 	private void drawPath(GeoPoint current, GeoPoint destination, int color) {
 		String mapURL = buildMapsURL(current, destination);
-
-		HttpRequest http = new HttpRequest();
-		String encoded = http.execHttpRequest(mapURL,
-				HttpRequest.HttpMethod.Get, null);
-
+		String encoded = InternetHelper.httpGetRequest(mapURL);
+		
 		decodePoints(encoded);
 
 		for (int i = 1; i < m_pathList.size(); i++) {
