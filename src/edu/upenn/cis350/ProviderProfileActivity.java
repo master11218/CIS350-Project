@@ -27,12 +27,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
-<<<<<<< HEAD
- * This Activity displays the profile of a provider. 
-=======
  * Contains information about a provider
  * @author DXU
->>>>>>> e515ea7b74160d59dc63c28c23d2248fb9dfde4e
  *
  */
 public class ProviderProfileActivity extends Activity{
@@ -112,7 +108,6 @@ public class ProviderProfileActivity extends Activity{
 	 */
 	private void addDescriptionToast(Button icon, final String description) {
 		icon.setOnClickListener(new OnClickListener() {
-			
 			public void onClick(View v) {
 				Context context = getApplicationContext();
 				Toast toast = Toast.makeText(context, description,Toast.LENGTH_SHORT);
@@ -247,31 +242,32 @@ public class ProviderProfileActivity extends Activity{
 		public RatingAdapter(Context c){
 			m_context = c;
 		}
+		
 		public int getCount() {
 			if(m_ratings != null)
 				return m_ratings.size();
 			else
 				return 0;
 		}
+		
 		public Object getItem(int position) {
 			if(m_ratings != null)
 				return m_ratings.get(position);
 			else
 				return 0;
 		}
+		
 		public long getItemId(int position) {
 			return position;
 		}
+		
 		public View getView(final int position, View convertView, ViewGroup parent) {
-
-
 			//inflate the view
 			LinearLayout list_result;
 			if(convertView == null){
 				LayoutInflater inf = (LayoutInflater)m_context.getSystemService(
 						Context.LAYOUT_INFLATER_SERVICE);
 				list_result = (LinearLayout) inf.inflate(R.layout.provider_pf_comment, null);
-
 			}
 			else
 				list_result = (LinearLayout)convertView;
