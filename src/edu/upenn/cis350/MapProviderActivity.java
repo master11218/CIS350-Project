@@ -256,10 +256,7 @@ public class MapProviderActivity extends MapActivity {
 					(int) (_providers.get(i).getLatitude() * 1000000),
 					(int) (_providers.get(i).getLongitude() * 1000000));
 			OverlayItem overlayitem = new OverlayItem(p, "", "");
-			System.out
-					.println(p.getLatitudeE6() + " AND " + p.getLongitudeE6());
 			itemizedoverlay.addOverlay(overlayitem);
-			System.out.println(_providers.get(i).getName());
 		}
 
 		// adding yourself comes after the location has been received.
