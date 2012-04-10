@@ -21,16 +21,16 @@ public class ProviderHelper {
 	
 	/**
 	 * This is a helper method for the search It will return a list of satisfied
-	 * providers according to the search criteria
+	 * providers according to the search criteria by making a request to the backend database
 	 * 
-	 * @param provider_name
-	 * @param has_parking
-	 * @param accepting_new
-	 * @param handicap
-	 * @param appointment_only
-	 * @param credit_card
-	 * @param type
-	 * @param distance
+	 * @param provider_name The name of the provider
+	 * @param has_parking whether the provider facility has parking
+	 * @param accepting_new whether the provider accepts new patients
+	 * @param handicap Handicap facility available
+	 * @param appointment_only Is the provider appointment only
+	 * @param credit_card Accepts credit card or not
+	 * @param type Primary Care or Specialist
+	 * @param distance 
 	 * @param m_longitude
 	 * @param m_latitude
 	 * @return the list of satisfied provider, or an empty list if no provider
@@ -63,8 +63,8 @@ public class ProviderHelper {
 		//Send the request
 		String jsonString = InternetHelper.httpGetRequest(urlBuff.toString());
 		
-		System.out.println(urlBuff.toString());
-		System.out.println(jsonString);
+//		System.out.println(urlBuff.toString());
+//		System.out.println(jsonString);
 		
 		if (jsonString!=null && jsonString.length()>0){
 			allproviders = ProviderHelper.createListOfProvidersFromJson(jsonString);
