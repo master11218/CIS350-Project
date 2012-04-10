@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import edu.upenn.cis350.entities.Provider;
 import edu.upenn.cis350.entities.Rating;
 import edu.upenn.cis350.util.HttpRequest;
+import edu.upenn.cis350.util.ProviderHelper;
 
 import android.app.Activity;
 import android.content.Context;
@@ -167,7 +168,7 @@ public class HistoryActivity extends Activity{
 						String actualJsonString = fakeJson.getString("provider");
 						JSONObject json = new JSONObject(actualJsonString);
 
-						buttonProvider = generateProviderFromJSON(json);
+						buttonProvider = ProviderHelper.createProviderFromJson(json);
 
 						intent.putExtra("providers", buttonProvider);
 						startActivity(intent);
@@ -177,38 +178,6 @@ public class HistoryActivity extends Activity{
 				}
 			});
 			return list_result;
-		}
-
-		private Provider generateProviderFromJSON(JSONObject json){
-			Provider ret_provider;
-			try{
-				long provider_id = Long.parseLong(json.getString("pid"));
-				String name = json.getString("name");
-				String address = json.getString("address");
-				String city = json.getString("city");
-				String state = json.getString("state");
-				String zip = json.getString("zip");
-				String phone = json.getString("phone");
-				String accepting_new = json.getString("accepting_new");
-				String has_parking = json.getString("has_parking");
-				String type = json.getString("type");
-				String credit_cards = json.getString("credit_cards");
-				String handicap_access = json.getString("handicap_access");
-				String appointment_only = json.getString("appointment_only");
-				Double average_rating = Double.parseDouble(json.getString("average_rating"));
-				Double longitude = Double.parseDouble(json.getString("longitude"));
-				Double latitude = Double.parseDouble(json.getString("latitude"));
-				String website = json.getString("website");
-				String hours = json.getString("hours");
-
-				ret_provider = new Provider(provider_id, name, address, city, state, zip, phone, accepting_new, 
-						has_parking, type, credit_cards, handicap_access, appointment_only, average_rating,
-						longitude, latitude, website, hours);
-				return ret_provider;
-			} catch (Exception e){
-				e.printStackTrace();
-			}
-			return null;
 		}
 	}
 }
