@@ -74,7 +74,6 @@ public class MapProviderActivity extends MapActivity {
 		@Override
 		public void gotLocation(Location location) {
 			if (location != null) {
-				System.out.println("INSIDE GOT LOCATION");
 				m_lat = (float) location.getLatitude();
 				m_long = (float) location.getLongitude();
 				// Save your location in the User info is set in the shared
@@ -239,7 +238,7 @@ public class MapProviderActivity extends MapActivity {
 		GeoPoint pennLocation = new GeoPoint(39951481, -75200987);
 		_myMapController.animateTo(pennLocation);
 
-		// add additional "pins" to the map
+		// setup additional "pins" to the map
 		mapOverlays = _myMapView.getOverlays();
 		Drawable drawable = this.getResources().getDrawable(
 				R.drawable.current_location_marker_bw);
@@ -247,6 +246,7 @@ public class MapProviderActivity extends MapActivity {
 				this);
 		itemizedoverlay.setProviders(_providers);
 
+		//add each pin for each provider.
 		for (int i = 0; i < _providers.size(); i++) {
 			GeoPoint p = new GeoPoint(
 					(int) (_providers.get(i).getLatitude() * 1000000),
@@ -258,6 +258,7 @@ public class MapProviderActivity extends MapActivity {
 		// adding yourself comes after the location has been received.
 		mapOverlays.add(itemizedoverlay);
 
+		//refresh map
 		_myMapView.invalidate();
 	}
 
