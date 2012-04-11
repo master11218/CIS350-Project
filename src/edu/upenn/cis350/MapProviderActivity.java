@@ -30,7 +30,7 @@ public class MapProviderActivity extends MapActivity {
 	private Float m_long;
 	private Context m_context = this;
 	private SharedPreferences settings;
-	// gloabl variable mapOverlays so that we can add personal location after
+	// global variable mapOverlays so that we can add personal location after
 	// we've received the location
 	private List<Overlay> mapOverlays;
 	private ProgressDialog m_loading_dialog;
@@ -49,7 +49,7 @@ public class MapProviderActivity extends MapActivity {
 				"Finding your current location. Please wait...", true);
 
 		// start location search
-		// LocationClick() will cause locationresult to run when finished in
+		// LocationClick() will cause location result to run when finished in
 		// thread.
 		locationClick();
 		// set up map
@@ -110,11 +110,11 @@ public class MapProviderActivity extends MapActivity {
 		Provider personal = new Provider(1, "adsf", "3400 Spruce Street",
 				"Philadelphia", "PA", "19104", "(215)662-3228", "yes", "yes",
 				"PCP", "yes", "yes", "yes", 3, 1.1, 1.1, "None", "stfu");
-		// create an arraylist just containing this to pass to the mapitemized
+		// create an array list just containing this to pass to the map itemized
 		// overlay
 		ArrayList<Provider> personal_templist = new ArrayList<Provider>();
 		personalLocationOverlay.setProviders(personal_templist);
-		// create a geopoint and overlay item for yourself.
+		// create a geo-point and overlay item for yourself.
 		GeoPoint p = new GeoPoint((int) (m_lat * 1000000),
 				(int) (m_long * 1000000));
 		OverlayItem overlayitem = new OverlayItem(p, "", "");
