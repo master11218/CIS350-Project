@@ -98,9 +98,9 @@ public class DashboardLayout extends ViewGroup {
     }
 
     @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        width = r - l;
-        height = b - t;
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        width = right - left;
+        height = bottom - top;
 
         final int count = getChildCount();
 
@@ -132,7 +132,7 @@ public class DashboardLayout extends ViewGroup {
         
 
 
-        int left, top;
+        int left_new, top_new;
         int col, row;
         int visibleIndex = 0;
         for (int i = 0; i < count; i++) {
@@ -144,12 +144,12 @@ public class DashboardLayout extends ViewGroup {
             row = visibleIndex / cols;
             col = visibleIndex % cols;
 
-            left = l + hSpace * (col + 1) + width * col;
-            top = t + vSpace * (row + 1) + height * row;
+            left_new = left + hSpace * (col + 1) + width * col;
+            top_new = top + vSpace * (row + 1) + height * row;
 
-            child.layout(left, top,
-                    (hSpace == 0 && col == cols - 1) ? r : (left + width),
-                    (vSpace == 0 && row == rows - 1) ? b : (top + height));
+            child.layout(left_new, top_new,
+                    (hSpace == 0 && col == cols - 1) ? right : (left_new + width),
+                    (vSpace == 0 && row == rows - 1) ? bottom : (top_new + height));
             ++visibleIndex;
         }
     }

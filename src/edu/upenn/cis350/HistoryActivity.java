@@ -98,8 +98,8 @@ public class HistoryActivity extends Activity{
 	class HistoryAdapter extends BaseAdapter{
 		private Context m_context;
 
-		public HistoryAdapter(Context c){
-			m_context = c;
+		public HistoryAdapter(Context context){
+			m_context = context;
 		}
 
 		public int getCount() {
@@ -151,15 +151,14 @@ public class HistoryActivity extends Activity{
 			TextView date = (TextView)list_result.findViewById(R.id.history_activity_date_visited);
 			date.setText(currentRating.getDate());
 
-			Button b = (Button)list_result.findViewById(R.id.history_activity_button);
-			b.setOnClickListener(new OnClickListener(){
+			Button button = (Button)list_result.findViewById(R.id.history_activity_button);
+			button.setOnClickListener(new OnClickListener(){
 				public void onClick(View arg0) {
 					Intent intent = new Intent(m_context, ProviderProfileActivity.class);
 					String uri = "http://spectrackulo.us/350/?pid=" + _ratings.get(position).getProvider();
 
 					String provider = InternetHelper.httpGetRequest(uri);
 							
-					
 					Provider buttonProvider;
 					try{
 						JSONObject fakeJson = new JSONObject(provider);
