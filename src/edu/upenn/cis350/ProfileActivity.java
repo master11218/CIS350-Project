@@ -1,7 +1,7 @@
 package edu.upenn.cis350;
 
 import edu.upenn.cis350.entities.User;
-import edu.upenn.cis350.util.HttpRequest;
+import edu.upenn.cis350.util.InternetHelper;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -91,14 +91,9 @@ public class ProfileActivity extends Activity{
     		gender = "Female";
 		
 		//get the user's id via the http request, and store it in the database
-		HttpRequest http = new HttpRequest();
 		String uri = "http://spectrackulo.us/350/register.php?name=" + name + 
 				"&address=" + address + "&gender=" + gender + "&email=" + email + "&phone=" + phone;
-		
-		
-		String id = http.execHttpRequest(uri, HttpRequest.HttpMethod.Get, "");
-		
-		
+		String id = InternetHelper.httpGetRequest(uri);
 		
 		//store the information on the device
 		editor.putString("Id", id);

@@ -7,7 +7,8 @@ import org.json.JSONObject;
 
 import edu.upenn.cis350.entities.Provider;
 import edu.upenn.cis350.entities.Rating;
-import edu.upenn.cis350.util.HttpRequest;
+import edu.upenn.cis350.util.InternetHelper;
+import edu.upenn.cis350.util.ProviderHelper;
 
 import android.app.Activity;
 import android.content.Context;
@@ -45,10 +46,8 @@ public class HistoryActivity extends Activity{
 		//The uri is the connection to our back-end
 		String uri = BASE_P_URL + user_id;
 
-		HttpRequest http = new HttpRequest();
-
 		//history_JSON is a String that contains encoded information for the provider
-		String history_JSON = http.execHttpRequest(uri, HttpRequest.HttpMethod.Get, "");
+		String history_JSON = InternetHelper.httpGetRequest(uri);
 
 		//ratings is an ArrayList which contains all of Ratings instances pertaining to a provider
 		_ratings = populateRatings(user_id, history_JSON);	
@@ -137,8 +136,8 @@ public class HistoryActivity extends Activity{
 			//populate the inflated view.
 			TextView providerName = (TextView)list_result.findViewById(R.id.history_activity_provider_name);
 			String uri = "http://spectrackulo.us/350/provider.php?pid=" + currentRating.getProvider();
-			HttpRequest http = new HttpRequest();
-			final String pid = http.execHttpRequest(uri, HttpRequest.HttpMethod.Get, "");
+			
+			final String pid = InternetHelper.httpGetRequest(uri);
 			providerName.setText(pid);
 
 			//get the rating
@@ -158,16 +157,16 @@ public class HistoryActivity extends Activity{
 					Intent intent = new Intent(m_context, ProviderProfileActivity.class);
 					String uri = "http://spectrackulo.us/350/?pid=" + _ratings.get(position).getProvider();
 
-					HttpRequest http = new HttpRequest();
-					String provider = http.execHttpRequest(uri, HttpRequest.HttpMethod.Get, "");
-
+					String provider = InternetHelper.httpGetRequest(uri);
+							
+					
 					Provider buttonProvider;
 					try{
 						JSONObject fakeJson = new JSONObject(provider);
 						String actualJsonString = fakeJson.getString("provider");
 						JSONObject json = new JSONObject(actualJsonString);
 
-						buttonProvider = generateProviderFromJSON(json);
+						buttonProvider = ProviderHelper.createProviderFromJson(json);
 
 						intent.putExtra("providers", buttonProvider);
 						startActivity(intent);
@@ -177,38 +176,6 @@ public class HistoryActivity extends Activity{
 				}
 			});
 			return list_result;
-		}
-
-		private Provider generateProviderFromJSON(JSONObject json){
-			Provider ret_provider;
-			try{
-				long provider_id = Long.parseLong(json.getString("pid"));
-				String name = json.getString("name");
-				String address = json.getString("address");
-				String city = json.getString("city");
-				String state = json.getString("state");
-				String zip = json.getString("zip");
-				String phone = json.getString("phone");
-				String accepting_new = json.getString("accepting_new");
-				String has_parking = json.getString("has_parking");
-				String type = json.getString("type");
-				String credit_cards = json.getString("credit_cards");
-				String handicap_access = json.getString("handicap_access");
-				String appointment_only = json.getString("appointment_only");
-				Double average_rating = Double.parseDouble(json.getString("average_rating"));
-				Double longitude = Double.parseDouble(json.getString("longitude"));
-				Double latitude = Double.parseDouble(json.getString("latitude"));
-				String website = json.getString("website");
-				String hours = json.getString("hours");
-
-				ret_provider = new Provider(provider_id, name, address, city, state, zip, phone, accepting_new, 
-						has_parking, type, credit_cards, handicap_access, appointment_only, average_rating,
-						longitude, latitude, website, hours);
-				return ret_provider;
-			} catch (Exception e){
-				e.printStackTrace();
-			}
-			return null;
 		}
 	}
 }
