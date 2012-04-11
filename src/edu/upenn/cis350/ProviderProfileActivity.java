@@ -188,11 +188,13 @@ public class ProviderProfileActivity extends Activity{
 			JSONArray reviews = json.getJSONArray("reviews");
 			for (int i = 0; i < reviews.length(); i++) {
 				JSONObject current = reviews.getJSONObject(i);
-				Rating currentRating = new Rating(Long.parseLong(current
-						.getString("uid")), Long.parseLong(current
-						.getString("pid")), current.getString("time"),
-						current.getString("review"), Integer.parseInt(current
-								.getString("rating")));
+				long user_id = Long.parseLong(current.getString("uid"));
+				long provider_id = Long.parseLong(current.getString("pid"));
+				String time = current.getString("time");
+				String review = current.getString("review");
+				int rating = Integer.parseInt(current.getString("rating"));
+				
+				Rating currentRating = new Rating(user_id, provider_id, time, review, rating);
 				m_ratings.add(currentRating);
 			}
 		} catch (Exception e) {
@@ -270,32 +272,34 @@ public class ProviderProfileActivity extends Activity{
 			}
 			else
 				list_result = (LinearLayout)convertView;
+			
+			Rating currentRating = m_ratings.get(position);
 			//populate the new view
 			//TextView tv_rating = (TextView)list_result.findViewById(R.id.providerpf_comment_rating);
-			Integer temp = m_ratings.get(position).getRating();
+			Integer rating = currentRating.getRating();
+			ImageView stars= (ImageView)list_result.findViewById(R.id.providerpf_comment_stars);
 			
-			if (temp==5) {
-				ImageView stars= (ImageView)list_result.findViewById(R.id.providerpf_comment_stars);
+			if (rating==5) {
 				stars.setImageResource(R.drawable.fivestars);
-			} else if (temp==4) {
-				ImageView stars= (ImageView)list_result.findViewById(R.id.providerpf_comment_stars);
+			} else if (rating==4) {
 				stars.setImageResource(R.drawable.fourstars);
-			} else if (temp==3) {
-				ImageView stars= (ImageView)list_result.findViewById(R.id.providerpf_comment_stars);
+			} else if (rating==3) {
 				stars.setImageResource(R.drawable.threestars);
-			} else if (temp==2) {
-				ImageView stars= (ImageView)list_result.findViewById(R.id.providerpf_comment_stars);
+			} else if (rating==2) {
 				stars.setImageResource(R.drawable.twostars);
-			} else if (temp==1) {
-				ImageView stars= (ImageView)list_result.findViewById(R.id.providerpf_comment_stars);
+			} else if (rating==1) {
 				stars.setImageResource(R.drawable.onestar);
 			}
+			
+			
+			String review = currentRating.getReview();
+			String date = currentRating.getDate();
 
 			TextView tv_provider_desc = (TextView)list_result.findViewById(R.id.providerpf_comment_review);
-			tv_provider_desc.setText(m_ratings.get(position).getReview());
+			tv_provider_desc.setText(review);
 
 			TextView tv_provider_date = (TextView)list_result.findViewById(R.id.providerpf_comment_date);
-			tv_provider_date.setText(m_ratings.get(position).getDate().toString());
+			tv_provider_date.setText(date);
 
 			return list_result;
 		}
