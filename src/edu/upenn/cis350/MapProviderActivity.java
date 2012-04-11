@@ -238,7 +238,7 @@ public class MapProviderActivity extends MapActivity {
 		GeoPoint pennLocation = new GeoPoint(39951481, -75200987);
 		_myMapController.animateTo(pennLocation);
 
-		// add additional "pins" to the map
+		// setup additional "pins" to the map
 		mapOverlays = _myMapView.getOverlays();
 		Drawable drawable = this.getResources().getDrawable(
 				R.drawable.current_location_marker_bw);
@@ -258,6 +258,7 @@ public class MapProviderActivity extends MapActivity {
 		// adding yourself comes after the location has been received.
 		mapOverlays.add(itemizedoverlay);
 
+		//refresh map
 		_myMapView.invalidate();
 	}
 
