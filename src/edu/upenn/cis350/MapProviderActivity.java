@@ -30,7 +30,7 @@ public class MapProviderActivity extends MapActivity {
 	private Float m_long;
 	private Context m_context = this;
 	private SharedPreferences settings;
-	// gloabl variable mapOverlays so that we can add personal location after
+	// global variable mapOverlays so that we can add personal location after
 	// we've received the location
 	private List<Overlay> mapOverlays;
 	private ProgressDialog m_loading_dialog;
@@ -49,7 +49,7 @@ public class MapProviderActivity extends MapActivity {
 				"Finding your current location. Please wait...", true);
 
 		// start location search
-		// LocationClick() will cause locationresult to run when finished in
+		// LocationClick() will cause location result to run when finished in
 		// thread.
 		locationClick();
 		// set up map
@@ -74,7 +74,10 @@ public class MapProviderActivity extends MapActivity {
 		@Override
 		public void gotLocation(Location location) {
 			if (location != null) {
+<<<<<<< HEAD
 				
+=======
+>>>>>>> a40623422354baa8d4277cd967e3bbe62758805b
 				m_lat = (float) location.getLatitude();
 				m_long = (float) location.getLongitude();
 				// Save your location in the User info is set in the shared
@@ -109,12 +112,17 @@ public class MapProviderActivity extends MapActivity {
 		// ratings.
 		Provider personal = new Provider(1, "adsf", "3400 Spruce Street",
 				"Philadelphia", "PA", "19104", "(215)662-3228", "yes", "yes",
+<<<<<<< HEAD
 				"PCP", "yes", "yes", "yes", 3, 1.1, 1.1, "None", "yahoo");
 		// create an arraylist just containing this to pass to the mapitemized
+=======
+				"PCP", "yes", "yes", "yes", 3, 1.1, 1.1, "None", "stfu");
+		// create an array list just containing this to pass to the map itemized
+>>>>>>> a40623422354baa8d4277cd967e3bbe62758805b
 		// overlay
 		ArrayList<Provider> personal_templist = new ArrayList<Provider>();
 		personalLocationOverlay.setProviders(personal_templist);
-		// create a geopoint and overlay item for yourself.
+		// create a geo-point and overlay item for yourself.
 		GeoPoint p = new GeoPoint((int) (m_lat * 1000000),
 				(int) (m_long * 1000000));
 		OverlayItem overlayitem = new OverlayItem(p, "", "");
@@ -239,7 +247,7 @@ public class MapProviderActivity extends MapActivity {
 		GeoPoint pennLocation = new GeoPoint(39951481, -75200987);
 		_myMapController.animateTo(pennLocation);
 
-		// add additional "pins" to the map
+		// setup additional "pins" to the map
 		mapOverlays = _myMapView.getOverlays();
 		Drawable drawable = this.getResources().getDrawable(
 				R.drawable.current_location_marker_bw);
@@ -247,6 +255,7 @@ public class MapProviderActivity extends MapActivity {
 				this);
 		itemizedoverlay.setProviders(_providers);
 
+		//add each pin for each provider.
 		for (int i = 0; i < _providers.size(); i++) {
 			GeoPoint p = new GeoPoint(
 					(int) (_providers.get(i).getLatitude() * 1000000),
@@ -258,6 +267,7 @@ public class MapProviderActivity extends MapActivity {
 		// adding yourself comes after the location has been received.
 		mapOverlays.add(itemizedoverlay);
 
+		//refresh map
 		_myMapView.invalidate();
 	}
 
