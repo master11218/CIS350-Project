@@ -131,19 +131,18 @@ public class MapProviderActivity extends MapActivity {
 			GeoPoint providerLocation = new GeoPoint(
 					(int) (temp_latitude * 1000000),
 					(int) (temp_longitude * 1000000));
-			System.out.println("INSIDE THE ONE ONLY");
+			
 			drawPath(m_current_location, providerLocation, Color.RED);
 			// Add the final pin
 			Drawable drawable = this.getResources().getDrawable(
 					R.drawable.current_location_marker_bw);
 			MapItemizedOverlay itemizedoverlay = new MapItemizedOverlay(
 					drawable, this);
-			OverlayItem tempoverlayitem = new OverlayItem(providerLocation, "",
-					"");
+			
 			itemizedoverlay.addOverlay(overlayitem);
 			mapOverlays.add(itemizedoverlay);
 		}
-		System.out.println("NEW MAPOVERLAY ADDED< SHOULD'VE RESET.");
+		
 
 		m_loading_dialog.hide();
 	}
@@ -167,7 +166,7 @@ public class MapProviderActivity extends MapActivity {
 	// decode the points
 	private void decodePoints(String encoded) {
 		// get only the encoded geopoints
-		System.out.println(encoded);
+		
 		encoded = encoded.split("points:\"")[1].split("\",")[0];
 		// replace two backslashes by one (some error from the transmission)
 		encoded = encoded.replace("\\\\", "\\");
