@@ -71,10 +71,11 @@ public class DashboardLayout extends ViewGroup {
         mMaxChildWidth = 0;
         mMaxChildHeight = 0;
 
+        int size = MeasureSpec.getSize(widthMeasureSpec);
         final int childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(
-                MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.AT_MOST);
+                size, MeasureSpec.AT_MOST);
         final int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(
-                MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.AT_MOST);
+        		size, MeasureSpec.AT_MOST);
 
         final int count = getChildCount();
         for (int i = 0; i < count; i++) {
@@ -85,8 +86,10 @@ public class DashboardLayout extends ViewGroup {
 
             child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
 
-            mMaxChildWidth = Math.max(mMaxChildWidth, child.getMeasuredWidth());
-            mMaxChildHeight = Math.max(mMaxChildHeight, child.getMeasuredHeight());
+            int childWidth = child.getMeasuredWidth();
+            int childHeight = child.getMeasuredHeight();
+            mMaxChildWidth = Math.max(mMaxChildWidth, childWidth);
+            mMaxChildHeight = Math.max(mMaxChildHeight, childHeight);
         }
 
         setMeasuredDimension(
