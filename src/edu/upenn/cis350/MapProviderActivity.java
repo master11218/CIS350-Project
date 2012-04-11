@@ -74,7 +74,7 @@ public class MapProviderActivity extends MapActivity {
 		@Override
 		public void gotLocation(Location location) {
 			if (location != null) {
-				System.out.println("INSIDE GOT LOCATION");
+				
 				m_lat = (float) location.getLatitude();
 				m_long = (float) location.getLongitude();
 				// Save your location in the User info is set in the shared
@@ -109,7 +109,7 @@ public class MapProviderActivity extends MapActivity {
 		// ratings.
 		Provider personal = new Provider(1, "adsf", "3400 Spruce Street",
 				"Philadelphia", "PA", "19104", "(215)662-3228", "yes", "yes",
-				"PCP", "yes", "yes", "yes", 3, 1.1, 1.1, "None", "stfu");
+				"PCP", "yes", "yes", "yes", 3, 1.1, 1.1, "None", "yahoo");
 		// create an arraylist just containing this to pass to the mapitemized
 		// overlay
 		ArrayList<Provider> personal_templist = new ArrayList<Provider>();
