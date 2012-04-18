@@ -21,6 +21,7 @@ public class InternetHelper {
 		String result = "";		
 		
 		try {
+			System.out.println(url);
 			HttpGet method = new HttpGet(url);			
 			HttpResponse response = client.execute(method);
 			
