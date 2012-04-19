@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +21,11 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +41,11 @@ public class ProviderProfileActivity extends Activity{
 	private TextView m_provider_phone;
 	private TextView m_provider_address;
 	private TextView m_provider_rating;
+	private Dialog dialog;
+
+	private EditText reviewText;
+	private Button reviewButton;
+	private RatingBar ratingbar;
 
 	private Button m_button_map;
 	private Button m_button_review;
@@ -145,10 +153,38 @@ public class ProviderProfileActivity extends Activity{
 		//review dialog pops up.
 		m_button_review.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				Dialog dialog = new Dialog(m_context);
+				dialog = new Dialog(m_context);
 
 				dialog.setContentView(R.layout.provider_pf_rate);
 				dialog.setTitle("Rate and Review this Provider!");
+				
+				
+				
+				reviewText = (EditText) dialog.findViewById(R.id.providerpf_rate_review);
+				reviewButton = (Button) dialog.findViewById(R.id.providerpf_rate_button_submit);
+				ratingbar = (RatingBar) dialog.findViewById(R.id.providerpf_rate_bar);
+				
+				reviewButton.setOnClickListener(new OnClickListener(){
+
+					public void onClick(View arg0) {
+						SharedPreferences settings = getSharedPreferences("UserData", 0);
+						String review = reviewText.getText().toString();
+						String id = settings.getString("Id", null);
+						Float f = ratingbar.getRating();
+						String rating = f.toString();
+						m_provider.getID();
+						String temp_base = "http://www.spectrackulo.us/350/ratings.php?mode=insert";
+						String url = temp_base + "&pid=" + m_provider.getID() + "&uid=" + id + "&rating=" + rating + "&review=" + review;
+						System.out.println(url);
+						InternetHelper.httpGetRequest(url);
+						Toast.makeText(m_context, "Review submitted!", Toast.LENGTH_LONG).show();
+						dialog.hide();
+					}
+					
+				});
+
+				
+				
 				dialog.show();
 			}
 		});
