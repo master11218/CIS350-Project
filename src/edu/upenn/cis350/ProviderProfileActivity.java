@@ -60,6 +60,8 @@ public class ProviderProfileActivity extends Activity{
 	private Button appointment; 
 	private Button PCP; 
 	private Button specialist;
+	
+	private RatingAdapter m_adapter;
 
 	/**
 	 * Create each provider's profile
@@ -72,7 +74,8 @@ public class ProviderProfileActivity extends Activity{
 		m_button_map = (Button)this.findViewById(R.id.button_providerpf_map);
 		m_button_review = (Button)this.findViewById(R.id.providerpf_rate_button);
 		m_comments = (ListView)this.findViewById(R.id.providerpf_comments);
-		m_comments.setAdapter(new RatingAdapter(m_context));
+		m_adapter = new RatingAdapter(m_context);
+		m_comments.setAdapter(m_adapter);
 
 		//provider metadata
 		m_provider_name = (TextView)this.findViewById(R.id.provider_name);
@@ -170,15 +173,17 @@ public class ProviderProfileActivity extends Activity{
 						SharedPreferences settings = getSharedPreferences("UserData", 0);
 						String review = reviewText.getText().toString();
 						String id = settings.getString("Id", null);
-						Float f = ratingbar.getRating();
-						String rating = f.toString();
+						float rating = ratingbar.getRating();
 						m_provider.getID();
 						String temp_base = "http://www.spectrackulo.us/350/ratings.php?mode=insert";
-						String url = temp_base + "&pid=" + m_provider.getID() + "&uid=" + id + "&rating=" + rating + "&review=" + review;
+						String url = temp_base + "&pid=" + m_provider.getID() + "&uid=" + id + "&rating=" + (int)rating + "&review=" + review;
 						System.out.println(url);
 						InternetHelper.httpGetRequest(url);
 						Toast.makeText(m_context, "Review submitted!", Toast.LENGTH_LONG).show();
+						populateRatings();
 						dialog.hide();
+						
+						
 					}
 					
 				});
@@ -232,9 +237,12 @@ public class ProviderProfileActivity extends Activity{
 				
 				Rating currentRating = new Rating(user_id, provider_id, time, review, rating);
 				m_ratings.add(currentRating);
+				m_adapter.notifyDataSetChanged();
+				
 			}
 		} catch (Exception e) {
 			// for logging
+			System.out.println("ratings errorrrrrrrrrrrrrrrrr Whyyyyyyyyy");
 			e.printStackTrace();
 		}
 	}
