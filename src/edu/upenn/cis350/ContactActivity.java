@@ -17,8 +17,6 @@ public class ContactActivity extends Activity{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.contact);
-
-
 	}
 
 	@Override
