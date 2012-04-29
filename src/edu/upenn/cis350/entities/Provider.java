@@ -36,6 +36,7 @@ public class Provider implements Serializable{
 		this.address = address;
 		this.city = city;
 		this.state = state;
+		this.zip = zip;
 		this.phone = phone;
 		this.accepting_new = accepting_new;
 		this.has_parking = has_parking;

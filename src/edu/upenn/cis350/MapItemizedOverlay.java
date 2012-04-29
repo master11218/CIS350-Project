@@ -37,15 +37,17 @@ public class MapItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		dialog.setTitle(currentProvider.getName());
 
 		TextView addressText = (TextView) dialog.findViewById(R.id.map_provider_address);
-		addressText.setText(currentProvider.getAddress());
+		addressText.setText("Address: " +currentProvider.getAddress());
 		
 		TextView phoneText = (TextView) dialog.findViewById(R.id.map_provider_phone);
-		phoneText.setText(currentProvider.getPhone());
+		phoneText.setText("Phone #: " + currentProvider.getPhone());
 		
 		TextView ratingText = (TextView) dialog.findViewById(R.id.map_provider_rating);
 		Double rating = currentProvider.getAverageRating();
 		//if it's not 0.0, that means it's an actual rating, so display it
-		String rating_text = rating.toString();
+		String rating_text = "";
+		if(rating != -1)
+			rating_text = "Average rating: " + rating.toString();
 		if(rating != 0.0) ratingText.setText(rating_text);
 		//else if it is, then it's the actual user's location
 		else ratingText.setText("");

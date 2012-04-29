@@ -157,7 +157,6 @@ public class ProviderProfileActivity extends Activity{
 				Intent intent = new Intent(m_context, MapProviderActivity.class);
 				intent.putExtra("providers", m_provider);
 				startActivity(intent);
-				m_button_map.setBackgroundResource(R.drawable.map2);
 			}
 		});
 
@@ -198,15 +197,9 @@ public class ProviderProfileActivity extends Activity{
 						InternetHelper.httpGetRequest(url);
 						Toast.makeText(m_context, "Review submitted!", Toast.LENGTH_LONG).show();
 						populateRatings();
-						dialog.hide();
-						
-						
+						dialog.hide();	
 					}
-					
 				});
-
-				
-				
 				dialog.show();
 			}
 		});
@@ -221,7 +214,6 @@ public class ProviderProfileActivity extends Activity{
 				+ m_provider.getCity() + ", " + m_provider.getState() + "  "
 				+ m_provider.getZip());
 
-
 		// show or hide icons as appropriate
 		toggleIconVisibility(parking,m_provider.getParking());
 		toggleIconVisibility(creditcard,m_provider.getCreditCards());
@@ -229,9 +221,7 @@ public class ProviderProfileActivity extends Activity{
 		toggleIconVisibility(accepting,m_provider.getAccepting());
 		toggleIconVisibility(PCP,m_provider.getType());
 		
-		//
 		setRatingImage();
-
 	}
 
 	
@@ -262,7 +252,7 @@ public class ProviderProfileActivity extends Activity{
 			}
 		} catch (Exception e) {
 			// for logging
-			System.out.println("ratings errorrrrrrrrrrrrrrrrr Whyyyyyyyyy");
+			System.out.println("Ratings error");
 			e.printStackTrace();
 		}
 	}
