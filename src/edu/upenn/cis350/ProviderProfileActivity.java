@@ -180,8 +180,24 @@ public class ProviderProfileActivity extends Activity{
 				reviewButton.setOnClickListener(new OnClickListener(){
 
 					public void onClick(View arg0) {
-						SharedPreferences settings = getSharedPreferences("UserData", 0);
+						
+
 						String review = reviewText.getText().toString();
+						
+						//make sure the input for keyword search is correct
+						if (review.length()>0 && review.matches("[A-Za-z0-9\\s\\.,!?]+?")){
+							//tell user the input was invalid
+							Context context = getApplicationContext();
+							Toast toast = Toast.makeText(context, "The keyword for search should only contains" +
+									" English characters, numbers or white space",Toast.LENGTH_SHORT);
+							toast.show();
+							return;
+						}else{
+							review = review.replace(" ", "%20");
+						}
+						
+						
+						SharedPreferences settings = getSharedPreferences("UserData", 0);
 						System.out.println(settings);
 						String id = settings.getString("Id", null);
 						float rating = ratingbar.getRating();
