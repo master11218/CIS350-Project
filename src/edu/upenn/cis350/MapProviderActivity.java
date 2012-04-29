@@ -12,7 +12,6 @@ import edu.upenn.cis350.util.MyLocation;
 import edu.upenn.cis350.util.ProviderHelper;
 import edu.upenn.cis350.util.MyLocation.LocationResult;
 import edu.upenn.cis350.entities.Provider;
-import edu.upenn.cis350.entities.Rating;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -21,8 +20,6 @@ import android.location.Location;
 import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.json.JSONObject;
 
 public class MapProviderActivity extends MapActivity {
 	private MapView _myMapView;
