@@ -13,7 +13,6 @@ import edu.upenn.cis350.util.MyLocation.LocationResult;
 import edu.upenn.cis350.entities.Provider;
 import edu.upenn.cis350.entities.Rating;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -28,7 +27,6 @@ public class MapProviderActivity extends MapActivity {
 	private ArrayList<Provider> _providers = new ArrayList<Provider>();;
 	private Float m_lat;
 	private Float m_long;
-	private Context m_context = this;
 	private SharedPreferences settings;
 	// global variable mapOverlays so that we can add personal location after
 	// we've received the location
@@ -112,6 +110,7 @@ public class MapProviderActivity extends MapActivity {
 		// create an array list just containing this to pass to the map itemized
 		// overlay
 		ArrayList<Provider> personal_templist = new ArrayList<Provider>();
+		personal_templist.add(personal);
 		personalLocationOverlay.setProviders(personal_templist);
 		// create a geo-point and overlay item for yourself.
 		GeoPoint p = new GeoPoint((int) (m_lat * 1000000),

@@ -48,7 +48,7 @@ public class SearchResultActivity extends Activity{
         
         if (extras != null) {
         	//Fetch all the parameters from the caller activity
-			String provider_name = extras.getString("provider_name").replace(" ", "%20");
+			String provider_name = extras.getString("provider_name");
 			String has_parking = extras.getString("has_parking");
 			String accepting_new = extras.getString("accepting_new");
 			String handicap = extras.getString("handicap");
@@ -74,8 +74,6 @@ public class SearchResultActivity extends Activity{
 			this.providerList = (ListView)this.findViewById(R.id.search_result_list);
 			this.providerList.setAdapter(new SearchResultAdapter(this));
         
-			
-			//TODO: next step: buffer the output, generate 10 outputs at a time
         }
         
         
