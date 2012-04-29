@@ -48,7 +48,7 @@ public class SearchResultActivity extends Activity{
         
         if (extras != null) {
         	//Fetch all the parameters from the caller activity
-			String provider_name = extras.getString("provider_name");
+			String provider_name = extras.getString("provider_name").replace(" ", "%20");
 			String has_parking = extras.getString("has_parking");
 			String accepting_new = extras.getString("accepting_new");
 			String handicap = extras.getString("handicap");
