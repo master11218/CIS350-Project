@@ -90,9 +90,9 @@ public class ProfileActivity extends Activity{
 		}
 		
 		email = emailField.getText().toString();
-		if (!email.matches("[A-Za-z0-9@]+?")){
+		if (!email.matches("[A-Za-z0-9@\\_\\.\\_]+?")){
 			//tell user the input was invalid
-			displayToast("The email should not be empty and should only contains English characters, numbers or @");
+			displayToast("The email should not be empty and should only contains English characters, numbers or \"@\", \".\",\"_\" ");
 			return;
 		}
 		
