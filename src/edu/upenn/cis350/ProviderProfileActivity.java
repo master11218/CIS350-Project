@@ -46,6 +46,10 @@ public class ProviderProfileActivity extends Activity{
 	private EditText reviewText;
 	private Button reviewButton;
 	private RatingBar ratingbar;
+	private RatingBar rating_friendliness_bar;
+	private RatingBar rating_communication_bar;
+	private RatingBar rating_environment_bar;
+	
 
 	private Button m_button_map;
 	private Button m_button_review;
@@ -166,17 +170,26 @@ public class ProviderProfileActivity extends Activity{
 				reviewText = (EditText) dialog.findViewById(R.id.providerpf_rate_review);
 				reviewButton = (Button) dialog.findViewById(R.id.providerpf_rate_button_submit);
 				ratingbar = (RatingBar) dialog.findViewById(R.id.providerpf_rate_bar);
+				rating_communication_bar = (RatingBar) dialog.findViewById(R.id.providerpf_rate_communication_bar);
+				rating_environment_bar = (RatingBar) dialog.findViewById(R.id.providerpf_rate_environment_bar);
+				rating_friendliness_bar = (RatingBar) dialog.findViewById(R.id.providerpf_rate_friendly_bar);
 				
 				reviewButton.setOnClickListener(new OnClickListener(){
 
 					public void onClick(View arg0) {
 						SharedPreferences settings = getSharedPreferences("UserData", 0);
 						String review = reviewText.getText().toString();
+						System.out.println(settings);
 						String id = settings.getString("Id", null);
 						float rating = ratingbar.getRating();
+						float friendliness = rating_friendliness_bar.getRating();
+						float communication = rating_communication_bar.getRating();
+						float environment = rating_environment_bar.getRating();
 						m_provider.getID();
 						String temp_base = "http://www.spectrackulo.us/350/ratings.php?mode=insert";
-						String url = temp_base + "&pid=" + m_provider.getID() + "&uid=" + id + "&rating=" + (int)rating + "&review=" + review;
+						String url = temp_base + "&pid=" + m_provider.getID() + "&uid=" + id + "&rating=" + 
+								(int)rating + "&review=" + review + "&friendliness=" + (int)friendliness + 
+								"&communication=" + (int)communication + "&office_environment=" + (int)environment;
 						System.out.println(url);
 						InternetHelper.httpGetRequest(url);
 						Toast.makeText(m_context, "Review submitted!", Toast.LENGTH_LONG).show();

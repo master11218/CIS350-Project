@@ -18,11 +18,58 @@
         android:layout_height="wrap_content"
         android:minLines="5"
         />
+      <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Overall Review"
+        />
       <RatingBar android:id="@+id/providerpf_rate_bar"
         android:layout_width="wrap_content"
+    	style="?android:attr/ratingBarStyleIndicator"
+    	android:isIndicator="false"
         android:layout_height="wrap_content"
         android:numStars="5"
         android:stepSize="1.0"/>
+      
+      <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Friendliness"
+        />
+      <RatingBar android:id="@+id/providerpf_rate_friendly_bar"
+        android:layout_width="wrap_content"
+    	style="?android:attr/ratingBarStyleIndicator"
+    	android:isIndicator="false"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1.0"/>
+      
+      <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Office Environment"
+        />
+      <RatingBar android:id="@+id/providerpf_rate_environment_bar"
+        android:layout_width="wrap_content"
+    	style="?android:attr/ratingBarStyleIndicator"
+    	android:isIndicator="false"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1.0"/>
+      
+      <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Communication"
+        />
+      <RatingBar android:id="@+id/providerpf_rate_communication_bar"
+        android:layout_width="wrap_content"
+    	style="?android:attr/ratingBarStyleIndicator"
+    	android:isIndicator="false"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1.0"/>
+      
 
     <Button
         android:id="@+id/providerpf_rate_button_submit"
