@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * This activity displays all the result from the search page. It first gets the
@@ -70,6 +71,12 @@ public class SearchResultActivity extends Activity{
 			this.satisfiedproviders = ProviderHelper.getSatisfiedProvider(provider_name, has_parking, 
 	        		accepting_new, handicap,appointment_only,credit_card,type,distance, this.m_latitude, this.m_longitude); 
         
+			if (this.satisfiedproviders.size()==0){
+				Context context = getApplicationContext();
+				Toast toast = Toast.makeText(context, "No provider found. Please refine your search criteria",Toast.LENGTH_SHORT);
+				toast.show();
+				finish();
+			}
 			
 			//Set up the list view for the search results
 			this.providerList = (ListView)this.findViewById(R.id.search_result_list);
