@@ -58,6 +58,7 @@ public class SearchResultActivity extends Activity{
 			String distance = extras.getString("distance");
 			
 			//Only load the current location when the search criteria includes distance
+			//This saves the time it takes to load the search result in most cases
 			if (distance.length()>0){
 				locationClick();
 				//load the longitude and latitude here
@@ -65,7 +66,7 @@ public class SearchResultActivity extends Activity{
 	    	            "Finding your current location. Please wait...", true);
 			}
 			
-			//Obtain a list of satisfied provider
+			//Obtain a list of satisfied provider by querying the backend database
 			this.satisfiedproviders = ProviderHelper.getSatisfiedProvider(provider_name, has_parking, 
 	        		accepting_new, handicap,appointment_only,credit_card,type,distance, this.m_latitude, this.m_longitude); 
         
