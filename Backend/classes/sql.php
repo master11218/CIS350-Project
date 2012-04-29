@@ -15,15 +15,6 @@ class sql{
 	function doSearch($name, $hasParking, $acceptingNew, $type, $handicap, $appointments, $creditCard, $lat, $long, $distance){
 		$query = "SELECT * FROM `providers`";
 		$flag = 1;
-		if(!empty($name)){
-			if($flag == 1){
-				$flag = 2;
-				$query = $query." WHERE ";
-			} else {
-				$query = $query." AND ";
-			}
-			$query = $query."name = '$name' ";
-		}
 		if(!empty($hasParking)){
 			if($flag == 1){
 				$flag = 2;
@@ -79,7 +70,6 @@ class sql{
 			$query = $query."credit_cards = '$creditCard' ";
 		}
 		
-		//echo $query;
 		$result = mysql_query($query);
 		$arr = array();
 		$found = "no";
@@ -88,6 +78,11 @@ class sql{
 				if($this->distanceLatLongPair($lat, $long, $row['lat'], $row['long']) < $distance){
 					$found = "yes";
 					$temp = array();
+					if(!empty($name)){
+						$name = ucwords($name);
+						if(strpos($row["name"], $name) === false)
+							continue;
+					}
 					$temp['pid'] = $row['pid'];
 					$temp['name'] = $row['name'];
 					$temp['address'] = $row['address'];
@@ -111,6 +106,11 @@ class sql{
 			} else {
 				$found = "yes";
 				$temp = array();
+				if(!empty($name)){
+					$name = ucwords($name);
+					if(strpos($row["name"], $name) === false)
+						continue;
+				}
 				$temp['pid'] = $row['pid'];
 				$temp['name'] = $row['name'];
 				$temp['address'] = $row['address'];
