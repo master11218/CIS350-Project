@@ -6,24 +6,68 @@
     
     
     
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Overall" />
     <ImageView
         android:id="@+id/providerpf_comment_stars"
         android:layout_width="fill_parent"
         android:layout_height="20dp"
-        
         />
-            <TextView
-                android:id="@+id/providerpf_comment_review"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="No Review" />
-		            
-		    <TextView
-                android:id="@+id/providerpf_comment_date"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-				android:layout_gravity="right"
-		        android:text="Sample Date" />
+      
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Friendliness" />
+      
+      <RatingBar android:id="@+id/providerpf_comment_friendliness"
+        android:layout_width="wrap_content"
+		style="?android:attr/ratingBarStyleSmall"
+    	android:isIndicator="false"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:numStars="5"
+        android:stepSize="1.0"/>
+      
+      
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Communication" />
+      <RatingBar android:id="@+id/providerpf_comment_communication"
+        android:layout_width="wrap_content"
+		style="?android:attr/ratingBarStyleSmall"
+    	android:isIndicator="false"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:numStars="5"
+        android:stepSize="1.0"/>
+      
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Office Environment" />
+      <RatingBar android:id="@+id/providerpf_comment_environment"
+        android:layout_width="wrap_content"
+		style="?android:attr/ratingBarStyleSmall"
+    	android:isIndicator="false"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:numStars="5"
+        android:stepSize="1.0"/>
+  	<TextView
+      android:id="@+id/providerpf_comment_review"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:text="No Review" />
+            
+    <TextView
+        android:id="@+id/providerpf_comment_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+		android:layout_gravity="right"
+        android:text="Sample Date" />
         
 
 </LinearLayout>

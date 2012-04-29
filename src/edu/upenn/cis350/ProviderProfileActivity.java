@@ -41,6 +41,10 @@ public class ProviderProfileActivity extends Activity{
 	private TextView m_provider_phone;
 	private TextView m_provider_address;
 	private TextView m_provider_rating;
+	private TextView m_provider_friendliness;
+	private TextView m_provider_communication;
+	private TextView m_provider_environment;
+	
 	private Dialog dialog;
 
 	private EditText reviewText;
@@ -246,9 +250,12 @@ public class ProviderProfileActivity extends Activity{
 				long provider_id = Long.parseLong(current.getString("pid"));
 				String time = current.getString("time");
 				String review = current.getString("review");
-				int rating = Integer.parseInt(current.getString("rating"));
+				float rating = Float.parseFloat(current.getString("rating"));
+				float friendliness = Float.parseFloat(current.getString("friendliness"));
+				float communication = Float.parseFloat(current.getString("communication"));
+				float environment = Float.parseFloat(current.getString("office_environment"));
 				
-				Rating currentRating = new Rating(user_id, provider_id, time, review, rating);
+				Rating currentRating = new Rating(user_id, provider_id, time, review, (int)rating, (int)communication, (int)environment, (int)friendliness);
 				m_ratings.add(currentRating);
 				m_adapter.notifyDataSetChanged();
 				
@@ -335,6 +342,9 @@ public class ProviderProfileActivity extends Activity{
 			//TextView tv_rating = (TextView)list_result.findViewById(R.id.providerpf_comment_rating);
 			Integer rating = currentRating.getRating();
 			ImageView stars= (ImageView)list_result.findViewById(R.id.providerpf_comment_stars);
+			RatingBar friendliness = (RatingBar)list_result.findViewById(R.id.providerpf_comment_friendliness);
+			RatingBar environment = (RatingBar)list_result.findViewById(R.id.providerpf_comment_environment);
+			RatingBar communication = (RatingBar)list_result.findViewById(R.id.providerpf_comment_communication);
 			
 			if (rating==5) {
 				stars.setImageResource(R.drawable.fivestars);
@@ -348,6 +358,10 @@ public class ProviderProfileActivity extends Activity{
 				stars.setImageResource(R.drawable.onestar);
 			}
 			
+			friendliness.setRating(currentRating.getFriendliness_rating());
+
+			environment.setRating(currentRating.getOffice_environment_rating());
+			communication.setRating(currentRating.getCommunication_rating());
 			
 			String review = currentRating.getReview();
 			String date = currentRating.getDate();
