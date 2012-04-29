@@ -73,7 +73,7 @@ public class HistoryActivity extends Activity{
 				long provider_id = Long.parseLong(current.getString("pid"));
 				String time = current.getString("time");
 				String review = current.getString("review");
-				int rating = Integer.parseInt(current.getString("rating"));
+				int rating = (int)Float.parseFloat(current.getString("rating"));
 				//Create a Ratings instance for each provider and add to the _ratings array
 				Rating currentRating = new Rating(user_id, provider_id, time, review, rating);
 				ratings.add(currentRating);

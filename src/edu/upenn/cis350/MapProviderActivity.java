@@ -111,6 +111,7 @@ public class MapProviderActivity extends MapActivity {
 		// overlay
 		ArrayList<Provider> personal_templist = new ArrayList<Provider>();
 		personal_templist.add(personal);
+		System.out.println(personal.toString());
 		personalLocationOverlay.setProviders(personal_templist);
 		// create a geo-point and overlay item for yourself.
 		GeoPoint p = new GeoPoint((int) (m_lat * 1000000),
@@ -120,6 +121,7 @@ public class MapProviderActivity extends MapActivity {
 
 		// add yourself
 		mapOverlays.add(personalLocationOverlay);
+		
 
 		// if only one provider, draw the path.
 

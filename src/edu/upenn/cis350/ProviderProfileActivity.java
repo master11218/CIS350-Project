@@ -41,9 +41,6 @@ public class ProviderProfileActivity extends Activity{
 	private TextView m_provider_phone;
 	private TextView m_provider_address;
 	private TextView m_provider_rating;
-	private TextView m_provider_friendliness;
-	private TextView m_provider_communication;
-	private TextView m_provider_environment;
 	
 	private Dialog dialog;
 
@@ -185,7 +182,7 @@ public class ProviderProfileActivity extends Activity{
 						String review = reviewText.getText().toString();
 						
 						//make sure the input for keyword search is correct
-						if (review.length()>0 && review.matches("[A-Za-z0-9\\s\\.,!?]+?")){
+						if (review.length()>0 && !review.matches("[A-Za-z0-9\\s\\.,'!?]+?")){
 							//tell user the input was invalid
 							Context context = getApplicationContext();
 							Toast toast = Toast.makeText(context, "The keyword for search should only contains" +

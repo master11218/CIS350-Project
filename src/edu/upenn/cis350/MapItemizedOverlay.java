@@ -30,17 +30,24 @@ public class MapItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 	@Override
 	protected boolean onTap(int index) {
 		Dialog dialog = new Dialog(mContext);
-
-		Provider currentProvider = _providers.get(index);
+		Provider currentProvider;
+		try{
+			currentProvider = _providers.get(index);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("return like a boss");
+			return false;
+		}
 
 		dialog.setContentView(R.layout.map_custom_dialog);
 		dialog.setTitle(currentProvider.getName());
 
 		TextView addressText = (TextView) dialog.findViewById(R.id.map_provider_address);
-		addressText.setText("Address: " +currentProvider.getAddress());
+		addressText.setText(currentProvider.getAddress());
 		
 		TextView phoneText = (TextView) dialog.findViewById(R.id.map_provider_phone);
-		phoneText.setText("Phone #: " + currentProvider.getPhone());
+		phoneText.setText(currentProvider.getPhone());
 		
 		TextView ratingText = (TextView) dialog.findViewById(R.id.map_provider_rating);
 		Double rating = currentProvider.getAverageRating();
