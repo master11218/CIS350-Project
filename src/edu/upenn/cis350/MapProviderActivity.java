@@ -34,6 +34,9 @@ public class MapProviderActivity extends MapActivity {
 	private ProgressDialog m_loading_dialog;
 	private GeoPoint m_current_location;
 	private List<GeoPoint> m_pathList;
+	
+	private Integer pennLatitude = 39951481;
+	private Integer pennLongitude = -75200987;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -236,7 +239,7 @@ public class MapProviderActivity extends MapActivity {
 			_providers.add(intentProvider);
 
 		//temporarily center the map to Penn
-		GeoPoint pennLocation = new GeoPoint(39951481, -75200987);
+		GeoPoint pennLocation = new GeoPoint(this.pennLatitude, this.pennLongitude);
 		_myMapController.animateTo(pennLocation);
 
 		// setup additional "pins" to the map
