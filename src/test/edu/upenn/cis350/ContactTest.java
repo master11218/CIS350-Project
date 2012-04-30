@@ -1,3 +1,5 @@
+package test.edu.upenn.cis350;
+
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
