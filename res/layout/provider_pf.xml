@@ -158,10 +158,9 @@
         
         android:layout_centerInParent="true"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/providerpf_average_stars"
-        android:background="@drawable/button3"
+        android:layout_below="@+id/providerpf_detailed_rate_button"
         android:text="Review and Rate!" />
-
+    
     <TextView
         android:id="@+id/providerpf_comment_header"
         android:layout_width="wrap_content"

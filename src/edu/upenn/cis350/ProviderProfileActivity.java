@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +21,11 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +41,16 @@ public class ProviderProfileActivity extends Activity{
 	private TextView m_provider_phone;
 	private TextView m_provider_address;
 	private TextView m_provider_rating;
+	
+	private Dialog dialog;
+
+	private EditText reviewText;
+	private Button reviewButton;
+	private RatingBar ratingbar;
+	private RatingBar rating_friendliness_bar;
+	private RatingBar rating_communication_bar;
+	private RatingBar rating_environment_bar;
+	
 
 	private Button m_button_map;
 	private Button m_button_review;
@@ -52,6 +65,8 @@ public class ProviderProfileActivity extends Activity{
 	private Button appointment; 
 	private Button PCP; 
 	private Button specialist;
+	
+	private RatingAdapter m_adapter;
 
 	/**
 	 * Create each provider's profile
@@ -64,7 +79,8 @@ public class ProviderProfileActivity extends Activity{
 		m_button_map = (Button)this.findViewById(R.id.button_providerpf_map);
 		m_button_review = (Button)this.findViewById(R.id.providerpf_rate_button);
 		m_comments = (ListView)this.findViewById(R.id.providerpf_comments);
-		m_comments.setAdapter(new RatingAdapter(m_context));
+		m_adapter = new RatingAdapter(m_context);
+		m_comments.setAdapter(m_adapter);
 
 		//provider metadata
 		m_provider_name = (TextView)this.findViewById(R.id.provider_name);
@@ -138,17 +154,65 @@ public class ProviderProfileActivity extends Activity{
 				Intent intent = new Intent(m_context, MapProviderActivity.class);
 				intent.putExtra("providers", m_provider);
 				startActivity(intent);
-				m_button_map.setBackgroundResource(R.drawable.map2);
 			}
 		});
 
 		//review dialog pops up.
 		m_button_review.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				Dialog dialog = new Dialog(m_context);
+				dialog = new Dialog(m_context);
 
 				dialog.setContentView(R.layout.provider_pf_rate);
 				dialog.setTitle("Rate and Review this Provider!");
+				
+				
+				
+				reviewText = (EditText) dialog.findViewById(R.id.providerpf_rate_review);
+				reviewButton = (Button) dialog.findViewById(R.id.providerpf_rate_button_submit);
+				ratingbar = (RatingBar) dialog.findViewById(R.id.providerpf_rate_bar);
+				rating_communication_bar = (RatingBar) dialog.findViewById(R.id.providerpf_rate_communication_bar);
+				rating_environment_bar = (RatingBar) dialog.findViewById(R.id.providerpf_rate_environment_bar);
+				rating_friendliness_bar = (RatingBar) dialog.findViewById(R.id.providerpf_rate_friendly_bar);
+				
+				reviewButton.setOnClickListener(new OnClickListener(){
+
+					public void onClick(View arg0) {
+						
+
+						String review = reviewText.getText().toString();
+						
+						//make sure the input for keyword search is correct
+						if (review.length()>0 && !review.matches("[A-Za-z0-9\\s\\.,'!?]+?")){
+							//tell user the input was invalid
+							Context context = getApplicationContext();
+							Toast toast = Toast.makeText(context, "The keyword for search should only contains" +
+									" English characters, numbers or white space",Toast.LENGTH_SHORT);
+							toast.show();
+							return;
+						}else{
+							review = review.replace(" ", "%20");
+						}
+						
+						
+						SharedPreferences settings = getSharedPreferences("UserData", 0);
+						System.out.println(settings);
+						String id = settings.getString("Id", null);
+						float rating = ratingbar.getRating();
+						float friendliness = rating_friendliness_bar.getRating();
+						float communication = rating_communication_bar.getRating();
+						float environment = rating_environment_bar.getRating();
+						m_provider.getID();
+						String temp_base = "http://www.spectrackulo.us/350/ratings.php?mode=insert";
+						String url = temp_base + "&pid=" + m_provider.getID() + "&uid=" + id + "&rating=" + 
+								(int)rating + "&review=" + review + "&friendliness=" + (int)friendliness + 
+								"&communication=" + (int)communication + "&office_environment=" + (int)environment;
+						System.out.println(url);
+						InternetHelper.httpGetRequest(url);
+						Toast.makeText(m_context, "Review submitted!", Toast.LENGTH_LONG).show();
+						populateRatings();
+						dialog.hide();	
+					}
+				});
 				dialog.show();
 			}
 		});
@@ -163,7 +227,6 @@ public class ProviderProfileActivity extends Activity{
 				+ m_provider.getCity() + ", " + m_provider.getState() + "  "
 				+ m_provider.getZip());
 
-
 		// show or hide icons as appropriate
 		toggleIconVisibility(parking,m_provider.getParking());
 		toggleIconVisibility(creditcard,m_provider.getCreditCards());
@@ -171,9 +234,7 @@ public class ProviderProfileActivity extends Activity{
 		toggleIconVisibility(accepting,m_provider.getAccepting());
 		toggleIconVisibility(PCP,m_provider.getType());
 		
-		//
 		setRatingImage();
-
 	}
 
 	
@@ -192,13 +253,19 @@ public class ProviderProfileActivity extends Activity{
 				long provider_id = Long.parseLong(current.getString("pid"));
 				String time = current.getString("time");
 				String review = current.getString("review");
-				int rating = Integer.parseInt(current.getString("rating"));
+				float rating = Float.parseFloat(current.getString("rating"));
+				float friendliness = Float.parseFloat(current.getString("friendliness"));
+				float communication = Float.parseFloat(current.getString("communication"));
+				float environment = Float.parseFloat(current.getString("office_environment"));
 				
-				Rating currentRating = new Rating(user_id, provider_id, time, review, rating);
+				Rating currentRating = new Rating(user_id, provider_id, time, review, (int)rating, (int)communication, (int)environment, (int)friendliness);
 				m_ratings.add(currentRating);
+				m_adapter.notifyDataSetChanged();
+				
 			}
 		} catch (Exception e) {
 			// for logging
+			System.out.println("Ratings error");
 			e.printStackTrace();
 		}
 	}
@@ -278,6 +345,9 @@ public class ProviderProfileActivity extends Activity{
 			//TextView tv_rating = (TextView)list_result.findViewById(R.id.providerpf_comment_rating);
 			Integer rating = currentRating.getRating();
 			ImageView stars= (ImageView)list_result.findViewById(R.id.providerpf_comment_stars);
+			RatingBar friendliness = (RatingBar)list_result.findViewById(R.id.providerpf_comment_friendliness);
+			RatingBar environment = (RatingBar)list_result.findViewById(R.id.providerpf_comment_environment);
+			RatingBar communication = (RatingBar)list_result.findViewById(R.id.providerpf_comment_communication);
 			
 			if (rating==5) {
 				stars.setImageResource(R.drawable.fivestars);
@@ -291,6 +361,10 @@ public class ProviderProfileActivity extends Activity{
 				stars.setImageResource(R.drawable.onestar);
 			}
 			
+			friendliness.setRating(currentRating.getFriendliness_rating());
+
+			environment.setRating(currentRating.getOffice_environment_rating());
+			communication.setRating(currentRating.getCommunication_rating());
 			
 			String review = currentRating.getReview();
 			String date = currentRating.getDate();

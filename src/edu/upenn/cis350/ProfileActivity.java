@@ -80,11 +80,36 @@ public class ProfileActivity extends Activity{
 		SharedPreferences settings = getSharedPreferences("UserData", 0);
 		SharedPreferences.Editor editor = settings.edit();
 		
-		//get the user's information
+		//Do the error check for input
 		name = nameField.getText().toString();
+		if (!name.matches("[A-Za-z0-9\\s]+?")){
+			displayToast("The name should not be empty and should only contains English characters, numbers or white space");
+			return;
+		}else{
+			name = name.replace(" ", "%20");
+		}
+		
 		email = emailField.getText().toString();
+		if (!email.matches("[A-Za-z0-9@\\_\\.\\_]+?")){
+			//tell user the input was invalid
+			displayToast("The email should not be empty and should only contains English characters, numbers or \"@\", \".\",\"_\" ");
+			return;
+		}
+		
 		address = addressField.getText().toString();
+		if (!address.matches("[A-Za-z0-9,\\s]+?")){
+			displayToast("The address should not be empty and should only contains English characters, numbers, \",\" or white space");
+			return;
+		}else{
+			address = address.replace(" ", "%20");
+		}
+		
 		phone = phoneField.getText().toString();
+		if (!phone.matches("[A-Za-z0-9,\\s]+?")){
+			displayToast("The phone should not be empty and should only contains numbers");
+			return;
+		}
+		
 		if(genderField.getCheckedRadioButtonId() == R.id.profile_new_male)
     		gender = "Male";
     	else
@@ -107,6 +132,12 @@ public class ProfileActivity extends Activity{
 		//let the user know that their information has been saved
 		Toast.makeText(ownContext, "Your information has been saved", Toast.LENGTH_SHORT).show();
 		finish();
+	}
+	
+	public void displayToast(String msg){
+		Context context = getApplicationContext();
+		Toast toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+		toast.show();
 	}
 	
 	public void loadProfile() {

@@ -73,7 +73,7 @@ public class HistoryActivity extends Activity{
 				long provider_id = Long.parseLong(current.getString("pid"));
 				String time = current.getString("time");
 				String review = current.getString("review");
-				int rating = Integer.parseInt(current.getString("rating"));
+				int rating = (int)Float.parseFloat(current.getString("rating"));
 				//Create a Ratings instance for each provider and add to the _ratings array
 				Rating currentRating = new Rating(user_id, provider_id, time, review, rating);
 				ratings.add(currentRating);
@@ -88,13 +88,16 @@ public class HistoryActivity extends Activity{
 	@Override
 	public void onResume(){
 		super.onResume();
-		if (_ratings.size()<1) {
+		if (_ratings.size() == 0) {
 			TextView nohistory= (TextView)this.findViewById(R.id.history_no_history_message);
 			nohistory.setText("You have not rated any providers yet");
 		}
 	}
 
 
+	/**
+	 * Inner class that handles the list view in this activity
+	 */
 	class HistoryAdapter extends BaseAdapter{
 		private Context m_context;
 
@@ -102,6 +105,9 @@ public class HistoryActivity extends Activity{
 			m_context = context;
 		}
 
+		/**
+		 * Returns how many rows there will be in this list.
+		 */
 		public int getCount() {
 			if(_ratings != null)
 				return _ratings.size();
@@ -109,6 +115,9 @@ public class HistoryActivity extends Activity{
 				return 0;
 		}
 
+		/**
+		 * Returns the object that will be displayed in a particular row
+		 */
 		public Object getItem(int position) {
 			if(_ratings != null)
 				return _ratings.get(position);
@@ -140,7 +149,7 @@ public class HistoryActivity extends Activity{
 			final String pid = InternetHelper.httpGetRequest(uri);
 			providerName.setText(pid);
 
-			//get the rating
+			//get the rating and display for
 			Integer rating_int = currentRating.getRating();
 			TextView rating_textBox = (TextView)list_result.findViewById(R.id.history_activity_rating);
 			rating_textBox.setText("Rating: " + rating_int.toString());

@@ -11,15 +11,40 @@ public class Rating implements Serializable{
 	private String date;
 	private String review;
 	private Integer rating;
+	private Integer communication_rating = 0;
+	private Integer office_environment_rating = 0;
+	private Integer friendliness_rating = 0;
 	
+<<<<<<< HEAD
 	public Rating(long user, long provider, Date date2, String desc, int rate){
 		user_id = user;
 		provider_id = provider;
 		this.date = date2;
 		review = desc;
 		rating = rate;
+=======
+	public Rating(long user, long provider, String date, String desc, int rate,
+			int communication_rating, int office_environment_rating,
+			int friendliness_rating) {
+		this.user_id = user;
+		this.provider_id = provider;
+		this.date = date;
+		this.review = desc;
+		this.rating = rate;
+		this.communication_rating = communication_rating;
+		this.office_environment_rating = office_environment_rating;
+		this.friendliness_rating = friendliness_rating;
+>>>>>>> e90293f653f4fc1b4f538fbaa97e92fa1979be93
 	}
 	
+	public Rating(long user, long provider, String date, String desc, int rate) {
+		this.user_id = user;
+		this.provider_id = provider;
+		this.date = date;
+		this.review = desc;
+		this.rating = rate;
+	}
+
 	public Long getUser(){
 		return user_id;
 	}
@@ -34,5 +59,17 @@ public class Rating implements Serializable{
 	}
 	public Integer getRating(){
 		return rating;
+	}
+	
+	public Integer getCommunication_rating() {
+		return communication_rating;
+	}
+
+	public Integer getOffice_environment_rating() {
+		return office_environment_rating;
+	}
+
+	public Integer getFriendliness_rating() {
+		return friendliness_rating;
 	}
 }

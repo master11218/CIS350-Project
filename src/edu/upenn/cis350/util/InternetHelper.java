@@ -13,7 +13,7 @@ public class InternetHelper {
 
 	/**
 	 * Execute a http get request and return the response entity
-	 * @param url the http get request including the paramters
+	 * @param url the http get request including the parameters
 	 * @return the entity of the response if it was successful, or an empty string otherwise
 	 */
 	public static String httpGetRequest(String url){
@@ -21,6 +21,7 @@ public class InternetHelper {
 		String result = "";		
 		
 		try {
+			System.out.println("Internet Helper: Making request to "+url);
 			HttpGet method = new HttpGet(url);			
 			HttpResponse response = client.execute(method);
 			

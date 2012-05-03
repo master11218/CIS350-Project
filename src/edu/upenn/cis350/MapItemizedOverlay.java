@@ -30,8 +30,15 @@ public class MapItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 	@Override
 	protected boolean onTap(int index) {
 		Dialog dialog = new Dialog(mContext);
-
-		Provider currentProvider = _providers.get(index);
+		Provider currentProvider;
+		try{
+			currentProvider = _providers.get(index);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("return like a boss");
+			return false;
+		}
 
 		dialog.setContentView(R.layout.map_custom_dialog);
 		dialog.setTitle(currentProvider.getName());
@@ -45,7 +52,9 @@ public class MapItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		TextView ratingText = (TextView) dialog.findViewById(R.id.map_provider_rating);
 		Double rating = currentProvider.getAverageRating();
 		//if it's not 0.0, that means it's an actual rating, so display it
-		String rating_text = rating.toString();
+		String rating_text = "";
+		if(rating != -1)
+			rating_text = "Average rating: " + rating.toString();
 		if(rating != 0.0) ratingText.setText(rating_text);
 		//else if it is, then it's the actual user's location
 		else ratingText.setText("");
