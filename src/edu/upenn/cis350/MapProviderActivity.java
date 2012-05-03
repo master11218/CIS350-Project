@@ -35,20 +35,8 @@ public class MapProviderActivity extends MapActivity {
 	private GeoPoint m_current_location;
 	private List<GeoPoint> m_pathList;
 	
-<<<<<<< HEAD
-	
-
-
-
-	@Override
-	protected boolean isRouteDisplayed() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-=======
 	private Integer pennLatitude = 39951481;
 	private Integer pennLongitude = -75200987;
->>>>>>> e90293f653f4fc1b4f538fbaa97e92fa1979be93
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -87,7 +75,6 @@ public class MapProviderActivity extends MapActivity {
 		@Override
 		public void gotLocation(Location location) {
 			if (location != null) {
-
 				m_lat = (float) location.getLatitude();
 				m_long = (float) location.getLongitude();
 				// Save your location in the User info is set in the shared
@@ -111,8 +98,6 @@ public class MapProviderActivity extends MapActivity {
 			}
 		}
 	};
-	
-	
 
 	public void displayCurrentLocationOnMap() {
 		// add your current location pin to the map
@@ -122,20 +107,10 @@ public class MapProviderActivity extends MapActivity {
 				current_location_drawable, this);
 		// you as a person will be identified as a dummy provider, with a null
 		// ratings.
-<<<<<<< HEAD
-		Provider personal = new Provider(1, "adsf", "3400 Spruce Street",
-				"Philadelphia", "PA", "19104", "(215)662-3228", "yes", "yes",
-
-				"PCP", "yes", "yes", "yes", 3, 1.1, 1.1, "None", "yahoo");
-		// create an arraylist just containing this to pass to the mapitemized
-
-=======
 		Provider personal = new Provider(1, "Your Current Location", "You are located near",
 				"", "", "", "(" + m_lat.toString() + "," + m_long.toString() + ")", "", "",
 				"", "", "", "", -1, 0, 0, "", "");
->>>>>>> e90293f653f4fc1b4f538fbaa97e92fa1979be93
 		// create an array list just containing this to pass to the map itemized
-
 		// overlay
 		ArrayList<Provider> personal_templist = new ArrayList<Provider>();
 		personal_templist.add(personal);
@@ -291,7 +266,10 @@ public class MapProviderActivity extends MapActivity {
 		_myMapView.invalidate();
 	}
 
-
+	@Override
+	protected boolean isRouteDisplayed() {
+		return false;
+	}
 
 	public void generateProviderList() {
 		try{
@@ -303,9 +281,3 @@ public class MapProviderActivity extends MapActivity {
 		}
 	}
 }
-	
-
-
-
-
-	
