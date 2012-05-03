@@ -98,15 +98,16 @@ public class ProfileActivity extends Activity{
 		}
 		
 		address = addressField.getText().toString();
+		String encoded_address;
 		if (!address.matches("[A-Za-z0-9,\\s&&[^\\n]]+?")){
 			displayToast("The address should not be empty and should only contains English characters, numbers, \",\" or white space");
 			return;
 		}else{
-			address = address.replace(" ", "%20");
+			encoded_address = address.replace(" ", "%20");
 		}
 		
 		phone = phoneField.getText().toString();
-		if (!phone.matches("[A-Za-z0-9,\\s]+?")){
+		if (!phone.matches("[0-9]+?")){
 			displayToast("The phone should not be empty and should only contains numbers");
 			return;
 		}
@@ -118,7 +119,7 @@ public class ProfileActivity extends Activity{
 		
 		//get the user's id via the http request, and store it in the database
 		String uri = "http://spectrackulo.us/350/register.php?name=" + encoded_name + 
-				"&address=" + address + "&gender=" + gender + "&email=" + email + "&phone=" + phone;
+				"&address=" + encoded_address + "&gender=" + gender + "&email=" + email + "&phone=" + phone;
 		String id = InternetHelper.httpGetRequest(uri);
 		
 		//store the information on the device
