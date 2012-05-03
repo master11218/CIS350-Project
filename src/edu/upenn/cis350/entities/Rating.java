@@ -1,6 +1,7 @@
 package edu.upenn.cis350.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Rating implements Serializable{
 
@@ -11,10 +12,10 @@ public class Rating implements Serializable{
 	private String review;
 	private Integer rating;
 	
-	public Rating(long user, long provider, String date, String desc, int rate){
+	public Rating(long user, long provider, Date date2, String desc, int rate){
 		user_id = user;
 		provider_id = provider;
-		this.date = date;
+		this.date = date2;
 		review = desc;
 		rating = rate;
 	}

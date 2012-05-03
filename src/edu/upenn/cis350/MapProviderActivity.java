@@ -36,6 +36,16 @@ public class MapProviderActivity extends MapActivity {
 	private ProgressDialog m_loading_dialog;
 	private GeoPoint m_current_location;
 	private List<GeoPoint> m_pathList;
+	
+	
+
+
+
+	@Override
+	protected boolean isRouteDisplayed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -74,10 +84,7 @@ public class MapProviderActivity extends MapActivity {
 		@Override
 		public void gotLocation(Location location) {
 			if (location != null) {
-<<<<<<< HEAD
-				
-=======
->>>>>>> a40623422354baa8d4277cd967e3bbe62758805b
+
 				m_lat = (float) location.getLatitude();
 				m_long = (float) location.getLongitude();
 				// Save your location in the User info is set in the shared
@@ -101,6 +108,8 @@ public class MapProviderActivity extends MapActivity {
 			}
 		}
 	};
+	
+	
 
 	public void displayCurrentLocationOnMap() {
 		// add your current location pin to the map
@@ -112,13 +121,12 @@ public class MapProviderActivity extends MapActivity {
 		// ratings.
 		Provider personal = new Provider(1, "adsf", "3400 Spruce Street",
 				"Philadelphia", "PA", "19104", "(215)662-3228", "yes", "yes",
-<<<<<<< HEAD
+
 				"PCP", "yes", "yes", "yes", 3, 1.1, 1.1, "None", "yahoo");
 		// create an arraylist just containing this to pass to the mapitemized
-=======
-				"PCP", "yes", "yes", "yes", 3, 1.1, 1.1, "None", "stfu");
+
 		// create an array list just containing this to pass to the map itemized
->>>>>>> a40623422354baa8d4277cd967e3bbe62758805b
+
 		// overlay
 		ArrayList<Provider> personal_templist = new ArrayList<Provider>();
 		personalLocationOverlay.setProviders(personal_templist);
@@ -271,10 +279,7 @@ public class MapProviderActivity extends MapActivity {
 		_myMapView.invalidate();
 	}
 
-	@Override
-	protected boolean isRouteDisplayed() {
-		return false;
-	}
+
 
 	// For temporary generation of providers
 	public Provider generateProvider(String name, double latitude,
@@ -327,5 +332,10 @@ public class MapProviderActivity extends MapActivity {
 				-75.192789));
 		_providers.add(generateProvider("Allie Lunday", 39.950481, -75.188687));
 	}
-
 }
+	
+
+
+
+
+	
