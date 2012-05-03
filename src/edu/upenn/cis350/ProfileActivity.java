@@ -82,22 +82,23 @@ public class ProfileActivity extends Activity{
 		
 		//Do the error check for input
 		name = nameField.getText().toString();
-		if (!name.matches("[A-Za-z0-9\\s]+?")){
+		String encoded_name; 
+		if (!name.matches("[A-Za-z0-9\\s&&[^\\n]]+?")){
 			displayToast("The name should not be empty and should only contains English characters, numbers or white space");
 			return;
 		}else{
-			name = name.replace(" ", "%20");
+			encoded_name = name.replace(" ", "%20");
 		}
 		
 		email = emailField.getText().toString();
-		if (!email.matches("[A-Za-z0-9@\\_\\.\\_]+?")){
+		if (!email.matches("[A-Za-z0-9@\\_\\.\\_&&[^\\n]]+?")){
 			//tell user the input was invalid
 			displayToast("The email should not be empty and should only contains English characters, numbers or \"@\", \".\",\"_\" ");
 			return;
 		}
 		
 		address = addressField.getText().toString();
-		if (!address.matches("[A-Za-z0-9,\\s]+?")){
+		if (!address.matches("[A-Za-z0-9,\\s&&[^\\n]]+?")){
 			displayToast("The address should not be empty and should only contains English characters, numbers, \",\" or white space");
 			return;
 		}else{
@@ -116,7 +117,7 @@ public class ProfileActivity extends Activity{
     		gender = "Female";
 		
 		//get the user's id via the http request, and store it in the database
-		String uri = "http://spectrackulo.us/350/register.php?name=" + name + 
+		String uri = "http://spectrackulo.us/350/register.php?name=" + encoded_name + 
 				"&address=" + address + "&gender=" + gender + "&email=" + email + "&phone=" + phone;
 		String id = InternetHelper.httpGetRequest(uri);
 		

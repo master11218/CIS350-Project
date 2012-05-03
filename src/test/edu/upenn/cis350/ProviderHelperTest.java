@@ -18,6 +18,7 @@ public class ProviderHelperTest extends TestCase {
 		Provider testProvider = ProviderHelper.createProviderFromJson(tempJson);
 		
 		assertEquals(testProvider.getID(), 1);
+		assertEquals(testProvider.getName(),"Tanvir Ahmed");
 		
 	}
 	

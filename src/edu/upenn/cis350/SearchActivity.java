@@ -117,7 +117,7 @@ public class SearchActivity extends Activity {
 			
 			String providerNameStr =  getEditTextEntry(provider_name);
 			//make sure the input for keyword search is correct
-			if (providerNameStr.length()>0 && !providerNameStr.matches("[A-Za-z0-9\\s]+?")){
+			if (providerNameStr.length()>0 && !providerNameStr.matches("[A-Za-z0-9\\s&&[^\\n]]+?")){
 				//tell user the input was invalid
 				Context context = getApplicationContext();
 				Toast toast = Toast.makeText(context, "The keyword for search should only contains" +
@@ -125,6 +125,7 @@ public class SearchActivity extends Activity {
 				toast.show();
 				return;
 			}else{
+				
 				providerNameStr = providerNameStr.replace(" ", "%20");
 			}
 			
