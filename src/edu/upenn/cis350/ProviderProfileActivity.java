@@ -182,7 +182,7 @@ public class ProviderProfileActivity extends Activity{
 						String review = reviewText.getText().toString();
 						
 						//make sure the input for keyword search is correct
-						if (review.length()>0 && !review.matches("[A-Za-z0-9\\s\\.,'!?]+?")){
+						if (review.length()>0 && !review.matches("[A-Za-z0-9\\s\\.,'!?&&[^\\n]]+?")){
 							//tell user the input was invalid
 							Context context = getApplicationContext();
 							Toast toast = Toast.makeText(context, "The keyword for search should only contains" +
