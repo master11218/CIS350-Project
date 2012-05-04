@@ -15,9 +15,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * Contains information about the user
- * @author DXU
- *
+ * The Profile Activity consists of two cases. When the user have not register
+ * on the phone, it would prompt for user profile information for registration.
+ * If the profile is created, it loads and displays the profile from the cache
+ * 
  */
 public class ProfileActivity extends Activity{
 	private User _userToLoad;
@@ -75,6 +76,13 @@ public class ProfileActivity extends Activity{
         
 	}
 	
+	/**
+	 * The method reads all the user inputs, do the basic scan of illegal
+	 * characters using regular expressions. It then interact with the backend
+	 * by constructing a url query and making http request to the server
+	 * 
+	 * 
+	 */
 	public void saveProfile() {
 		//User info is set in the shared preferences.
 		SharedPreferences settings = getSharedPreferences("UserData", 0);
@@ -136,11 +144,16 @@ public class ProfileActivity extends Activity{
 		finish();
 	}
 	
+	/**
+	 * A method that display a toast with the specified text
+	 * @param msg The toast message
+	 */
 	public void displayToast(String msg){
 		Context context = getApplicationContext();
 		Toast toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
 		toast.show();
 	}
+	
 	
 	public void loadProfile() {
 		//this user already has a profile, set view to profile_existing
