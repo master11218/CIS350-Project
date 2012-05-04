@@ -12,6 +12,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+/**
+ * An overlay on the map that allows user to interact with the pin on the map.
+ * The provider info digest is displayed when the corresponding point on the map
+ * was tapped
+ * 
+ */
 public class MapItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 	
 	private Context mContext;
@@ -36,7 +42,6 @@ public class MapItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		}
 		catch(Exception e){
 			e.printStackTrace();
-			System.out.println("return like a boss");
 			return false;
 		}
 

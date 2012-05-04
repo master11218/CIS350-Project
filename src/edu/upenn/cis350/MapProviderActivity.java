@@ -21,6 +21,10 @@ import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A map view that display the provider around the user location.
+ * 
+ */
 public class MapProviderActivity extends MapActivity {
 	private MapView _myMapView;
 	private MapController _myMapController;
