@@ -1,9 +1,10 @@
 package testfinal.edu.upenn.cis350;
+
 import edu.upenn.cis350.*;
+import edu.upenn.cis350.R;
 
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -29,11 +30,11 @@ public class MenuTest extends ActivityInstrumentationTestCase2<VoiceActivity> {
 	public void setUp() throws Exception {
 		super.setUp();
 		activity= getActivity();
-		searchbutton= (Button)activity.findViewById(R.id.button_search);
-		historybutton= (Button)activity.findViewById(R.id.button_history);
-		profilebutton= (Button)activity.findViewById(R.id.button_profile);
-		contactbutton= (Button)activity.findViewById(R.id.button_contact);
-		mapbutton= (Button)activity.findViewById(R.id.button_map);
+		searchbutton= (Button)activity.findViewById(R.id.home_btn_search);
+		historybutton= (Button)activity.findViewById(R.id.home_btn_history);
+		profilebutton= (Button)activity.findViewById(R.id.home_btn_profile);
+		contactbutton= (Button)activity.findViewById(R.id.home_btn_contact);
+		mapbutton= (Button)activity.findViewById(R.id.home_btn_map);
 	}
 	
 	public void testSearch() {
@@ -72,7 +73,6 @@ public class MenuTest extends ActivityInstrumentationTestCase2<VoiceActivity> {
 		assertEquals(profilebutton.getText(), "profile");
 	}
 	public void testContact() {
-
 		activity.runOnUiThread(new Runnable() {
 			public void run() {
 				
@@ -80,7 +80,7 @@ public class MenuTest extends ActivityInstrumentationTestCase2<VoiceActivity> {
 		});
 		//wait for UI Thread to finish
 		getInstrumentation().waitForIdleSync();
-		assertEquals(contactbutton.getText(), "contact");
+		assertEquals(contactbutton.getText(), "contact us");
 	}
 	public void testMap() {
 		activity.runOnUiThread(new Runnable() {

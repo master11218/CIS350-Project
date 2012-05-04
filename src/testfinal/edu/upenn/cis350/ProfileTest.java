@@ -1,7 +1,7 @@
 package testfinal.edu.upenn.cis350;
+
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import edu.upenn.cis350.*;
@@ -17,7 +17,6 @@ public class ProfileTest extends ActivityInstrumentationTestCase2<ProfileActivit
 	private TextView address;
 	private TextView email;
 	private TextView phone;
-	private TextView gender;
 	
 	public void setUp() throws Exception {
 		super.setUp();
