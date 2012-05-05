@@ -1,7 +1,6 @@
-package test.edu.upenn.cis350;
+package testfinal.edu.upenn.cis350;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
@@ -10,21 +9,32 @@ import edu.upenn.cis350.*;
 import edu.upenn.cis350.entities.Provider;
 import edu.upenn.cis350.entities.Rating;
 
-public class ProviderTest extends ActivityInstrumentationTestCase2<ProviderProfileActivity> {
-	
-	public ProviderTest() {
-		super("edu.upenn.cis350", ProviderProfileActivity.class);
+
+public class SearchTest extends ActivityInstrumentationTestCase2<SearchActivity> {
+	public SearchTest() {
+		super("edu.upenn.cis350", SearchActivity.class);
 	}
 	
 	private Activity activity;
-	private Button buttonmap;
-	private TextView name;
-	private TextView address;
-	private TextView phone;
-	private Button rate;
-	private TextView rating;
-	private Provider m_provider;
+	private TextView title;
+	private EditText input;
+	private Button search;
+	private Button filter;
+	private ArrayList<Provider> _providers = new ArrayList<Provider>();
 	
+	public void setUp() throws Exception {
+		super.setUp();
+		activity= getActivity();
+		search= (Button)activity.findViewById(R.id.search_button);
+		input = (EditText)activity.findViewById(R.id.search_distance);
+	}
+	
+	public void testSearchButton() {
+		assertEquals(search.getText(), "Search");
+	}
+	public void testTitle() {
+		assertEquals(title.getText(), "Search for Provider");
+	}
 	public Provider generateProvider(String name, double latitude,
 			double longitude) {
 		Rating first = new Rating(
@@ -55,34 +65,24 @@ public class ProviderTest extends ActivityInstrumentationTestCase2<ProviderProfi
 				"yes", "yes", 3, longitude, latitude, "None", "stfu");
 	}
 
-	
-	public void setUp() throws Exception {
-		super.setUp();
-		m_provider = generateProvider("testProvider", 1.300, 2.04);
-		activity= getActivity();
-		buttonmap= (Button)activity.findViewById(R.id.button_providerpf_map);
-		name= (TextView)activity.findViewById(R.id.provider_name);
-		address= (TextView)activity.findViewById(R.id.provider_address);
-		phone= (TextView)activity.findViewById(R.id.provider_phone);
-		rating= (TextView)activity.findViewById(R.id.providerpf_average_rating_text);
-		rate= (Button)activity.findViewById(R.id.providerpf_rate_button);
-	}
-	//tests to make sure everything displays correctly
-	public void testButtonMap() {
-		assertEquals(name, "testProvider");
-	}
-	public void testName() {
-		assertNotNull(buttonmap);
-	}
-	public void testPhone() {
-		assertNotNull(phone);
-	}
-	public void testRating() {
-		assertNotNull(rating);
-	}
-	public void testRate() {
-		assertNotNull(rate);
-	}
-	
+	public void generateProviderList() {
 
+		// Generate a bunch of temporary random providers
+		_providers.add(generateProvider("Loraine Zachery", 39.951481,
+				-75.180987));
+		_providers.add(generateProvider("Tyrone Bolan", 39.952481, -75.190987));
+		_providers
+				.add(generateProvider("Roslyn Chico", 39.9512376, -75.100987));
+		_providers
+				.add(generateProvider("Sharron Becher", 39.941237, -75.211987));
+		_providers
+				.add(generateProvider("Steidl Zachery", 39.912731, -75.223421));
+		_providers.add(generateProvider("Hugh Tandy", 39.91111, -75.0843728));
+		_providers.add(generateProvider("Mathew Dimas", 39.957481, -75.200987));
+		_providers.add(generateProvider("Milagros Siegmund", 39.958481,
+				-75.178178));
+		_providers.add(generateProvider("Serena Champine", 39.959481,
+				-75.192789));
+		_providers.add(generateProvider("Allie Lunday", 39.950481, -75.188687));
+	}
 }

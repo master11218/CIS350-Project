@@ -9,6 +9,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+/**
+ * 
+ * This is the page that displays the all the contact information of the app.
+ * The phone number was made to be dialable and the email button also has the
+ * link to sending email.
+ * 
+ */
 public class ContactActivity extends Activity{
 
 	Button phone;

@@ -1,4 +1,4 @@
-package test.edu.upenn.cis350;
+package testfinal.edu.upenn.cis350;
 
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;

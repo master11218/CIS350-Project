@@ -32,6 +32,7 @@ import android.view.ViewGroup;
 
 /**
  * Dashboard layout which spaces the visible children equally
+ * 
  * @author DXU
  *
  */
@@ -153,6 +154,10 @@ public class DashboardLayout extends ViewGroup {
             ++visibleIndex;
         }
     }
+    
+    /**
+     * Calculating the optimal size for for the layout
+     */
     public void optimizeLayout() {
     	// Calculate what number of rows and columns will optimize for even horizontal and
         // vertical whitespace between items. Start with a 1 x N grid, then try 2 x N, and so on.
